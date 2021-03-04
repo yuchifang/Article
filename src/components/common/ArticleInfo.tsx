@@ -12,7 +12,7 @@ type ArticleInfoProps = {
     index: number,
     articleId: string,
     publicAt: string,
-    views: number,
+    views: string,
 }
 
 

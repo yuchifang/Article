@@ -12,7 +12,7 @@ type tagProps = {
         "vertical-align": string,
         "display": string
     },
-    cancelIcon: IconProp | null,
+    cancelIcon?: IconProp,
     text: string
 }
 
