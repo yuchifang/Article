@@ -2,8 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { blue600, blue400 } from '../../styles/General'
 import { Link, useHistory } from 'react-router-dom'
+import { timestampToDate } from '../../utils'
 
-export default function ArticleInfo({ avatar, category, title, index, blockNumber, rowsCount, articleId, publicAt }) {
+export default function ArticleInfo({ avatar, category, title, index, blockNumber, rowsCount, articleId, publicAt, views }) {
     const history = useHistory()
     const handleClick = (articleId) => {
         const locationInfo = {
@@ -20,9 +21,10 @@ export default function ArticleInfo({ avatar, category, title, index, blockNumbe
             <WArticleFigure>
                 <WArticleImg src={`https://fakeimg.pl/350x200/?text=fakeImg${index}`} alt="fakeImg" />
             </WArticleFigure>
-            {!!category && category !== "未分類" && category.length > 0 && <WArticleCategory>{category}</WArticleCategory>}
             <WArticleTitle>{title}</WArticleTitle>
-
+            {!!category && category !== "未分類" && category.length > 0 && <WArticleCategory>{category}</WArticleCategory>}
+            <WPublicTime>{timestampToDate(Number(publicAt))}</WPublicTime>
+            <WViewCount>觀看次數: {views}次</WViewCount>
         </WArticle>
     )
 }
@@ -56,11 +58,21 @@ const WArticleImg = styled.img`
 `
 const WArticleCategory = styled.p`
     color:${blue400};
-    font-size: 12px;
+    font-size: 14px;
     transition: all .3s;
 `
 const WArticleTitle = styled.p`
     color:${blue600};
+    font-size:18px;
     transition: all .3s;
     font-weight: bold;
+`
+const WPublicTime = styled.p`
+    color:${blue400};
+    font-size:14px;
+`
+
+const WViewCount = styled.p`
+    color:${blue400};
+    font-size:14px;
 `

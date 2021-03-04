@@ -30,6 +30,6 @@ export function timestampToDate(timestamp) {
     const Time = new Date(timestampNumber)
     const getYear = Time.getFullYear()
     const getMonth = Time.getMonth() + 1 < 10 ? '0' + (Time.getMonth() + 1) : Time.getMonth() + 1
-    const getDateString = Time.getDate()
+    const getDateString = Time.getDate() < 10 ? '0' + Time.getDate() : Time.getDate()
     return `${getYear}-${getMonth}-${getDateString}`
 }

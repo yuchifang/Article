@@ -38,20 +38,21 @@ export default function TopicBlock({
     const [filterList, setFilterList] = useState(false)
 
     const [articleInfoList, setArticleInfoList] = useState(topicArticleList)
-    const [conditionArticleInfoList, setConditionArticleInfoList] = useState([])
 
     const [publicTimeActive, setPublicTimeActive] = useState(false)
     const [viewCountActive, setViewCountActive] = useState(false)
 
     const handlePublicTime = () => {
-        setConditionArticleInfoList(prevState => [...prevState, "publicTime"])
-        setPublicTimeActive(prevState => !prevState)
+        setArticleInfoList(prevState => prevState.sort((articleA, articleB) => Number(articleA.public_at) > Number(articleB.public_at) ? -1 : 1))
+        setPublicTimeActive(true)
+        setViewCountActive(false)
         // setFilterList(prevState => !prevState)
     }
 
     const handleViewCount = () => {
-        setConditionArticleInfoList(prevState => [...prevState, "viewCount"])
-        setViewCountActive(prevState => !prevState)
+        setArticleInfoList(prevState => prevState.sort((articleA, articleB) => Number(articleA.total_hits) > Number(articleB.total_hits) ? -1 : 1))
+        setViewCountActive(true)
+        setPublicTimeActive(false)
         // setFilterList(prevState => !prevState)
     }
 
@@ -69,6 +70,8 @@ export default function TopicBlock({
         "display": viewCountActive ? "inline-block" : "none"
     }
 
+    console.log("articleInfoList", articleInfoList)
+
     return (
         <WHomPageTopicBlock>
             {showTitle && <WTopicTitle titlePlace={titlePlace}>{title}</WTopicTitle>}
@@ -83,7 +86,7 @@ export default function TopicBlock({
                             text="上傳時間"
                             handleClick={handlePublicTime}
                             iconStyle={publicTimeIconStyle}
-                            cancelIcon={faTimes}
+                            // cancelIcon={faTimes}
                             isItemActive={publicTimeActive}
                             iconBackgroundColor={blue50}
                             iconColor={blue100}
@@ -92,7 +95,7 @@ export default function TopicBlock({
                             text="觀看次數"
                             handleClick={handleViewCount}
                             iconStyle={viewCountIconStyle}
-                            cancelIcon={faTimes}
+                            // cancelIcon={faTimes}
                             isItemActive={viewCountActive}
                             iconBackgroundColor={blue50}
                             iconColor={blue100}
@@ -100,7 +103,7 @@ export default function TopicBlock({
                     </WFilterList>
                 </WFilterFeature>}
             <WArticleBlock wrap={wrap}>
-                {articleInfoList.map((articleInfo, index) => {
+                {articleInfoList?.length > 0 && articleInfoList.map((articleInfo, index) => {
                     console.log("articleInfo", articleInfo)
                     return <ArticleInfo
                         key={`${articleInfo.title + index}`}
@@ -111,6 +114,7 @@ export default function TopicBlock({
                         index={index}
                         articleId={articleInfo.articleId}
                         publicAt={articleInfo.public_at}
+                        views={articleInfo.total_hits}
                     />
                 }
                 )}

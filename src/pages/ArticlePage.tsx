@@ -4,11 +4,22 @@ import { GetArticle } from '../store/actions/articleAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { WContainer } from '../styles/General'
 import { timestampToDate } from "../utils"
+import { RouteComponentProps } from "react-router-dom"
 
-export default function ArticlePage({ location: { state: { articleId } }, history }) {
+interface Location {
+    articleId: string
+}
+
+interface ArticlePageProps extends RouteComponentProps<{}, {}, Location> {
+
+}
+
+export default function ArticlePage({ location: { state: { articleId } }, history }: ArticlePageProps) {
 
     const dispatch = useDispatch()
+    // @ts-ignore
     const articleList = useSelector(state => state.WriterList)
+    // @ts-ignore
     const { [articleId]: article } = useSelector(state => state.Article)
     const authorName = articleList.pinkymini.AuthorName
 
@@ -16,50 +27,50 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
         dispatch(GetArticle(articleId, authorName))
     }, [authorName, articleId])
 
-    const handleTagClick = (e) => {
-
+    const handleTagClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        const target = e.target as Element
         const locationInfo = {
             pathname: `/ResultPage`,
             state: {
                 articleId,
-                searchValue: e.target.innerHTML
+                searchValue: target.innerHTML,
             }
         }
         history.push(locationInfo)
     }
     // ulit.js 創一個function 判斷 number 長度 做處理
-    const publicTime = new Date(Number(article?.public_at * 1000))
 
 
     return (
-        (article?.status === "success") &&
-        <WArticlePageSection>
-            <WArticlePageContainer>
-                <WArticleHeader>
-                    {!!article.category && article.category !== "未分類" && article.category.length > 0 && <WCategory>{article.category}</WCategory>}
-                    <WTitle>{article.title}</WTitle>
-                </WArticleHeader>
-                <WContent>
-                    <WArticleInfo>
-                        <WFigure>
-                            <WImg src={article.avatar} />
-                        </WFigure>
-                        <WAuthor>
-                            作者:{article.authorName}
-                        </WAuthor>
-                        <WPublic>
-                            {timestampToDate(article?.public_at)}
-                        </WPublic>
-                        <WTagList>
-                            {article.tags.map((item, index) =>
-                                <WTag key={index} onClick={(e) => handleTagClick(e)}>{item.tag}</WTag>
-                            )}
-                        </WTagList>
-                    </WArticleInfo>
-                    <WArticle dangerouslySetInnerHTML={{ __html: article.body }} />
-                </WContent>
-            </WArticlePageContainer>
-        </WArticlePageSection>
+        (article?.status === "success") ?
+            <WArticlePageSection>
+                <WArticlePageContainer>
+                    <WArticleHeader>
+                        {!!article.category && article.category !== "未分類" && article.category.length > 0 && <WCategory>{article.category}</WCategory>}
+                        <WTitle>{article.title}</WTitle>
+                    </WArticleHeader>
+                    <WContent>
+                        <WArticleInfo>
+                            <WFigure>
+                                <WImg src={article.avatar} />
+                            </WFigure>
+                            <WAuthor>
+                                作者:{article.authorName}
+                            </WAuthor>
+                            <WPublic>
+                                {timestampToDate(article?.public_at)}
+                            </WPublic>
+                            <WTagList>
+                                {article.tags.map((item: any, index: any) =>
+                                    <WTag key={index} onClick={(e) => handleTagClick(e)}>{item.tag}</WTag>
+                                )}
+                            </WTagList>
+                        </WArticleInfo>
+                        <WArticle dangerouslySetInnerHTML={{ __html: article.body }} />
+                    </WContent>
+                </WArticlePageContainer>
+            </WArticlePageSection>
+            : null
     )
 }
 

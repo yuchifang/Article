@@ -1,4 +1,3 @@
-import './App.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import HeaderPage from './pages/HeaderPage'
 import HomePage from './pages/HomePage'
@@ -10,8 +9,7 @@ import ArticlePage from './pages/ArticlePage'
 import ResultPage from './pages/ResultPage'
 import { pipe, packTagsString, countRepeatTag, _map, stringToLower, objToArr, _sort, _slice } from "./utils"
 import { RootState } from './store/reducers/RootReducer'
-import { type } from 'os';
-
+import { GlobalStyle } from './styles/General'
 
 function App() {
   // 每個component 如果沒有傳值的問題
@@ -31,7 +29,8 @@ function App() {
   // 更新時間的 function
   // 考慮在HomePage 用物件map呈現?
   type Tag = {
-
+    name: string,
+    value: number
   }
 
   const dispatch = useDispatch()
@@ -45,10 +44,7 @@ function App() {
         _map(stringToLower),
         countRepeatTag,
         objToArr,
-        _sort((x: any, y: any) => {
-          console.log("x", x)
-          return x.value > y.value ? -1 : 1
-        }),
+        _sort((x: Tag, y: Tag) => x.value > y.value ? -1 : 1),
         _slice(0, 3)
         // @ts-ignore
       )(articleList.pinkymini.articles)
@@ -63,11 +59,12 @@ function App() {
     // @ts-ignore
     articleList?.pinkymini?.actionStatus === "success" ?
       <BrowserRouter>
+        <GlobalStyle />
         <HeaderPage topicTitleList={topicTitleList} />
         <Switch>
           <Route exact path="/" component={() => <HomePage topicTitleList={topicTitleList} />} />
 
-          {/* <Route exact path="/ArticlePage" component={ArticlePage} /> */}
+          <Route exact path="/ArticlePage" component={ArticlePage} />
           <Route path="/ResultPage" component={ResultPage} />
         </Switch>
         <Footer />

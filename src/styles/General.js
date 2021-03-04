@@ -1,5 +1,4 @@
-import styled from 'styled-components'
-
+import styled, { createGlobalStyle } from 'styled-components'
 
 export const blue600 = "#1f292e"
 export const blue400 = "#78909c";
@@ -16,5 +15,13 @@ export const WContainer = styled.div`
     }
     @media (min-width: 980px) {
         padding: 0px 30px;
+    }
+`
+
+export const GlobalStyle = createGlobalStyle`
+    *{
+        margin:0px;
+        padding:0px;
+        list-style: none;
     }
 `
