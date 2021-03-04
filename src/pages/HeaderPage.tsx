@@ -5,8 +5,16 @@ import { faSearch, faBook, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { blue400, blue50, blue600 } from '../styles/General'
 import { Link } from 'react-router-dom'
 
+type Tag = {
+    name: string,
+    value: number
+}
 
-export default function HeaderPage({ topicTitleList }) {
+export type topicTitleListProps = {
+    topicTitleList: Tag[],
+}
+
+export default function HeaderPage({ topicTitleList }: topicTitleListProps) {
     const [showSearchButton, setShowSearchButton] = useState(true)
     const searchRef = useRef(null)
 
@@ -29,9 +37,14 @@ export default function HeaderPage({ topicTitleList }) {
                     </WLogoLink>
                 </WLogoBlock>
                 <WFeatureBlock>
+
                     <WSearchBlock showSearch={!showSearchButton} >
                         <WSearchInput type="text" ref={searchRef} />
-                        <FontAwesomeIcon onClick={handleSearch} size="1x" icon={faTimes} color={`${blue600}`} />
+                        <FontAwesomeIcon
+                            onClick={handleSearch}
+                            size="1x"
+                            icon={faTimes}
+                            color={`${blue600}`} />
                     </WSearchBlock>
 
                     <WSearchButton showSearch={showSearchButton} onClick={handleSearch}>
@@ -40,7 +53,7 @@ export default function HeaderPage({ topicTitleList }) {
 
                 </WFeatureBlock>
                 <WNavbar>
-                    {topicTitleList?.length > 0 && topicTitleList.map((obj, index) =>
+                    {topicTitleList?.length > 0 && topicTitleList.map((obj: Tag, index: number) =>
                         <WNavbarItem key={obj.name + index}>
                             <Link to={{
                                 pathname: `/ResultPage`,
@@ -54,6 +67,14 @@ export default function HeaderPage({ topicTitleList }) {
             </WHeaderContainer>
         </WHeaderSection>
     );
+}
+
+type WSearchBlockType = {
+    showSearch: boolean
+}
+
+type WSearchFeature = {
+    showSearch: boolean
 }
 
 const WHeaderSection = styled.header`
@@ -136,13 +157,13 @@ const WFeature = styled.div`
     transition: all .5s;
 `
 
-const WSearchFeature = styled(WFeature)`
+const WSearchFeature = styled(WFeature) <WSearchFeature>`
     position: relative;
     opacity: ${props => props?.showSearch ? "1" : "0"};
     z-index:${props => props?.showSearch ? "auto" : "-1"};
 `
 
-const WSearchBlock = styled(WSearchFeature)`
+const WSearchBlock = styled(WSearchFeature) <WSearchBlockType>`
     right:${props => props?.showSearch ? "-32px" : "-45px"};
     line-height:16px;
     svg{

@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { WContainer } from '../styles/General'
 import { timestampToDate } from "../utils"
 import { RouteComponentProps } from "react-router-dom"
-
-interface Location {
+import { RootState } from '../store/reducers/RootReducer'
+type Location = {
     articleId: string
 }
 
@@ -14,13 +14,32 @@ interface ArticlePageProps extends RouteComponentProps<{}, {}, Location> {
 
 }
 
+type Tag = {
+    added_by: string;
+    is_poi: boolean,
+    locked: number,
+    tag: string
+}
+
+type ArticleState = {
+    status: string,
+    errorMsg: string,
+    body: string,
+    category?: string,
+    title?: string,
+    avatar?: string,
+    authorName?: string,
+    public_at?: string,
+    tags?: Tag[]
+}
+
 export default function ArticlePage({ location: { state: { articleId } }, history }: ArticlePageProps) {
 
     const dispatch = useDispatch()
+    const articleList = useSelector((state: RootState) => state.WriterList)
+
+    const { [articleId]: article }: { [articleId: string]: ArticleState } = useSelector((state: RootState) => state.Article)
     // @ts-ignore
-    const articleList = useSelector(state => state.WriterList)
-    // @ts-ignore
-    const { [articleId]: article } = useSelector(state => state.Article)
     const authorName = articleList.pinkymini.AuthorName
 
     useEffect(() => {
@@ -40,6 +59,7 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
     }
     // ulit.js 創一個function 判斷 number 長度 做處理
 
+    console.log("article", article)
 
     return (
         (article?.status === "success") ?
@@ -61,9 +81,13 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
                                 {timestampToDate(article?.public_at)}
                             </WPublic>
                             <WTagList>
-                                {article.tags.map((item: any, index: any) =>
-                                    <WTag key={index} onClick={(e) => handleTagClick(e)}>{item.tag}</WTag>
-                                )}
+                                {(!!article?.tags && article?.tags.length > 0) ? article?.tags.map((item: Tag, index: number) =>
+                                    <WTag
+                                        key={index}
+                                        onClick={(e) => handleTagClick(e)}>
+                                        {item.tag}
+                                    </WTag>
+                                ) : null}
                             </WTagList>
                         </WArticleInfo>
                         <WArticle dangerouslySetInnerHTML={{ __html: article.body }} />

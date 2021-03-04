@@ -6,13 +6,14 @@ import {
     _sort,
     _log
 } from '../../utils'
-import ArticleInfo from './ArticleInfo'
+import ArticleInfo from './ArticleInfo.tsx'
 import { useSelector } from 'react-redux'
 import { blue600, blue100, blue50 } from '../../styles/General'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter, faTimes } from '@fortawesome/free-solid-svg-icons'
-import Tag from "./Tag"
+import Tag from "./Tag.tsx"
+
 
 export default function TopicBlock({
     filter = false,
@@ -70,7 +71,6 @@ export default function TopicBlock({
         "display": viewCountActive ? "inline-block" : "none"
     }
 
-    console.log("articleInfoList", articleInfoList)
 
     return (
         <WHomPageTopicBlock>
@@ -86,7 +86,7 @@ export default function TopicBlock({
                             text="上傳時間"
                             handleClick={handlePublicTime}
                             iconStyle={publicTimeIconStyle}
-                            // cancelIcon={faTimes}
+                            cancelIcon={faTimes}
                             isItemActive={publicTimeActive}
                             iconBackgroundColor={blue50}
                             iconColor={blue100}
@@ -104,7 +104,6 @@ export default function TopicBlock({
                 </WFilterFeature>}
             <WArticleBlock wrap={wrap}>
                 {articleInfoList?.length > 0 && articleInfoList.map((articleInfo, index) => {
-                    console.log("articleInfo", articleInfo)
                     return <ArticleInfo
                         key={`${articleInfo.title + index}`}
                         blockNumber={rowsCount * columnsCount}

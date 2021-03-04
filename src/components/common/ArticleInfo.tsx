@@ -4,9 +4,31 @@ import { blue600, blue400 } from '../../styles/General'
 import { Link, useHistory } from 'react-router-dom'
 import { timestampToDate } from '../../utils'
 
-export default function ArticleInfo({ avatar, category, title, index, blockNumber, rowsCount, articleId, publicAt, views }) {
+type ArticleInfoProps = {
+    blockNumber?: number,
+    rowsCount: number,
+    title: string,
+    category: string,
+    index: number,
+    articleId: string,
+    publicAt: string,
+    views: number,
+}
+
+
+export default function ArticleInfo({
+    category,
+    title,
+    index,
+    blockNumber,
+    rowsCount,
+    articleId,
+    publicAt,
+    views
+}: ArticleInfoProps) {
     const history = useHistory()
-    const handleClick = (articleId) => {
+    const handleClick = (articleId: string): void => {
+
         const locationInfo = {
             pathname: `/ArticlePage`,
             state: {
@@ -17,6 +39,7 @@ export default function ArticleInfo({ avatar, category, title, index, blockNumbe
     }
 
     return (
+
         <WArticle onClick={() => handleClick(articleId)} rowsCount={rowsCount}>
             <WArticleFigure>
                 <WArticleImg src={`https://fakeimg.pl/350x200/?text=fakeImg${index}`} alt="fakeImg" />
@@ -29,50 +52,54 @@ export default function ArticleInfo({ avatar, category, title, index, blockNumbe
     )
 }
 
-const WArticle = styled.div`
+type WArticleProps = {
+    rowsCount: number;
+}
+
+const WArticle = styled.div<WArticleProps>`
     box-sizing: border-box;
     width: calc( 90% / ${props => props.rowsCount});
     margin: 10px;
-    @media (min-width: 980px) {
+    @media(min - width: 980px) {
         margin: 20px;
     }
-    cursor: pointer;
+    cursor:pointer;
     &:hover{
-        figure{
-            img{
-                opacity: .7;
-            }
-        }
-        p{
+    figure{
+        img{
             opacity: .7;
         }
     }
+    p{
+        opacity: .7;
+    }
+}
 `
 const WArticleFigure = styled.figure`
-    width:100%;
+    width: 100%;
 `
 const WArticleImg = styled.img`
-    width:100%;
+    width: 100%;
     vertical-align: middle;
     transition: all .3s;
 `
 const WArticleCategory = styled.p`
-    color:${blue400};
+    color: ${blue400};
     font-size: 14px;
     transition: all .3s;
 `
 const WArticleTitle = styled.p`
-    color:${blue600};
-    font-size:18px;
+    color: ${blue600};
+    font-size: 18px;
     transition: all .3s;
     font-weight: bold;
 `
 const WPublicTime = styled.p`
-    color:${blue400};
-    font-size:14px;
+    color: ${blue400};
+    font-size: 14px;
 `
 
 const WViewCount = styled.p`
-    color:${blue400};
-    font-size:14px;
+    color: ${blue400};
+    font-size: 14px;
 `

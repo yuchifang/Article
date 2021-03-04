@@ -3,7 +3,16 @@ import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { pipe, _filter, packTagsString, countRepeatTag, _map, stringToLower, objToArr, _sort, _slice } from '../utils'
 import TopicBlock from '../components/common/TopicBlock'
-export default function ResultPage({ location: { state: { searchValue } } }) {
+import { RouteComponentProps } from 'react-router-dom'
+
+type locationProp = {
+    searchValue: string
+}
+interface ResultPageProps extends RouteComponentProps<{}, {}, locationProp> {
+
+}
+
+export default function ResultPage({ location: { state: { searchValue } } }: ResultPageProps) {
 
     return (
         <TopicBlock

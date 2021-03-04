@@ -6,8 +6,9 @@ import {
 } from '../utils'
 import TopicBlock from '../components/common/TopicBlock'
 import { WContainer } from '../styles/General'
+import { topicTitleListProps } from "./HeaderPage"
 
-export default function HomePage({ topicTitleList }) {
+export default function HomePage({ topicTitleList }: topicTitleListProps) {
 
 
     // rowsCount
