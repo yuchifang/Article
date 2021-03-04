@@ -28,7 +28,6 @@ export default function ArticleInfo({
 }: ArticleInfoProps) {
     const history = useHistory()
     const handleClick = (articleId: string): void => {
-
         const locationInfo = {
             pathname: `/ArticlePage`,
             state: {
@@ -39,67 +38,71 @@ export default function ArticleInfo({
     }
 
     return (
-
-        <WArticle onClick={() => handleClick(articleId)} rowsCount={rowsCount}>
-            <WArticleFigure>
-                <WArticleImg src={`https://fakeimg.pl/350x200/?text=fakeImg${index}`} alt="fakeImg" />
-            </WArticleFigure>
-            <WArticleTitle>{title}</WArticleTitle>
-            {!!category && category !== "未分類" && category.length > 0 && <WArticleCategory>{category}</WArticleCategory>}
-            <WPublicTime>{timestampToDate(Number(publicAt))}</WPublicTime>
-            <WViewCount>觀看次數: {views}次</WViewCount>
-        </WArticle>
+        <W_ArticleInfo onClick={() => handleClick(articleId)} rowsCount={rowsCount}>
+            <W_InfoFigure>
+                <W_InfoImg src={`https://fakeimg.pl/350x200/?text=fakeImg${index}`} alt="fakeImg" />
+            </W_InfoFigure>
+            <W_InfoTitle>{title}</W_InfoTitle>
+            {!!category && category !== "未分類" && category.length > 0 && <W_InfoCategory>{category}</W_InfoCategory>}
+            <W_PublicTime>{timestampToDate(Number(publicAt))}</W_PublicTime>
+            <W_ViewCount>觀看次數: {views}次</W_ViewCount>
+        </W_ArticleInfo>
     )
 }
 
-type WArticleProps = {
+type W_ArticleInfoProps = {
     rowsCount: number;
 }
 
-const WArticle = styled.div<WArticleProps>`
-    box-sizing: border-box;
-    width: calc( 90% / ${props => props.rowsCount});
-    margin: 10px;
-    @media(min - width: 980px) {
-        margin: 20px;
-    }
-    cursor:pointer;
-    &:hover{
-    figure{
-        img{
+const W_ArticleInfo = styled.div<W_ArticleInfoProps>`
+        box-sizing: border-box;
+        width: calc( 90% / ${props => props.rowsCount});
+        margin: 10px;
+        @media(min - width: 980px) {
+            margin: 20px;
+        }
+        cursor:pointer;
+        &:hover{
+        figure{
+            img{
+                opacity: .7;
+            }
+        }
+        p{
             opacity: .7;
         }
     }
-    p{
-        opacity: .7;
-    }
-}
 `
-const WArticleFigure = styled.figure`
+
+const W_InfoFigure = styled.figure`
     width: 100%;
 `
-const WArticleImg = styled.img`
+
+const W_InfoImg = styled.img`
     width: 100%;
     vertical-align: middle;
     transition: all .3s;
 `
-const WArticleCategory = styled.p`
+
+const W_InfoCategory = styled.p`
     color: ${blue400};
     font-size: 14px;
     transition: all .3s;
 `
-const WArticleTitle = styled.p`
+
+const W_InfoTitle = styled.p`
     color: ${blue600};
     font-size: 18px;
     transition: all .3s;
     font-weight: bold;
 `
-const WPublicTime = styled.p`
+
+const W_PublicTime = styled.p`
     color: ${blue400};
     font-size: 14px;
 `
 
-const WViewCount = styled.p`
+const W_ViewCount = styled.p`
     color: ${blue400};
     font-size: 14px;
 `

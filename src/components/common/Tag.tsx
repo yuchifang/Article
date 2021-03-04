@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
-type tagProps = {
+type TagProps = {
     iconBackgroundColor: string,
     iconColor: string,
     isItemActive: boolean,
@@ -25,25 +25,25 @@ export default function Tag({
     iconStyle,
     cancelIcon,
     text
-}: tagProps) {
+}: TagProps) {
     return (
-        <WFilterItemBlock>
-            <WFilterItemClickBlock
+        <W_TagBlock>
+            <W_TagClickBlock
                 onClick={() => handleClick()}>
-                <WFilterItem
+                <W_TagItem
                     iconBackgroundColor={iconBackgroundColor}
                     isItemActive={isItemActive}
                     iconColor={iconColor}
                 >
                     {text}
-                </WFilterItem>
+                </W_TagItem>
                 {cancelIcon && <FontAwesomeIcon icon={cancelIcon} style={iconStyle} />}
-            </WFilterItemClickBlock>
-        </WFilterItemBlock>
+            </W_TagClickBlock>
+        </W_TagBlock>
     )
 }
 
-type WFilterItemProps = {
+type W_TagItemProps = {
     iconColor: string,
     isItemActive: boolean,
     iconBackgroundColor: string
@@ -51,17 +51,17 @@ type WFilterItemProps = {
 }
 
 
-const WFilterItemBlock = styled.div`
+const W_TagBlock = styled.div`
     width:100px;
 `
 
-const WFilterItemClickBlock = styled.div`
+const W_TagClickBlock = styled.div`
     display: inline-block;
     cursor:pointer;
 `
 
 
-const WFilterItem = styled.div<WFilterItemProps>`
+const W_TagItem = styled.div<W_TagItemProps>`
     vertical-align: middle;
     display: inline-block;
     font-size: 14px;

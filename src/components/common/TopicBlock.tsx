@@ -50,10 +50,9 @@ export default function TopicBlock({
 
         }
     }, [articleList, title])
+
     const [filterList, setFilterList] = useState(false)
-
     const [articleInfoList, setArticleInfoList] = useState<ArticleProps[]>(topicArticleList)
-
     const [publicTimeActive, setPublicTimeActive] = useState(false)
     const [viewCountActive, setViewCountActive] = useState(false)
 
@@ -88,20 +87,20 @@ export default function TopicBlock({
     }
 
     return (
-        <WHomPageTopicBlock>
-            {showTitle && <WTopicTitle titlePlace={titlePlace}>{title}</WTopicTitle>}
+        <W_TopicBlock>
+            {showTitle && <W_TopicTitle titlePlace={titlePlace}>{title}</W_TopicTitle>}
             {filter &&
-                <WFilterFeature>
-                    <WFilterBlock onClick={() => handleFilterList()}>
+                <W_FilterFeature>
+                    <W_FilterBlock onClick={() => handleFilterList()}>
                         <FontAwesomeIcon icon={faFilter} color={`${blue600}`} />
-                        <WFilterText>篩選器</WFilterText>
-                    </WFilterBlock>
-                    <WFilterList show={filterList}>
+                        <W_FilterText>篩選器</W_FilterText>
+                    </W_FilterBlock>
+                    <W_FilterList show={filterList}>
                         <Tag
                             text="上傳時間"
                             handleClick={handlePublicTime}
                             iconStyle={publicTimeIconStyle}
-                            cancelIcon={faTimes}
+                            // cancelIcon={faTimes}
                             isItemActive={publicTimeActive}
                             iconBackgroundColor={blue50}
                             iconColor={blue100}
@@ -115,9 +114,9 @@ export default function TopicBlock({
                             iconBackgroundColor={blue50}
                             iconColor={blue100}
                         />
-                    </WFilterList>
-                </WFilterFeature>}
-            <WArticleBlock  //@ts-ignore
+                    </W_FilterList>
+                </W_FilterFeature>}
+            <W_ArticleInfoBlock  //@ts-ignore
                 wrap={wrap}>
                 {articleInfoList?.length > 0 && articleInfoList.map(
                     //@ts-ignore
@@ -135,31 +134,31 @@ export default function TopicBlock({
                         />
                     }
                 )}
-            </WArticleBlock>
-        </WHomPageTopicBlock>
+            </W_ArticleInfoBlock>
+        </W_TopicBlock>
     )
 }
 
-type WTopicTitleProps = {
+type W_TopicTitleProps = {
     titlePlace: string
 }
 
-type WFilterListProps = {
+type W_FilterListProps = {
     show: boolean
 }
 
-type WArticleBlockProps = {
+type W_ArticleInfoBlockProps = {
     wrap: boolean
 }
 
-const WHomPageTopicBlock = styled.div`
+const W_TopicBlock = styled.div`
     padding: 25px 10px;
     @media (min-width: 980px) {
         padding:45px;
     }
 `
 
-const WTopicTitle = styled.p<WTopicTitleProps>`
+const W_TopicTitle = styled.p<W_TopicTitleProps>`
     text-align:${props => props.titlePlace};
     color:${blue600};
     font-weight: bold;
@@ -167,32 +166,32 @@ const WTopicTitle = styled.p<WTopicTitleProps>`
     margin-bottom:30px;
 `
 
-const WFilterFeature = styled.div`
+const W_FilterFeature = styled.div`
     display: flex;
     margin: 0 20px;
     flex-direction: column;
     align-items: flex-start;
 `
 
-const WFilterBlock = styled.div`
+const W_FilterBlock = styled.div`
     cursor: pointer;
     margin: 0 0 10px 0px;
 `
 
-const WFilterList = styled.div<WFilterListProps>`
+const W_FilterList = styled.div<W_FilterListProps>`
     // height:${props => props.show ? "27px" : "0px"};
     // visibility: ${props => props.show ? "unset" : "hidden"};
     transition: all .3s .5s;
     display:${props => props.show ? "flex" : "none"};;
 `
 
-const WFilterText = styled.p`
+const W_FilterText = styled.p`
     display: inline-block;
     margin: 0 10px;
     font-weight: bold;
 `
 
-const WArticleBlock = styled.div<WArticleBlockProps>`
+const W_ArticleInfoBlock = styled.div<W_ArticleInfoBlockProps>`
     display: flex;
     justify-content: space-around;
     width:100%;

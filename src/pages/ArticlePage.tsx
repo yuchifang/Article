@@ -6,10 +6,10 @@ import { WContainer } from '../styles/General'
 import { timestampToDate } from "../utils"
 import { RouteComponentProps } from "react-router-dom"
 import { RootState } from '../store/reducers/RootReducer'
+
 type Location = {
     articleId: string
 }
-
 interface ArticlePageProps extends RouteComponentProps<{}, {}, Location> {
 
 }
@@ -57,7 +57,7 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
         }
         history.push(locationInfo)
     }
-    // ulit.js 創一個function 判斷 number 長度 做處理
+
 
     console.log("article", article)
 

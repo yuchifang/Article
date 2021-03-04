@@ -10,11 +10,11 @@ type Tag = {
     value: number
 }
 
-export type topicTitleListProps = {
+export type HeaderPageProps = {
     topicTitleList: Tag[],
 }
 
-export default function HeaderPage({ topicTitleList }: topicTitleListProps) {
+export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
     const [showSearchButton, setShowSearchButton] = useState(true)
     const searchRef = useRef(null)
 
