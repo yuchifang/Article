@@ -1,7 +1,26 @@
 import { ARTICLE_LIST_LOADING, ARTICLE_LIST_FAIL, ARTICLE_LIST_SUCCESS } from '../actions/actionType'
 
+export type typeArticleListState = {
+    authorName: {
+        authorDisplayName: string,
+        authorName: string,
+        errorMsg: string,
+        actionStatus: string,
+        total: number,
+        img: string,
+        articles: [{
+            title: string,
+            category: string,
+            sub_site_category: string,
+            id: string,
+            total_hits: number,
+            tag: string[],
+            public_at: string
+        }]
+    }
+}
 
-const DefaultState = {
+const DefaultState: typeArticleListState = {
     //這邊應該要存整理過的資料
 
     authorName: {
@@ -23,7 +42,14 @@ const DefaultState = {
     }
 }
 
-const ArticleListReducer = (state = DefaultState, action) => {
+type ArticleAction = {
+    type: string,
+    payload: {
+        [key: string]: string | {},
+    }
+}
+
+const ArticleListReducer = (state: typeArticleListState = DefaultState, action: ArticleAction) => {
     const { payload } = action
     switch (action.type) {
         case ARTICLE_LIST_LOADING:
@@ -35,6 +61,7 @@ const ArticleListReducer = (state = DefaultState, action) => {
             // }
             return {
                 ...state,
+                //@ts-ignore
                 [payload.userId]: {
                     ...state.authorName,
                     errorMsg: "",
@@ -51,7 +78,9 @@ const ArticleListReducer = (state = DefaultState, action) => {
             // }
             return {
                 ...state,
+                //@ts-ignore
                 [payload.userId]: {
+                    //@ts-ignore
                     ...state[payload.userId],
                     errorMsg: payload.rej,
                     actionStatus: "error"
@@ -59,30 +88,27 @@ const ArticleListReducer = (state = DefaultState, action) => {
             }
 
         case ARTICLE_LIST_SUCCESS:
+            //@ts-ignore
             const { res: { data } } = payload
             const compileArticles = data.articles.map(({
-                sub_site_category,
-                category,
-                title,
-                id,
-                hits: { total },
-                public_at,
-                tags,
-                user
+                //@ts-ignore
+                sub_site_category, category, title, id, hits: { total }, public_at, tags, user
             }) => ({
                 category,
                 title,
                 sub_site_category,
                 articleId: id,
                 total_hits: total,
-                public_at,
+                public_at, //@ts-ignore
                 tags: tags.map(obj => obj.tag),
                 avatar: user.avatar
             }))
 
             return {
                 ...state,
-                [payload.userId]: {
+                //@ts-ignore
+
+                [payload.userId]: { //@ts-ignore
                     ...state[payload.userId],
                     errorMsg: "",
                     actionStatus: 'success',

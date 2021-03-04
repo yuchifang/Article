@@ -1,5 +1,7 @@
 import axios from 'axios'
 import fakeData from '../../data.json'
+import { ThunkDispatch } from 'redux-thunk';
+import { Action } from 'redux';
 import {
     ARTICLE_LIST_LOADING,
     ARTICLE_LIST_FAIL,
@@ -9,7 +11,10 @@ import {
     ARTICLE_FAIL
 } from './actionType'
 
-export const GetWriterArticles = (userId = "pinkymini") => dispatch => {
+import { typeArticleListState } from "../reducers/WriterListReducer"
+import { typeArticleState } from '../reducers/ArticleReducer'
+
+export const GetWriterArticles = (userId = "pinkymini") => (dispatch: ThunkDispatch<typeArticleListState, void, Action>) => {
     dispatch({
         type: ARTICLE_LIST_LOADING,
         payload: { userId }
@@ -36,7 +41,7 @@ export const GetWriterArticles = (userId = "pinkymini") => dispatch => {
 }
 
 
-export const GetArticle = (articleId, authorName) => dispatch => {
+export const GetArticle = (articleId: string, authorName: string) => (dispatch: ThunkDispatch<typeArticleState, void, Action>) => {
     dispatch({
         type: ARTICLE_LOADING,
         payload: { articleId: articleId }

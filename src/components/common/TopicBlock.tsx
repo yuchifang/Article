@@ -6,14 +6,25 @@ import {
     _sort,
     _log
 } from '../../utils'
-import ArticleInfo from './ArticleInfo.tsx'
+import ArticleInfo from './ArticleInfo'
 import { useSelector } from 'react-redux'
 import { blue600, blue100, blue50 } from '../../styles/General'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter, faTimes } from '@fortawesome/free-solid-svg-icons'
-import Tag from "./Tag.tsx"
+import { RootState } from '../../store/reducers/RootReducer'
+import Tag from "./Tag"
 
+type ArticleProps = {
+    articleId: string,
+    avatar: string,
+    category: string,
+    public_at: string,
+    sub_site_category: string,
+    tags: string[],
+    title: string,
+    total_hits: string
+}
 
 export default function TopicBlock({
     filter = false,
@@ -25,33 +36,38 @@ export default function TopicBlock({
     wrap = false,
     titlePlace = "left"
 }) {
-    const articleList = useSelector(state => state.WriterList)
+
+    const articleList = useSelector((state: RootState) => state.WriterList)
     const topicArticleList = useMemo(() => {
+        //@ts-ignore
         if (articleList?.pinkymini?.actionStatus === "success") {
             return pipe(
-                _filter(article => article.tags.some(element => element.toLowerCase() === title.toLowerCase())),
-                _sort((articleA, articleB) => articleA.total_hits > articleB.total_hits ? -1 : 1),
+                _filter((article: ArticleProps) => article.tags.some((element: string) => element.toLowerCase() === title.toLowerCase())),
+                _sort((articleA: ArticleProps, articleB: ArticleProps) => articleA.total_hits > articleB.total_hits ? -1 : 1),
                 _slice(0, rowsCount * columnsCount)
+                //@ts-ignore
             )(articleList.pinkymini.articles)
 
         }
     }, [articleList, title])
     const [filterList, setFilterList] = useState(false)
 
-    const [articleInfoList, setArticleInfoList] = useState(topicArticleList)
+    const [articleInfoList, setArticleInfoList] = useState<ArticleProps[]>(topicArticleList)
 
     const [publicTimeActive, setPublicTimeActive] = useState(false)
     const [viewCountActive, setViewCountActive] = useState(false)
 
     const handlePublicTime = () => {
-        setArticleInfoList(prevState => prevState.sort((articleA, articleB) => Number(articleA.public_at) > Number(articleB.public_at) ? -1 : 1))
+        setArticleInfoList(prevState => prevState.sort((articleA: ArticleProps, articleB: ArticleProps) =>
+            Number(articleA.public_at) > Number(articleB.public_at) ? -1 : 1))
         setPublicTimeActive(true)
         setViewCountActive(false)
         // setFilterList(prevState => !prevState)
     }
 
     const handleViewCount = () => {
-        setArticleInfoList(prevState => prevState.sort((articleA, articleB) => Number(articleA.total_hits) > Number(articleB.total_hits) ? -1 : 1))
+        setArticleInfoList(prevState => prevState.sort((articleA: ArticleProps, articleB: ArticleProps) =>
+            Number(articleA.total_hits) > Number(articleB.total_hits) ? -1 : 1))
         setViewCountActive(true)
         setPublicTimeActive(false)
         // setFilterList(prevState => !prevState)
@@ -70,7 +86,6 @@ export default function TopicBlock({
         "vertical-align": "middle",
         "display": viewCountActive ? "inline-block" : "none"
     }
-
 
     return (
         <WHomPageTopicBlock>
@@ -102,24 +117,39 @@ export default function TopicBlock({
                         />
                     </WFilterList>
                 </WFilterFeature>}
-            <WArticleBlock wrap={wrap}>
-                {articleInfoList?.length > 0 && articleInfoList.map((articleInfo, index) => {
-                    return <ArticleInfo
-                        key={`${articleInfo.title + index}`}
-                        blockNumber={rowsCount * columnsCount}
-                        rowsCount={rowsCount}
-                        title={articleInfo.title}
-                        category={articleInfo.category}
-                        index={index}
-                        articleId={articleInfo.articleId}
-                        publicAt={articleInfo.public_at}
-                        views={articleInfo.total_hits}
-                    />
-                }
+            <WArticleBlock  //@ts-ignore
+                wrap={wrap}>
+                {articleInfoList?.length > 0 && articleInfoList.map(
+                    //@ts-ignore
+                    (articleInfo, index) => {
+                        return <ArticleInfo
+                            key={`${articleInfo.title + index}`}
+                            blockNumber={rowsCount * columnsCount}
+                            rowsCount={rowsCount}
+                            title={articleInfo.title}
+                            category={articleInfo.category}
+                            index={index}
+                            articleId={articleInfo.articleId}
+                            publicAt={articleInfo.public_at}
+                            views={articleInfo.total_hits}
+                        />
+                    }
                 )}
             </WArticleBlock>
         </WHomPageTopicBlock>
     )
+}
+
+type WTopicTitleProps = {
+    titlePlace: string
+}
+
+type WFilterListProps = {
+    show: boolean
+}
+
+type WArticleBlockProps = {
+    wrap: boolean
 }
 
 const WHomPageTopicBlock = styled.div`
@@ -129,7 +159,7 @@ const WHomPageTopicBlock = styled.div`
     }
 `
 
-const WTopicTitle = styled.p`
+const WTopicTitle = styled.p<WTopicTitleProps>`
     text-align:${props => props.titlePlace};
     color:${blue600};
     font-weight: bold;
@@ -149,7 +179,7 @@ const WFilterBlock = styled.div`
     margin: 0 0 10px 0px;
 `
 
-const WFilterList = styled.div`
+const WFilterList = styled.div<WFilterListProps>`
     // height:${props => props.show ? "27px" : "0px"};
     // visibility: ${props => props.show ? "unset" : "hidden"};
     transition: all .3s .5s;
@@ -162,7 +192,7 @@ const WFilterText = styled.p`
     font-weight: bold;
 `
 
-const WArticleBlock = styled.div`
+const WArticleBlock = styled.div<WArticleBlockProps>`
     display: flex;
     justify-content: space-around;
     width:100%;
