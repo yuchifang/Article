@@ -5,10 +5,10 @@ import { pipe, _filter, packTagsString, countRepeatTag, _map, stringToLower, obj
 import TopicBlock from '../components/common/TopicBlock'
 import { RouteComponentProps } from 'react-router-dom'
 
-type locationProp = {
+type LocationProp = {
     searchValue: string
 }
-interface ResultPageProps extends RouteComponentProps<{}, {}, locationProp> {
+interface ResultPageProps extends RouteComponentProps<{}, {}, LocationProp> {
 
 }
 

@@ -15,7 +15,7 @@ import { GlobalStyle } from './styles/General'
 // 寫到APP 上
 fromEvent??
 Result 加 container max-width <<
-Css? <<<
+media?
 //看看可不可以把 style 物件 宣告到同頁
 // 注意
 - type

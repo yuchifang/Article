@@ -17,67 +17,58 @@ export type HeaderPageProps = {
 export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
     const [showSearchButton, setShowSearchButton] = useState(true)
     const searchRef = useRef(null)
-
-
     const handleSearch = () => {
         setShowSearchButton?.(prevState => !prevState)
     }
 
-
-
     return (
-        <WHeaderSection>
-            <WHeaderContainer>
-                <WLogoBlock>
-                    <WLogoLink to="/">
+        <W_HeaderSection>
+            <W_HeaderContainer>
+                <W_LogoBlock>
+                    <W_LogoLink to="/">
                         <FontAwesomeIcon size="2x" icon={faBook} color={`${blue600}`} />
-                        <WLogTitle>
-                            Article
-                        </WLogTitle>
-                    </WLogoLink>
-                </WLogoBlock>
-                <WFeatureBlock>
-
-                    <WSearchBlock showSearch={!showSearchButton} >
-                        <WSearchInput type="text" ref={searchRef} />
+                        <W_LogTitle>Article</W_LogTitle>
+                    </W_LogoLink>
+                </W_LogoBlock>
+                <W_FeatureBlock>
+                    <W_SearchBlock showSearch={!showSearchButton} >
+                        <W_SearchInput type="text" ref={searchRef} />
                         <FontAwesomeIcon
                             onClick={handleSearch}
                             size="1x"
                             icon={faTimes}
                             color={`${blue600}`} />
-                    </WSearchBlock>
-
-                    <WSearchButton showSearch={showSearchButton} onClick={handleSearch}>
+                    </W_SearchBlock>
+                    <W_SearchButton showSearch={showSearchButton} onClick={handleSearch}>
                         <FontAwesomeIcon icon={faSearch} color={`${blue600}`} />
-                    </WSearchButton>
-
-                </WFeatureBlock>
-                <WNavbar>
+                    </W_SearchButton>
+                </W_FeatureBlock>
+                <W_Navbar>
                     {topicTitleList?.length > 0 && topicTitleList.map((obj: Tag, index: number) =>
-                        <WNavbarItem key={obj.name + index}>
+                        <W_NavbarItem key={obj.name + index}>
                             <Link to={{
                                 pathname: `/ResultPage`,
                                 state: { searchValue: obj.name }
                             }} replace >
                                 {obj.name}
                             </Link>
-                        </WNavbarItem>
+                        </W_NavbarItem>
                     )}
-                </WNavbar>
-            </WHeaderContainer>
-        </WHeaderSection>
+                </W_Navbar>
+            </W_HeaderContainer>
+        </W_HeaderSection>
     );
 }
 
-type WSearchBlockType = {
+type WSearchBlockProps = {
     showSearch: boolean
 }
 
-type WSearchFeature = {
+type WSearchFeatureProps = {
     showSearch: boolean
 }
 
-const WHeaderSection = styled.header`
+const W_HeaderSection = styled.header`
     position: relative;
     z-index: 1;
     box-shadow: 0 1px 6px rgba(0, 0, 0, .1),
@@ -85,7 +76,7 @@ const WHeaderSection = styled.header`
     width:100%;
 `
 
-const WHeaderContainer = styled.div`
+const W_HeaderContainer = styled.div`
     max-width: 1280px;
     margin :auto;
     padding: 0 0px;
@@ -102,7 +93,7 @@ const WHeaderContainer = styled.div`
     
 `
 
-const WLogoBlock = styled.div`
+const W_LogoBlock = styled.div`
     width:50%;
     font-size:20px;
     box-sizing: border-box;
@@ -112,7 +103,7 @@ const WLogoBlock = styled.div`
     }   
 `
 
-const WLogoLink = styled(Link)`
+const W_LogoLink = styled(Link)`
     display: inline-flex;
     align-items: center;
     text-decoration: none;
@@ -132,14 +123,14 @@ const WLogoLink = styled(Link)`
     
 `
 
-const WLogTitle = styled.div`
+const W_LogTitle = styled.div`
     font-weight:bold;
     font-size: 25px;
     line-height: 30px;
     color:${blue600};
 `
 
-const WFeatureBlock = styled.div`
+const W_FeatureBlock = styled.div`
     box-sizing: border-box;
     display: flex;
     justify-content: flex-end;
@@ -157,13 +148,13 @@ const WFeature = styled.div`
     transition: all .5s;
 `
 
-const WSearchFeature = styled(WFeature) <WSearchFeature>`
+const WSearchFeature = styled(WFeature) <WSearchFeatureProps>`
     position: relative;
     opacity: ${props => props?.showSearch ? "1" : "0"};
     z-index:${props => props?.showSearch ? "auto" : "-1"};
 `
 
-const WSearchBlock = styled(WSearchFeature) <WSearchBlockType>`
+const W_SearchBlock = styled(WSearchFeature) <WSearchBlockProps>`
     right:${props => props?.showSearch ? "-32px" : "-45px"};
     line-height:16px;
     svg{
@@ -172,11 +163,11 @@ const WSearchBlock = styled(WSearchFeature) <WSearchBlockType>`
     }
 `
 
-const WSearchButton = styled(WSearchFeature)`
+const W_SearchButton = styled(WSearchFeature)`
 
 `
 
-const WSearchInput = styled.input`
+const W_SearchInput = styled.input`
     font-size: 18px;
     vertical-align: middle;
     width:100px;
@@ -194,7 +185,7 @@ const WSearchInput = styled.input`
     }
 `
 
-const WNavbar = styled.nav`
+const W_Navbar = styled.nav`
     width:100%;
     align-items: center;
     display: flex;
@@ -203,7 +194,7 @@ const WNavbar = styled.nav`
         width: unset;
     }
 `
-const WNavbarItem = styled.div`
+const W_NavbarItem = styled.div`
    
     margin:0px 15px 0px 15px; 
     border-radius: 4px;
