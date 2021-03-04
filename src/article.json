@@ -1,0 +1,122 @@
+{
+    "article": {
+        "id": "5903198",
+        "public_at": "1584343313",
+        "last_modified": "1598161737",
+        "site_category": "數位生活",
+        "site_category_id": "24",
+        "sub_site_category": "進修深造",
+        "sub_site_category_id": "8",
+        "category": "JavaScript初體驗",
+        "category_id": "128810",
+        "link": "https://pinkymini.pixnet.net/blog/post/5903198-%e3%80%90javascript%e8%90%8c%e6%96%b0%e4%b8%8a%e8%b7%af%e3%80%91console.log%e5%88%b0%e5%ba%95%e6%98%af%e8%9d%a6%e7%b1%b3%e6%8c%96%e6%ba%9d",
+        "status": "2",
+        "is_top": "0",
+        "is_nl2br": "0",
+        "comment_perm": "1",
+        "comment_hidden": "0",
+        "title": "【JavaScript萌新筆記】console.log到底是蝦米東東？",
+        "thumb": "https://imageproxy.pimg.tw/zoomcrop?url=https%3A%2F%2Fpic.pimg.tw%2Fpinkymini%2F1584344984-740211774_n.png&width=90&height=90",
+        "cover": "",
+        "hits": {
+            "total": 493,
+            "daily": 5
+        },
+        "info": {
+            "trackbacks_count": 0,
+            "comments_count": 0,
+            "shareds_count": 0,
+            "hit": 493
+        },
+        "hit_uri": "https://counter.pixplug.in/count.php?timestamp=1613815371&random=3280226426&check=1693152028&no_timeout=2&data[blogarticle]=%7B%22blogid%22%3A%227717468%22%2C%22articleid%22%3A%225903198%22%2C%22no_timeout%22%3A2%7D",
+        "sns": {
+            "twitter": null,
+            "facebook": null,
+            "plurk": null
+        },
+        "tags": [
+            {
+                "tag": "JavaScript",
+                "locked": 0,
+                "added_by": "pinkymini",
+                "is_poi": false
+            },
+            {
+                "tag": "console.log",
+                "locked": 0,
+                "added_by": "pinkymini",
+                "is_poi": false
+            },
+            {
+                "tag": "程式語言",
+                "locked": 0,
+                "added_by": "pinkymini",
+                "is_poi": false
+            },
+            {
+                "tag": "學習日記",
+                "locked": 0,
+                "added_by": "pinkymini",
+                "is_poi": false
+            }
+        ],
+        "user": {
+            "name": "pinkymini",
+            "display_name": "文科少女寫程式",
+            "avatar": "https://s8.pimg.tw/avatar/pinkymini/0/0/resize/90x0.png?v=1589073493",
+            "cavatar": "https://s8.pimg.tw/avatar/pinkymini/0/0/zoomcrop/90x90.png?v=1589073493",
+            "link": "https://pinkymini.pixnet.net",
+            "member_uniqid": "865895e01fa8c19e0a",
+            "is_vip": false,
+            "has_ad": true,
+            "avatar_role_id": 4,
+            "avatar_role_url": "https://s.pixfs.net/common/icons/planet--icon-4.png"
+        },
+        "body": "<p>今天來聊一下console,log！<br>\nconsole英文的意思就是控制台，log的意思是紀錄，<br>\n所以以文字面來說的話，就是把log顯示在console上。<br>\n沒錯！console.log的使用目的就是把某個數值顯示在螢幕上。<br>\n<br>\n接下來看看console.log可以讓什麼樣的紀錄顯示在螢幕上。<br>\n1. 印出布林值(true or false)<br>\n如果用console.log()印出一個大於小於之類的比較算式的話，就會顯示布林值。<br>\n<img alt=\"image\" height=\"80\" src=\"https://pic.pimg.tw/pinkymini/1584344984-740211774_n.png\" title=\"image\" width=\"600\"><br>\n<br>\n2. 印出變數<br>\n在宣告一個變數後，如果使用console.log()，就可印出已經宣告的變數。<br>\n<img alt=\"image\" height=\"77\" src=\"https://pic.pimg.tw/pinkymini/1584345401-3433091705_n.png\" title=\"image\" width=\"600\"></p>\n\n<p>3. 印出字串<br>\n就如同前面有提到過的，當要表示字串時，就使用單引號('')，這裡也是一樣個概念。<br>\n以下面的這個情況來看，因為用單引號框住了myAge，所以實際上印出來的東西不是18，是變成字串的myAge。<br>\n<img alt=\"image\" height=\"77\" src=\"https://pic.pimg.tw/pinkymini/1584345821-2056762485_n.png\" title=\"image\" width=\"600\"></p>\n\n<p>4. 印出字串+變數<br>\n方法一：使用逗號(,)，實際上會顯示字串、半型空格和變數。<br>\n<img alt=\"image\" height=\"81\" src=\"https://pic.pimg.tw/pinkymini/1584346232-3527682900_n.png\" title=\"image\" width=\"600\"></p>\n\n<p>方法二：使用加號(+)，實際上會顯示字串和變數，這之中沒有空格。<br>\n<img alt=\"image\" height=\"78\" src=\"https://pic.pimg.tw/pinkymini/1584346363-2080530391_n.png\" title=\"image\" width=\"600\"><br>\n以上兩種方式除了印出字串+變數外，也可以連續印出變數。<br>\n<span style=\"color:#FF0000\"><strong><span style=\"background-color:#FFFF00\">注意！</span></strong><br>\n使用加號要非常注意，若是將字串和變數相加的話，就會自動轉換型別成全部都字串。</span><br>\n<img alt=\"image\" height=\"119\" src=\"https://pic.pimg.tw/pinkymini/1584347565-3296722233_n.png\" title=\"image\" width=\"600\"><br>\n上述這個例子，<u><span style=\"background-color:#DEF0D7\">我們原本以為會將兩個數字相加，變成43，但是因為型別不同，所以變成顯示字串，變成1825。</span></u><br>\n<br>\n方法三：使用反引號(``)和${}，可以將變數包在整句字串內。<br>\n<img alt=\"image\" height=\"59\" src=\"https://pic.pimg.tw/pinkymini/1584346690-1249827141_n.png\" title=\"image\" width=\"600\"></p>\n\n<p>5. 印出數字<br>\n直接在console.log上使用數字，就能印出數字<br>\n<img alt=\"image\" height=\"56\" src=\"https://pic.pimg.tw/pinkymini/1584346824-3936915771_n.png\" title=\"image\" width=\"600\"><br>\n<br>\n以上就是console.log用法上的介紹。<br>\n今天就簡單地介紹這個部分，接下來會繼續介紹和陣列有關的<strong>物件</strong>。<br>\n那就先這樣囉，掰餔^^</p>\n",
+        "images": [
+            {
+                "url": "https://pic.pimg.tw/pinkymini/1584344984-740211774_n.png",
+                "width": 918,
+                "height": 123
+            },
+            {
+                "url": "https://pic.pimg.tw/pinkymini/1584345401-3433091705_n.png",
+                "width": 948,
+                "height": 123
+            },
+            {
+                "url": "https://pic.pimg.tw/pinkymini/1584345821-2056762485_n.png",
+                "width": 894,
+                "height": 116
+            },
+            {
+                "url": "https://pic.pimg.tw/pinkymini/1584346232-3527682900_n.png",
+                "width": 909,
+                "height": 124
+            },
+            {
+                "url": "https://pic.pimg.tw/pinkymini/1584346363-2080530391_n.png",
+                "width": 951,
+                "height": 125
+            },
+            {
+                "url": "https://pic.pimg.tw/pinkymini/1584347565-3296722233_n.png",
+                "width": 978,
+                "height": 194
+            },
+            {
+                "url": "https://pic.pimg.tw/pinkymini/1584346690-1249827141_n.png",
+                "width": 1053,
+                "height": 105
+            },
+            {
+                "url": "https://pic.pimg.tw/pinkymini/1584346824-3936915771_n.png",
+                "width": 888,
+                "height": 84
+            }
+        ]
+    },
+    "message": "Show article successfully",
+    "error": 0,
+    "api_version": 2
+}
