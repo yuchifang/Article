@@ -16,9 +16,16 @@ export type HeaderPageProps = {
 
 export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
     const [showSearchButton, setShowSearchButton] = useState(true)
-    const searchRef = useRef(null)
+    const searchRef = useRef<HTMLInputElement>(null)
+
     const handleSearch = () => {
         setShowSearchButton?.(prevState => !prevState)
+    }
+
+    const handleInputCancel = () => {
+        if (searchRef.current && searchRef.current) {
+            searchRef.current.value = ''
+        }
     }
 
     return (
@@ -36,7 +43,7 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
                             <W.SearchInput type="text" ref={searchRef} />
                             <W.SearchInputIcon>
                                 <FontAwesomeIcon
-
+                                    onClick={handleInputCancel}
                                     size="1x"
                                     icon={faTimes} />
                             </W.SearchInputIcon>
