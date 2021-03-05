@@ -14,7 +14,7 @@ import { RootState } from './store/reducers/RootReducer'
 // 寫到APP 上
 fromEvent??
 Result 加 container max-width <<
-media?
+
 //看看可不可以把 style 物件 宣告到同頁
 // 注意
 - type
@@ -34,6 +34,8 @@ media?
 看看mo 面試的提到的兩題
 */
 function App() {
+  // 想辦法做一起引入一隻 index.js
+
 
   // 每個component 如果沒有傳值的問題
   // 取得作者姓名? 一個 或 多個

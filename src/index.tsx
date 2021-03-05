@@ -5,14 +5,24 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from "react-redux"
 import store from "./store/store"
-import GlobalComponent from './styles/GlobalComponent'
+import { createGlobalStyle } from "styled-components"
+
+const GlobalStyle = createGlobalStyle`
+    body,html{
+        width:100%;
+        height: 100%;
+        font-size: 16px;
+        margin:0px;
+        padding:0px;
+        list-style: none;
+    }
+`
 
 ReactDOM.render(
-  <GlobalComponent>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </GlobalComponent>,
+  <Provider store={store}>
+    <GlobalStyle />
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
 

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { blue600, blue400 } from '../../styles/General'
 import { Link, useHistory } from 'react-router-dom'
 import { timestampToDate } from '../../utils/utils'
-
+import { MediaQueries } from "../../styles/media"
 type ArticleInfoProps = {
     blockNumber?: number,
     rowsCount: number,
@@ -54,13 +54,14 @@ type WArticleInfoProps = {
     rowsCount: number;
 }
 
-const W = {
-    ArticleInfo: styled.div<WArticleInfoProps>`
+const W: { [key: string]: any } = {};
+
+W.ArticleInfo = styled.div<WArticleInfoProps>`
         box-sizing: border-box;
         width: calc( 90% / ${props => props.rowsCount});
         margin: 10px;
         cursor:pointer;
-        ${props => props.theme.DesktopS`
+        ${MediaQueries.DesktopSCSS`
             margin: 20px;
         `}
         &:hover{
@@ -73,32 +74,38 @@ const W = {
                 opacity: .7;
             }
         }
-    `,
-    InfoFigure: styled.figure`
+    `
+
+W.InfoFigure = styled.figure`
         width: 100%;
-    `,
-    InfoImg: styled.img`
+    `
+
+W.InfoImg = styled.img`
         width: 100%;
         vertical-align: middle;
         transition: all .3s;
-    `,
-    InfoCategory: styled.p`
+    `
+
+W.InfoCategory = styled.p`
         color: ${blue400};
         font-size: 14px;
         transition: all .3s;
-    `,
-    InfoTitle: styled.p`
+    `
+
+W.InfoTitle = styled.p`
         color: ${blue600};
         font-size: 18px;
         transition: all .3s;
         font-weight: bold;
-    `,
-    PublicTime: styled.p`
-        color: ${blue400};
-        font-size: 14px;
-    `,
-    ViewCount: styled.p`
+    `
+
+W.PublicTime = styled.p`
         color: ${blue400};
         font-size: 14px;
     `
-}
+
+W.ViewCount = styled.p`
+        color: ${blue400};
+        font-size: 14px;
+    `
+

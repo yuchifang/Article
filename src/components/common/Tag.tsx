@@ -51,15 +51,16 @@ type WTagItemProps = {
 }
 
 
-const W = {
-    TagBlock: styled.div`
+const W: { [key: string]: any } = {}
+
+W.TagBlock = styled.div`
         width:100px;
-    `,
-    TagClickBlock: styled.div`
+    `
+W.TagClickBlock = styled.div`
         display: inline-block;
         cursor:pointer;
-    `,
-    TagItem: styled.div<WTagItemProps>`
+    `
+W.TagItem = styled.div<WTagItemProps>`
         vertical-align: middle;
         display: inline-block;
         font-size: 14px;
@@ -74,4 +75,4 @@ const W = {
             background-color:${props => props.iconBackgroundColor};
         }
     `
-}
+

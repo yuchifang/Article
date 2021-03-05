@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { RootState } from '../../store/reducers/RootReducer'
 import Tag from "./Tag"
+import { MediaQueries } from "../../styles/media"
 
 type ArticleProps = {
     articleId: string,
@@ -87,15 +88,15 @@ export default function TopicBlock({
     }
 
     return (
-        <W_TopicBlock>
-            {showTitle && <W_TopicTitle titlePlace={titlePlace}>{title}</W_TopicTitle>}
+        <W.TopicBlock>
+            {showTitle && <W.TopicTitle titlePlace={titlePlace}>{title}</W.TopicTitle>}
             {filter &&
-                <W_FilterFeature>
-                    <W_FilterBlock onClick={() => handleFilterList()}>
+                <W.FilterFeature>
+                    <W.FilterBlock onClick={() => handleFilterList()}>
                         <FontAwesomeIcon icon={faFilter} color={`${blue600}`} />
-                        <W_FilterText>篩選器</W_FilterText>
-                    </W_FilterBlock>
-                    <W_FilterList show={filterList}>
+                        <W.FilterText>篩選器</W.FilterText>
+                    </W.FilterBlock>
+                    <W.FilterList show={filterList}>
                         <Tag
                             text="上傳時間"
                             handleClick={handlePublicTime}
@@ -114,9 +115,9 @@ export default function TopicBlock({
                             iconBackgroundColor={blue50}
                             iconColor={blue100}
                         />
-                    </W_FilterList>
-                </W_FilterFeature>}
-            <W_ArticleInfoBlock  //@ts-ignore
+                    </W.FilterList>
+                </W.FilterFeature>}
+            <W.ArticleInfoBlock  //@ts-ignore
                 wrap={wrap}>
                 {articleInfoList?.length > 0 && articleInfoList.map(
                     //@ts-ignore
@@ -134,31 +135,33 @@ export default function TopicBlock({
                         />
                     }
                 )}
-            </W_ArticleInfoBlock>
-        </W_TopicBlock>
+            </W.ArticleInfoBlock>
+        </W.TopicBlock>
     )
 }
 
-type W_TopicTitleProps = {
+type WTopicTitleProps = {
     titlePlace: string
 }
 
-type W_FilterListProps = {
+type WFilterListProps = {
     show: boolean
 }
 
-type W_ArticleInfoBlockProps = {
+type WArticleInfoBlockProps = {
     wrap: boolean
 }
 
-const W_TopicBlock = styled.div`
+let W: { [key: string]: any } = {}
+
+W.TopicBlock = styled.div`
     padding: 25px 10px;
-    @media (min-width: 980px) {
+    ${MediaQueries.DesktopSCSS`
         padding:45px;
-    }
+    `}
 `
 
-const W_TopicTitle = styled.p<W_TopicTitleProps>`
+W.TopicTitle = styled.p<WTopicTitleProps>`
     text-align:${props => props.titlePlace};
     color:${blue600};
     font-weight: bold;
@@ -166,32 +169,32 @@ const W_TopicTitle = styled.p<W_TopicTitleProps>`
     margin-bottom:30px;
 `
 
-const W_FilterFeature = styled.div`
+W.FilterFeature = styled.div`
     display: flex;
     margin: 0 20px;
     flex-direction: column;
     align-items: flex-start;
 `
 
-const W_FilterBlock = styled.div`
-    cursor: pointer;
+W.FilterBlock = styled.div`
     margin: 0 0 10px 0px;
+    cursor: pointer;
 `
 
-const W_FilterList = styled.div<W_FilterListProps>`
+W.FilterList = styled.div<WFilterListProps>`
     // height:${props => props.show ? "27px" : "0px"};
     // visibility: ${props => props.show ? "unset" : "hidden"};
     transition: all .3s .5s;
     display:${props => props.show ? "flex" : "none"};;
 `
 
-const W_FilterText = styled.p`
+W.FilterText = styled.p`
     display: inline-block;
     margin: 0 10px;
     font-weight: bold;
 `
 
-const W_ArticleInfoBlock = styled.div<W_ArticleInfoBlockProps>`
+W.ArticleInfoBlock = styled.div<WArticleInfoBlockProps>`
     display: flex;
     justify-content: space-around;
     width:100%;
