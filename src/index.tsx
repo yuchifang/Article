@@ -8,13 +8,14 @@ import store from "./store/store"
 import { createGlobalStyle } from "styled-components"
 
 const GlobalStyle = createGlobalStyle`
-    body,html{
-        width:100%;
-        height: 100%;
-        font-size: 16px;
+    *{
         margin:0px;
         padding:0px;
         list-style: none;
+    }
+    
+    html,body{
+      width: 100vw;
     }
 `
 

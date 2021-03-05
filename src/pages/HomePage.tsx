@@ -64,7 +64,7 @@ W.HomePageSection = styled.section`
 `
 
 W.HomePage = styled.div`
-    >div:nth-child(even) {
-        background-color: #eee;
+    >section:nth-child(even) {
+        background-color: #EFEFEF;
     }
 `

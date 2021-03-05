@@ -16,6 +16,7 @@ fromEvent??
 Result 加 container max-width <<
 
 //看看可不可以把 style 物件 宣告到同頁
+// 想辦法做一起引入一隻style index.js
 // 注意
 - type
 - style
@@ -25,8 +26,6 @@ Result 加 container max-width <<
 >> mo
 >> kika
 
-查查css styled
-
 看 top 的mo
 
 看看 Mo dcard reader style 部分
@@ -34,7 +33,6 @@ Result 加 container max-width <<
 看看mo 面試的提到的兩題
 */
 function App() {
-  // 想辦法做一起引入一隻 index.js
 
 
   // 每個component 如果沒有傳值的問題
@@ -44,7 +42,13 @@ function App() {
   // 看看用useMemo 前要做啥
   // https://overreacted.io/before-you-memo/
   // >看看自己專案的命名規則 component/  變數
+
   // html Tag
+
+  // bug
+
+  // 點擊 headerTag 不會換頁
+
   // search feature
   // 分頁
   // slider
@@ -52,6 +56,7 @@ function App() {
   // 搜尋結果 篩選  時間  人氣 
   // 更新時間的 function
   // 考慮在HomePage 用物件map呈現?
+
   type Tag = {
     name: string,
     value: number
@@ -80,18 +85,22 @@ function App() {
   }, [])
 
   return (
-    // @ts-ignore
-    articleList?.pinkymini?.actionStatus === "success" ?
-      <BrowserRouter>
-        <HeaderPage topicTitleList={topicTitleList} />
-        <Switch>
-          <Route exact path="/" component={() => <HomePage topicTitleList={topicTitleList} />} />
-          <Route exact path="/ArticlePage" component={ArticlePage} />
-          <Route path="/ResultPage" component={ResultPage} />
-        </Switch>
-        <Footer />
-      </BrowserRouter >
-      : null
+    <BrowserRouter>
+      {
+        // @ts-ignore
+        articleList?.pinkymini?.actionStatus === "success" ?
+          <>
+            <HeaderPage topicTitleList={topicTitleList} />
+            <Switch>
+              <Route exact path="/" component={() => <HomePage topicTitleList={topicTitleList} />} />
+              <Route path="/ArticlePage" component={ArticlePage} />
+              <Route path="/ResultPage" component={ResultPage} />
+            </Switch>
+            <Footer />
+          </>
+          : null
+      }
+    </BrowserRouter >
   );
 }
 

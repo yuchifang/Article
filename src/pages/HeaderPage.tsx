@@ -23,7 +23,7 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
 
     return (
         <W.HeaderSection>
-            <W.HeaderContainer color={"red"}>
+            <W.HeaderContainer >
                 <W.LogoBlock>
                     <W.LogoLink to="/">
                         <FontAwesomeIcon size="2x" icon={faBook} color={`${blue600}`} />
@@ -32,7 +32,15 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
                 </W.LogoBlock>
                 <W.FeatureBlock>
                     <W.SearchBlock showSearch={!showSearchButton} >
-                        <W.SearchInput type="text" ref={searchRef} />
+                        <W.InputBlock>
+                            <W.SearchInput type="text" ref={searchRef} />
+                            <W.SearchInputIcon>
+                                <FontAwesomeIcon
+
+                                    size="1x"
+                                    icon={faTimes} />
+                            </W.SearchInputIcon>
+                        </W.InputBlock>
                         <FontAwesomeIcon
                             onClick={handleSearch}
                             size="1x"
@@ -56,7 +64,7 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
                     )}
                 </W.Navbar>
             </W.HeaderContainer>
-        </W.HeaderSection>
+        </W.HeaderSection >
     );
 }
 
@@ -77,7 +85,6 @@ W.HeaderSection = styled.header`
     0 4px 24px rgba(0, 0, 0, .06);
     width:100%;
 `
-// background-color:${props.color ? "red" : "blue"};
 
 W.HeaderContainer = styled.div`
     max-width: 1280px;
@@ -147,7 +154,7 @@ W.FeatureBlock = styled.div`
 
 W.Feature = styled.div`
     padding: 0 10px;
-    cursor: pointer;
+  
     transition: all .5s;
 `
 
@@ -158,11 +165,50 @@ W.SearchFeature = styled(W.Feature) <WSearchFeatureProps>`
 `
 
 W.SearchBlock = styled(W.SearchFeature) <WSearchBlockProps>`
+    display: flex;
+    align-items: center;
     right:${props => props?.showSearch ? "-32px" : "-45px"};
-    line-height:16px;
-    svg{
+    >svg{
+        cursor:pointer;
         border-radius: 6px;
         vertical-align: middle;
+    }
+`
+
+W.InputBlock = styled.div`
+    width:100px;
+    ${MediaQueries.DesktopSCSS`
+        width: 150px;
+    `}
+    ${MediaQueries.MobileCSS`
+        width: 120px;
+    `}
+    border:solid 1px #767676;
+    border-radius: 12px;
+    overflow:hidden;
+    display:flex;
+    align-items: center;
+    margin-right: 10px;
+    padding-right: 4px;
+    &:hover{
+        >div{
+            svg{
+                opacity: 1;
+            }
+        }
+    }
+`
+
+W.SearchInputIcon = styled.div`
+    width: 10px;
+    display: flex;
+    align-items: center;
+    >svg{
+        cursor:pointer;
+        position:relative;
+        color:#aaa;
+        width: 100%;
+        opacity: 0;;
     }
 `
 
@@ -171,18 +217,12 @@ W.SearchButton = styled(W.SearchFeature)`
 `
 
 W.SearchInput = styled.input`
+    cursor:pointer;
     font-size: 18px;
     vertical-align: middle;
-    width:100px;
-    ${MediaQueries.DesktopSCSS`
-        width: 150px;
-    `}
-    ${MediaQueries.MobileCSS`
-        width: 120px;
-    `}
+    width: 100%;
     padding: 4px 0px 4px 11px;
-    border-radius: 12px;
-    margin-right: 10px;
+    border:none;
     &:focus{
         outline: none;
     }

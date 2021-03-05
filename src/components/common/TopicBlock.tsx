@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import {
     pipe,
     _filter,
@@ -38,31 +38,39 @@ export default function TopicBlock({
     titlePlace = "left"
 }) {
 
-    const articleList = useSelector((state: RootState) => state.WriterList)
-    const topicArticleList = useMemo(() => {
+    const storeArticleList = useSelector((state: RootState) => state.WriterList)
+    const propsArticleList = useMemo(() => {
         //@ts-ignore
-        if (articleList?.pinkymini?.actionStatus === "success") {
+        if (storeArticleList?.pinkymini?.actionStatus === "success") {
             return pipe(
                 _filter((article: ArticleProps) => article.tags.some((element: string) => element.toLowerCase() === title.toLowerCase())),
                 _sort((articleA: ArticleProps, articleB: ArticleProps) => articleA.total_hits > articleB.total_hits ? -1 : 1),
                 _slice(0, rowsCount * columnsCount)
                 //@ts-ignore
-            )(articleList.pinkymini.articles)
+            )(storeArticleList.pinkymini.articles)
 
         }
-    }, [articleList, title])
+    }, [storeArticleList, title])
 
     const [filterList, setFilterList] = useState(false)
-    const [articleInfoList, setArticleInfoList] = useState<ArticleProps[]>(topicArticleList)
+    const [articleInfoList, setArticleInfoList] = useState<ArticleProps[]>(propsArticleList)
     const [publicTimeActive, setPublicTimeActive] = useState(false)
-    const [viewCountActive, setViewCountActive] = useState(false)
+    const [viewCountActive, setViewCountActive] = useState(true)
+
+    useEffect(() => {
+        setArticleInfoList(propsArticleList)
+        setViewCountActive(true)
+        setPublicTimeActive(false)
+        setFilterList(false)
+    }, [propsArticleList])
+
 
     const handlePublicTime = () => {
         setArticleInfoList(prevState => prevState.sort((articleA: ArticleProps, articleB: ArticleProps) =>
             Number(articleA.public_at) > Number(articleB.public_at) ? -1 : 1))
         setPublicTimeActive(true)
         setViewCountActive(false)
-        // setFilterList(prevState => !prevState)
+        setFilterList(prevState => !prevState)
     }
 
     const handleViewCount = () => {
@@ -70,7 +78,7 @@ export default function TopicBlock({
             Number(articleA.total_hits) > Number(articleB.total_hits) ? -1 : 1))
         setViewCountActive(true)
         setPublicTimeActive(false)
-        // setFilterList(prevState => !prevState)
+        setFilterList(prevState => !prevState)
     }
 
     const handleFilterList = () => {
@@ -92,30 +100,32 @@ export default function TopicBlock({
             {showTitle && <W.TopicTitle titlePlace={titlePlace}>{title}</W.TopicTitle>}
             {filter &&
                 <W.FilterFeature>
-                    <W.FilterBlock onClick={() => handleFilterList()}>
-                        <FontAwesomeIcon icon={faFilter} color={`${blue600}`} />
-                        <W.FilterText>篩選器</W.FilterText>
-                    </W.FilterBlock>
-                    <W.FilterList show={filterList}>
-                        <Tag
-                            text="上傳時間"
-                            handleClick={handlePublicTime}
-                            iconStyle={publicTimeIconStyle}
-                            // cancelIcon={faTimes}
-                            isItemActive={publicTimeActive}
-                            iconBackgroundColor={blue50}
-                            iconColor={blue100}
-                        />
-                        <Tag
-                            text="觀看次數"
-                            handleClick={handleViewCount}
-                            iconStyle={viewCountIconStyle}
-                            // cancelIcon={faTimes}
-                            isItemActive={viewCountActive}
-                            iconBackgroundColor={blue50}
-                            iconColor={blue100}
-                        />
-                    </W.FilterList>
+                    <W.FilterShowList show={filterList}>
+                        <W.FilterBlock onClick={() => handleFilterList()}>
+                            <FontAwesomeIcon icon={faFilter} color={`${blue600}`} />
+                            <W.FilterText>篩選器</W.FilterText>
+                        </W.FilterBlock>
+                        <W.FilterList >
+                            <Tag
+                                text="上傳時間"
+                                handleClick={handlePublicTime}
+                                iconStyle={publicTimeIconStyle}
+                                // cancelIcon={faTimes}
+                                isItemActive={publicTimeActive}
+                                iconBackgroundColor={blue50}
+                                iconColor={blue100}
+                            />
+                            <Tag
+                                text="觀看次數"
+                                handleClick={handleViewCount}
+                                iconStyle={viewCountIconStyle}
+                                // cancelIcon={faTimes}
+                                isItemActive={viewCountActive}
+                                iconBackgroundColor={blue50}
+                                iconColor={blue100}
+                            />
+                        </W.FilterList>
+                    </W.FilterShowList>
                 </W.FilterFeature>}
             <W.ArticleInfoBlock  //@ts-ignore
                 wrap={wrap}>
@@ -136,7 +146,7 @@ export default function TopicBlock({
                     }
                 )}
             </W.ArticleInfoBlock>
-        </W.TopicBlock>
+        </W.TopicBlock >
     )
 }
 
@@ -150,6 +160,10 @@ type WFilterListProps = {
 
 type WArticleInfoBlockProps = {
     wrap: boolean
+}
+
+type WFilterShowList = {
+    show: boolean
 }
 
 let W: { [key: string]: any } = {}
@@ -166,6 +180,7 @@ W.TopicTitle = styled.p<WTopicTitleProps>`
     color:${blue600};
     font-weight: bold;
     font-size: 30px;
+    line-height: 1;
     margin-bottom:30px;
 `
 
@@ -174,18 +189,25 @@ W.FilterFeature = styled.div`
     margin: 0 20px;
     flex-direction: column;
     align-items: flex-start;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 7px;
 `
 
 W.FilterBlock = styled.div`
-    margin: 0 0 10px 0px;
+    padding-bottom: 7px;
+    margin-bottom:2px;
     cursor: pointer;
 `
 
+W.FilterShowList = styled.div<WFilterShowList>`
+    transition: max-height .5s .3s;
+    max-height:${props => props.show ? "60px" : "20px"};
+    overflow: hidden;
+`
+
 W.FilterList = styled.div<WFilterListProps>`
-    // height:${props => props.show ? "27px" : "0px"};
-    // visibility: ${props => props.show ? "unset" : "hidden"};
     transition: all .3s .5s;
-    display:${props => props.show ? "flex" : "none"};;
+    display:flex;
 `
 
 W.FilterText = styled.p`

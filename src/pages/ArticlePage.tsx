@@ -6,6 +6,8 @@ import { WContainer } from '../styles/General'
 import { timestampToDate } from "../utils/utils"
 import { RouteComponentProps } from "react-router-dom"
 import { RootState } from '../store/reducers/RootReducer'
+import { blue50 } from "../styles/General"
+import Tag from "../components/common/Tag"
 
 type Location = {
     articleId: string
@@ -47,7 +49,8 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
     }, [authorName, articleId])
 
     const handleTagClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        const target = e.target as Element
+        const target = e.target as Element;
+        console.log({ target });
         const locationInfo = {
             pathname: `/ResultPage`,
             state: {
@@ -79,11 +82,11 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
                             <W.PublicTime>{timestampToDate(article?.public_at)}</W.PublicTime>
                             <W.TagList>
                                 {(!!article?.tags && article?.tags.length > 0) ? article?.tags.map((item: Tag, index: number) =>
-                                    <W.Tag
+                                    <Tag
+                                        iconBackgroundColor={blue50}
+                                        text={item.tag}
                                         key={index}
-                                        onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => handleTagClick(e)}>
-                                        {item.tag}
-                                    </W.Tag>
+                                        handleClick={(e) => handleTagClick(e)} />
                                 ) : null}
                             </W.TagList>
                         </W.ArticleInfo>
@@ -102,14 +105,14 @@ W.TagList = styled.div`
     flex-wrap: wrap;
 `
 
-W.Tag = styled.div`
-    padding: 5px;
-    border: 1px solid black;
-    border-radius: 15px;
-    line-height: 0.8;
-    margin: 2px 5px;
-    cursor: pointer;
-`
+// W.Tag = styled.div`
+//     padding: 5px;
+//     border: 1px solid black;
+//     border-radius: 15px;
+//     line-height: 0.8;
+//     margin: 2px 5px;
+//     cursor: pointer;
+// `
 
 W.ArticleHeader = styled.div`
     max-width:720px;
@@ -172,7 +175,7 @@ W.ArticleContent = styled.div`
 `
 
 W.ArticlePageSection = styled.section`
-    background-color: #EEE;
+    background-color: #FEFEFE;
     padding:25px 0px;
 `
 
