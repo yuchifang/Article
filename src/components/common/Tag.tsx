@@ -27,23 +27,23 @@ export default function Tag({
     text
 }: TagProps) {
     return (
-        <W_TagBlock>
-            <W_TagClickBlock
+        <W.TagBlock>
+            <W.TagClickBlock
                 onClick={() => handleClick()}>
-                <W_TagItem
+                <W.TagItem
                     iconBackgroundColor={iconBackgroundColor}
                     isItemActive={isItemActive}
                     iconColor={iconColor}
                 >
                     {text}
-                </W_TagItem>
+                </W.TagItem>
                 {cancelIcon && <FontAwesomeIcon icon={cancelIcon} style={iconStyle} />}
-            </W_TagClickBlock>
-        </W_TagBlock>
+            </W.TagClickBlock>
+        </W.TagBlock>
     )
 }
 
-type W_TagItemProps = {
+type WTagItemProps = {
     iconColor: string,
     isItemActive: boolean,
     iconBackgroundColor: string
@@ -51,29 +51,27 @@ type W_TagItemProps = {
 }
 
 
-const W_TagBlock = styled.div`
-    width:100px;
-`
-
-const W_TagClickBlock = styled.div`
-    display: inline-block;
-    cursor:pointer;
-`
-
-
-const W_TagItem = styled.div<W_TagItemProps>`
-    vertical-align: middle;
-    display: inline-block;
-    font-size: 14px;
-    padding: 5px;
-    margin: 0 5px;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: all .3s;
-    color:${props => props?.iconColor};
-    background-color:${props => props.isItemActive ? props.iconBackgroundColor : "#fff"};
-    &:hover{
-        background-color:${props => props.iconBackgroundColor};
-    }
-    
+const W = {
+    TagBlock: styled.div`
+        width:100px;
+    `,
+    TagClickBlock: styled.div`
+        display: inline-block;
+        cursor:pointer;
+    `,
+    TagItem: styled.div<WTagItemProps>`
+        vertical-align: middle;
+        display: inline-block;
+        font-size: 14px;
+        padding: 5px;
+        margin: 0 5px;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: all .3s;
+        color:${props => props?.iconColor};
+        background-color:${props => props.isItemActive ? props.iconBackgroundColor : "#fff"};
+        &:hover{
+            background-color:${props => props.iconBackgroundColor};
+        }
     `
+}

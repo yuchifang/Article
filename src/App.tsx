@@ -7,9 +7,8 @@ import React, { useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import ArticlePage from './pages/ArticlePage'
 import ResultPage from './pages/ResultPage'
-import { pipe, packTagsString, countRepeatTag, _map, stringToLower, objToArr, _sort, _slice } from "./utils"
+import { pipe, packTagsString, countRepeatTag, _map, stringToLower, objToArr, _sort, _slice } from "./utils/utils"
 import { RootState } from './store/reducers/RootReducer'
-import { GlobalStyle } from './styles/General'
 /*
 // 注意
 // 寫到APP 上
@@ -82,11 +81,9 @@ function App() {
     // @ts-ignore
     articleList?.pinkymini?.actionStatus === "success" ?
       <BrowserRouter>
-        <GlobalStyle />
         <HeaderPage topicTitleList={topicTitleList} />
         <Switch>
           <Route exact path="/" component={() => <HomePage topicTitleList={topicTitleList} />} />
-
           <Route exact path="/ArticlePage" component={ArticlePage} />
           <Route path="/ResultPage" component={ResultPage} />
         </Switch>

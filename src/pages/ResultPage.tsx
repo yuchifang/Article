@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { pipe, _filter, packTagsString, countRepeatTag, _map, stringToLower, objToArr, _sort, _slice } from '../utils'
+import { pipe, _filter, packTagsString, countRepeatTag, _map, stringToLower, objToArr, _sort, _slice } from '../utils/utils'
 import TopicBlock from '../components/common/TopicBlock'
 import { RouteComponentProps } from 'react-router-dom'
 

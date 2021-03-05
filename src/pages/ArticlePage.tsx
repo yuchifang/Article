@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { GetArticle } from '../store/actions/articleAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { WContainer } from '../styles/General'
-import { timestampToDate } from "../utils"
+import { timestampToDate } from "../utils/utils"
 import { RouteComponentProps } from "react-router-dom"
 import { RootState } from '../store/reducers/RootReducer'
 

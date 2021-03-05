@@ -5,10 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from "react-redux"
 import store from "./store/store"
+import GlobalComponent from './styles/GlobalComponent'
+
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <GlobalComponent>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </GlobalComponent>,
   document.getElementById('root')
 );
 

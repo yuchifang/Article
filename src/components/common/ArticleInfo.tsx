@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { blue600, blue400 } from '../../styles/General'
 import { Link, useHistory } from 'react-router-dom'
-import { timestampToDate } from '../../utils'
+import { timestampToDate } from '../../utils/utils'
 
 type ArticleInfoProps = {
     blockNumber?: number,
@@ -38,71 +38,67 @@ export default function ArticleInfo({
     }
 
     return (
-        <W_ArticleInfo onClick={() => handleClick(articleId)} rowsCount={rowsCount}>
-            <W_InfoFigure>
-                <W_InfoImg src={`https://fakeimg.pl/350x200/?text=fakeImg${index}`} alt="fakeImg" />
-            </W_InfoFigure>
-            <W_InfoTitle>{title}</W_InfoTitle>
-            {!!category && category !== "未分類" && category.length > 0 && <W_InfoCategory>{category}</W_InfoCategory>}
-            <W_PublicTime>{timestampToDate(Number(publicAt))}</W_PublicTime>
-            <W_ViewCount>觀看次數: {views}次</W_ViewCount>
-        </W_ArticleInfo>
+        <W.ArticleInfo onClick={() => handleClick(articleId)} rowsCount={rowsCount}>
+            <W.InfoFigure>
+                <W.InfoImg src={`https://fakeimg.pl/350x200/?text=fakeImg${index}`} alt="fakeImg" />
+            </W.InfoFigure>
+            <W.InfoTitle>{title}</W.InfoTitle>
+            {!!category && category !== "未分類" && category.length > 0 && <W.InfoCategory>{category}</W.InfoCategory>}
+            <W.PublicTime>{timestampToDate(Number(publicAt))}</W.PublicTime>
+            <W.ViewCount>觀看次數: {views}次</W.ViewCount>
+        </W.ArticleInfo>
     )
 }
 
-type W_ArticleInfoProps = {
+type WArticleInfoProps = {
     rowsCount: number;
 }
 
-const W_ArticleInfo = styled.div<W_ArticleInfoProps>`
+const W = {
+    ArticleInfo: styled.div<WArticleInfoProps>`
         box-sizing: border-box;
         width: calc( 90% / ${props => props.rowsCount});
         margin: 10px;
-        @media(min - width: 980px) {
-            margin: 20px;
-        }
         cursor:pointer;
+        ${props => props.theme.DesktopS`
+            margin: 20px;
+        `}
         &:hover{
-        figure{
-            img{
+            figure{
+                img{
+                    opacity: .7;
+                }
+            }
+            p{
                 opacity: .7;
             }
         }
-        p{
-            opacity: .7;
-        }
-    }
-`
-
-const W_InfoFigure = styled.figure`
-    width: 100%;
-`
-
-const W_InfoImg = styled.img`
-    width: 100%;
-    vertical-align: middle;
-    transition: all .3s;
-`
-
-const W_InfoCategory = styled.p`
-    color: ${blue400};
-    font-size: 14px;
-    transition: all .3s;
-`
-
-const W_InfoTitle = styled.p`
-    color: ${blue600};
-    font-size: 18px;
-    transition: all .3s;
-    font-weight: bold;
-`
-
-const W_PublicTime = styled.p`
-    color: ${blue400};
-    font-size: 14px;
-`
-
-const W_ViewCount = styled.p`
-    color: ${blue400};
-    font-size: 14px;
-`
+    `,
+    InfoFigure: styled.figure`
+        width: 100%;
+    `,
+    InfoImg: styled.img`
+        width: 100%;
+        vertical-align: middle;
+        transition: all .3s;
+    `,
+    InfoCategory: styled.p`
+        color: ${blue400};
+        font-size: 14px;
+        transition: all .3s;
+    `,
+    InfoTitle: styled.p`
+        color: ${blue600};
+        font-size: 18px;
+        transition: all .3s;
+        font-weight: bold;
+    `,
+    PublicTime: styled.p`
+        color: ${blue400};
+        font-size: 14px;
+    `,
+    ViewCount: styled.p`
+        color: ${blue400};
+        font-size: 14px;
+    `
+}

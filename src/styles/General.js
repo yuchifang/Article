@@ -17,11 +17,3 @@ export const WContainer = styled.div`
         padding: 0px 30px;
     }
 `
-
-export const GlobalStyle = createGlobalStyle`
-    *{
-        margin:0px;
-        padding:0px;
-        list-style: none;
-    }
-`

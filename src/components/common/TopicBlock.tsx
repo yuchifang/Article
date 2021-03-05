@@ -5,7 +5,7 @@ import {
     _slice,
     _sort,
     _log
-} from '../../utils'
+} from '../../utils/utils'
 import ArticleInfo from './ArticleInfo'
 import { useSelector } from 'react-redux'
 import { blue600, blue100, blue50 } from '../../styles/General'
