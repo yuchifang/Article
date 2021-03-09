@@ -1,7 +1,8 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { blue50, blue100, blue400, blue600 } from "../../styles/General"
 
 // (input)
 // total = length 
@@ -31,9 +32,9 @@ export default function Pagination({
     for (let item = 1; item <= totalPageCount; item++) {
         pageCount.push(
             <WPaginationItem>
-                <WPageItemBlock>
+                <WNumberItem>
                     {item}
-                </WPageItemBlock>
+                </WNumberItem>
             </WPaginationItem>
         )
     }
@@ -45,11 +46,15 @@ export default function Pagination({
     return <>
         <WPaginationList >
             <WPaginationItem>
-                <WLeftIcon onClick={() => handleClick()} icon={faChevronLeft} size="sm" />
+                <WIconButton>
+                    <WLeftIcon onClick={() => handleClick()} icon={faChevronLeft} size="sm" />
+                </WIconButton>
             </WPaginationItem>
             {pageCount}
             <WPaginationItem>
-                <WRightIcon icon={faChevronRight} size="sm" />
+                <WIconButton>
+                    <WRightIcon icon={faChevronRight} size="sm" />
+                </WIconButton>
             </WPaginationItem>
         </WPaginationList>
     </>
@@ -67,10 +72,24 @@ type RightIcon = {
 
 }
 
+const WItemOnClickStyled = css`
+    padding: 6px 10px;
+    cursor: pointer;
+    line-height: 1;
+    border:solid 1px ${blue50};
+    color:${blue100};
+    transition: all .3s;
+    &:hover{
+        color:${blue600};
+        border:solid 1px ${blue400};
+    }
+`
+
 const WPaginationList = styled.ul`
     display:flex;
     align-items: center;
     justify-content: center;
+    padding: 5px 5px;
     >li + li {
         margin-left:5px;
     }
@@ -80,19 +99,23 @@ const WPaginationItem = styled.li`
     
 `
 
-const WPageItemBlock = styled.div`
-    padding:5px 10px;
-    cursor: pointer;
-    line-height: 32px;
-    &:hover{
-        background-color:red;
+const WNumberItem = styled.div`
+    ${WItemOnClickStyled};
+`
+
+const WIconButton = styled.button`
+    ${WItemOnClickStyled};
+    background-color: transparent;
+    padding: 8px 11px;
+    &:focus{
+        outline:none;
     }
+
 `
 
 const WLeftIcon = styled(FontAwesomeIcon) <LeftIcon>`
     cursor: pointer;
     width:50px;
-    // background-color:${props => props.$temp || "blue"};
 `
 
 const WRightIcon = styled(FontAwesomeIcon) <RightIcon>`
