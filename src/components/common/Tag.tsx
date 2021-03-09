@@ -29,40 +29,39 @@ export default function Tag({
     text
 }: TagProps) {
     return (
-        <W.TagBlock>
-            <W.TagClickBlock
+        <WTagBlock>
+            <WTagClickBlock
                 onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => handleClick(e)}>
-                <W.TagItem
+                <WTagItem
                     iconBackgroundColor={iconBackgroundColor}
                     isItemActive={isItemActive}
                     iconColor={iconColor}
                 >
                     {text}
-                </W.TagItem>
+                </WTagItem>
                 {cancelIcon && <FontAwesomeIcon icon={cancelIcon} style={iconStyle} />}
-            </W.TagClickBlock>
-        </W.TagBlock >
+            </WTagClickBlock>
+        </WTagBlock >
     )
 }
 
 type WTagItemProps = {
-    iconColor: string,
-    isItemActive: boolean,
-    iconBackgroundColor: string,
-    hasBorder: boolean
+    iconColor?: string,
+    isItemActive?: boolean,
+    iconBackgroundColor?: string,
+    hasBorder?: boolean
 }
 
 
-const W: { [key: string]: any } = {}
 
-W.TagBlock = styled.div`
+const WTagBlock = styled.div`
         width:100px;
     `
-W.TagClickBlock = styled.div`
+const WTagClickBlock = styled.div`
         display: inline-block;
         cursor:pointer;
     `
-W.TagItem = styled.div<WTagItemProps>`
+const WTagItem = styled.div<WTagItemProps>`
         vertical-align: middle;
         display: inline-block;
         font-size: 14px;

@@ -38,15 +38,15 @@ export default function ArticleInfo({
     }
 
     return (
-        <W.ArticleInfo onClick={() => handleClick(articleId)} rowsCount={rowsCount}>
-            <W.InfoFigure>
-                <W.InfoImg src={`https://fakeimg.pl/350x200/?text=fakeImg${index}`} alt="fakeImg" />
-            </W.InfoFigure>
-            <W.InfoTitle>{title}</W.InfoTitle>
-            {!!category && category !== "未分類" && category.length > 0 && <W.InfoCategory>{category}</W.InfoCategory>}
-            <W.PublicTime>{timestampToDate(Number(publicAt))}</W.PublicTime>
-            <W.ViewCount>觀看次數: {views}次</W.ViewCount>
-        </W.ArticleInfo>
+        <WArticleInfo onClick={() => handleClick(articleId)} rowsCount={rowsCount}>
+            <WInfoFigure>
+                <WInfoImg src={`https://fakeimg.pl/350x200/?text=fakeImg${index}`} alt="fakeImg" />
+            </WInfoFigure>
+            <WInfoTitle>{title}</WInfoTitle>
+            {!!category && category !== "未分類" && category.length > 0 && <WInfoCategory>{category}</WInfoCategory>}
+            <WPublicTime>{timestampToDate(Number(publicAt))}</WPublicTime>
+            <WViewCount>觀看次數: {views}次</WViewCount>
+        </WArticleInfo>
     )
 }
 
@@ -54,9 +54,8 @@ type WArticleInfoProps = {
     rowsCount: number;
 }
 
-const W: { [key: string]: any } = {};
 
-W.ArticleInfo = styled.div<WArticleInfoProps>`
+const WArticleInfo = styled.div<WArticleInfoProps>`
         box-sizing: border-box;
         width: calc( 90% / ${props => props.rowsCount});
         margin: 10px;
@@ -76,35 +75,35 @@ W.ArticleInfo = styled.div<WArticleInfoProps>`
         }
     `
 
-W.InfoFigure = styled.figure`
+const WInfoFigure = styled.figure`
         width: 100%;
     `
 
-W.InfoImg = styled.img`
+const WInfoImg = styled.img`
         width: 100%;
         vertical-align: middle;
         transition: all .3s;
     `
 
-W.InfoCategory = styled.p`
+const WInfoCategory = styled.p`
         color: ${blue400};
         font-size: 14px;
         transition: all .3s;
     `
 
-W.InfoTitle = styled.p`
+const WInfoTitle = styled.p`
         color: ${blue600};
         font-size: 18px;
         transition: all .3s;
         font-weight: bold;
     `
 
-W.PublicTime = styled.p`
+const WPublicTime = styled.p`
         color: ${blue400};
         font-size: 14px;
     `
 
-W.ViewCount = styled.p`
+const WViewCount = styled.p`
         color: ${blue400};
         font-size: 14px;
     `

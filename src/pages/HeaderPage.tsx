@@ -29,7 +29,7 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
         }
     }
 
-    const handlePressEnter = (e: KeyboardEvent) => {
+    const handlePressEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
         // 找title tag
         if (e.key === 'Enter') {
             if (searchRef.current && searchRef.current) {
@@ -45,53 +45,53 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
     }
 
     return (
-        <W.HeaderSection>
-            <W.HeaderContainer >
-                <W.LogoBlock>
-                    <W.LogoLink to="/">
+        <WHeaderSection>
+            <WHeaderContainer >
+                <WLogoBlock>
+                    <WLogoLink to="/">
                         <FontAwesomeIcon size="2x" icon={faBook} color={`${blue600}`} />
-                        <W.LogTitle>Article</W.LogTitle>
-                    </W.LogoLink>
-                </W.LogoBlock>
-                <W.FeatureBlock>
-                    <W.SearchBlock showSearch={!showSearchButton} >
-                        <W.InputBlock>
-                            <W.SearchInput
+                        <WLogTitle>Article</WLogTitle>
+                    </WLogoLink>
+                </WLogoBlock>
+                <WFeatureBlock>
+                    <WSearchBlock showSearch={!showSearchButton} >
+                        <WInputBlock>
+                            <WSearchInput
                                 type="text"
                                 ref={searchRef}
-                                onKeyPress={(e: KeyboardEvent) => handlePressEnter(e)}
+                                onKeyPress={(e: React.KeyboardEvent<HTMLDivElement>) => handlePressEnter(e)}
                             />
-                            <W.SearchInputIcon>
+                            <WSearchInputIcon>
                                 <FontAwesomeIcon
                                     onClick={handleInputCancel}
                                     size="1x"
                                     icon={faTimes} />
-                            </W.SearchInputIcon>
-                        </W.InputBlock>
+                            </WSearchInputIcon>
+                        </WInputBlock>
                         <FontAwesomeIcon
                             onClick={handleSearch}
                             size="1x"
                             icon={faTimes}
                             color={`${blue600}`} />
-                    </W.SearchBlock>
-                    <W.SearchButton showSearch={showSearchButton} onClick={handleSearch}>
+                    </WSearchBlock>
+                    <WSearchButton showSearch={showSearchButton} onClick={handleSearch}>
                         <FontAwesomeIcon icon={faSearch} color={`${blue600}`} />
-                    </W.SearchButton>
-                </W.FeatureBlock>
-                <W.Navbar>
+                    </WSearchButton>
+                </WFeatureBlock>
+                <WNavbar>
                     {topicTitleList?.length > 0 && topicTitleList.map((obj: Tag, index: number) =>
-                        <W.NavbarItem key={obj.name + index}>
+                        <WNavbarItem key={obj.name + index}>
                             <Link to={{
                                 pathname: `/ResultPage`,
                                 state: { searchValue: obj.name }
                             }} replace >
                                 {obj.name}
                             </Link>
-                        </W.NavbarItem>
+                        </WNavbarItem>
                     )}
-                </W.Navbar>
-            </W.HeaderContainer>
-        </W.HeaderSection >
+                </WNavbar>
+            </WHeaderContainer>
+        </WHeaderSection >
     );
 }
 
@@ -103,9 +103,12 @@ type WSearchFeatureProps = {
     showSearch: boolean
 }
 
-let W: { [key: string]: any } = {}
+// type WSearchInputProps = {
+//     onKeyPress: (e: KeyboardEvent) => any
+// }
 
-W.HeaderSection = styled.header`
+
+const WHeaderSection = styled.header`
     position: relative;
     z-index: 1;
     box-shadow: 0 1px 6px rgba(0, 0, 0, .1),
@@ -113,7 +116,7 @@ W.HeaderSection = styled.header`
     width:100%;
 `
 
-W.HeaderContainer = styled.div`
+const WHeaderContainer = styled.div`
     max-width: 1280px;
     margin :auto;
     padding: 0 0px;
@@ -130,7 +133,7 @@ W.HeaderContainer = styled.div`
     
 `
 
-W.LogoBlock = styled.div`
+const WLogoBlock = styled.div`
     width:50%;
     font-size:20px;
     box-sizing: border-box;
@@ -140,7 +143,7 @@ W.LogoBlock = styled.div`
     `}   
 `
 
-W.LogoLink = styled(Link)`
+const WLogoLink = styled(Link)`
     display: inline-flex;
     align-items: center;
     text-decoration: none;
@@ -160,14 +163,14 @@ W.LogoLink = styled(Link)`
     
 `
 
-W.LogTitle = styled.div`
+const WLogTitle = styled.div`
     font-weight:bold;
     font-size: 25px;
     line-height: 30px;
     color:${blue600};
 `
 
-W.FeatureBlock = styled.div`
+const WFeatureBlock = styled.div`
     box-sizing: border-box;
     display: flex;
     justify-content: flex-end;
@@ -179,19 +182,19 @@ W.FeatureBlock = styled.div`
     `}
 `
 
-W.Feature = styled.div`
+const WFeature = styled.div`
     padding: 0 10px;
   
     transition: all .5s;
 `
 
-W.SearchFeature = styled(W.Feature) <WSearchFeatureProps>`
+const WSearchFeature = styled(WFeature) <WSearchFeatureProps>`
     position: relative;
     opacity: ${props => props?.showSearch ? "1" : "0"};
     z-index:${props => props?.showSearch ? "auto" : "-1"};
 `
 
-W.SearchBlock = styled(W.SearchFeature) <WSearchBlockProps>`
+const WSearchBlock = styled(WSearchFeature) <WSearchBlockProps>`
     display: flex;
     align-items: center;
     right:${props => props?.showSearch ? "-32px" : "-45px"};
@@ -202,7 +205,7 @@ W.SearchBlock = styled(W.SearchFeature) <WSearchBlockProps>`
     }
 `
 
-W.InputBlock = styled.div`
+const WInputBlock = styled.div`
     width:100px;
     ${MediaQueries.DesktopSCSS`
         width: 150px;
@@ -226,7 +229,7 @@ W.InputBlock = styled.div`
     }
 `
 
-W.SearchInputIcon = styled.div`
+const WSearchInputIcon = styled.div`
     width: 10px;
     display: flex;
     align-items: center;
@@ -239,11 +242,11 @@ W.SearchInputIcon = styled.div`
     }
 `
 
-W.SearchButton = styled(W.SearchFeature)`
+const WSearchButton = styled(WSearchFeature)`
 
 `
 
-W.SearchInput = styled.input`
+const WSearchInput = styled.input`
     cursor:pointer;
     font-size: 18px;
     vertical-align: middle;
@@ -255,7 +258,7 @@ W.SearchInput = styled.input`
     }
 `
 
-W.Navbar = styled.nav`
+const WNavbar = styled.nav`
     width:100%;
     align-items: center;
     display: flex;
@@ -264,7 +267,7 @@ W.Navbar = styled.nav`
         width: unset;
     `}
 `
-W.NavbarItem = styled.div`
+const WNavbarItem = styled.div`
    
     margin:0px 15px 0px 15px; 
     border-radius: 4px;

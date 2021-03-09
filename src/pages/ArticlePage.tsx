@@ -66,21 +66,21 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
 
     return (
         (article?.status === "success") ?
-            <W.ArticlePageSection>
-                <W.ArticlePageContainer>
-                    <W.ArticleHeader>
+            <WArticlePageSection>
+                <WArticlePageContainer>
+                    <WArticleHeader>
                         {!!article.category && article.category !== "未分類" && article.category.length > 0 &&
-                            <W.Category>{article.category}</W.Category>}
-                        <W.ArticleTitle>{article.title}</W.ArticleTitle>
-                    </W.ArticleHeader>
-                    <W.ArticleBlock>
-                        <W.ArticleInfo>
-                            <W.ArticleFigure>
-                                <W.Img src={article.avatar} />
-                            </W.ArticleFigure>
-                            <W.Author>作者:{article.authorName}</W.Author>
-                            <W.PublicTime>{timestampToDate(article?.public_at)}</W.PublicTime>
-                            <W.TagList>
+                            <WCategory>{article.category}</WCategory>}
+                        <WArticleTitle>{article.title}</WArticleTitle>
+                    </WArticleHeader>
+                    <WArticleBlock>
+                        <WArticleInfo>
+                            <WArticleFigure>
+                                <WImg src={article.avatar} />
+                            </WArticleFigure>
+                            <WAuthor>作者:{article.authorName}</WAuthor>
+                            <WPublicTime>{timestampToDate(article?.public_at)}</WPublicTime>
+                            <WTagList>
                                 {(!!article?.tags && article?.tags.length > 0) ? article?.tags.map((item: Tag, index: number) =>
                                     <Tag
                                         iconBackgroundColor={blue50}
@@ -88,24 +88,23 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
                                         key={index}
                                         handleClick={(e) => handleTagClick(e)} />
                                 ) : null}
-                            </W.TagList>
-                        </W.ArticleInfo>
-                        <W.ArticleContent dangerouslySetInnerHTML={{ __html: article.body }} />
-                    </W.ArticleBlock>
-                </W.ArticlePageContainer>
-            </W.ArticlePageSection>
+                            </WTagList>
+                        </WArticleInfo>
+                        <WArticleContent dangerouslySetInnerHTML={{ __html: article.body }} />
+                    </WArticleBlock>
+                </WArticlePageContainer>
+            </WArticlePageSection>
             : null
     )
 }
 
-let W: { [key: string]: any } = {}
 
-W.TagList = styled.div`
+const WTagList = styled.div`
     display: flex;
     flex-wrap: wrap;
 `
 
-// W.Tag = styled.div`
+// const  WTag = styled.div`
 //     padding: 5px;
 //     border: 1px solid black;
 //     border-radius: 15px;
@@ -114,13 +113,13 @@ W.TagList = styled.div`
 //     cursor: pointer;
 // `
 
-W.ArticleHeader = styled.div`
+const WArticleHeader = styled.div`
     max-width:720px;
     padding: 25px 0;
     margin:auto;
 `
 
-W.Category = styled.p`
+const WCategory = styled.p`
     font-size: 15px;
     line-height: 20px;
     margin:auto;
@@ -128,43 +127,43 @@ W.Category = styled.p`
     padding-left:10px;   
 `
 
-W.ArticleTitle = styled.h1`
+const WArticleTitle = styled.h1`
     font-size: 30px;
     line-height: 35px;
     margin:auto;
 `
 
-W.ArticleInfo = styled.div`
+const WArticleInfo = styled.div`
     position: absolute;
     left: -60%;
     width: 250px;
 `
 
-W.ArticleFigure = styled.figure`
+const WArticleFigure = styled.figure`
     text-align: center;
     margin-bottom: 5px;
 `
 
-W.Img = styled.img`
+const WImg = styled.img`
 
 `
 
-W.Author = styled.p`
+const WAuthor = styled.p`
     margin-bottom:5px;
 `
 
-W.PublicTime = styled.p`
+const WPublicTime = styled.p`
     margin-bottom:5px;
 `
 
-W.ArticleBlock = styled.div`
+const WArticleBlock = styled.div`
     position:relative;
     max-width:580px;
     margin:auto;
     padding-top:50px;
 `
 
-W.ArticleContent = styled.div`
+const WArticleContent = styled.div`
     p{
         padding:5px 0px;
         >img{
@@ -174,12 +173,12 @@ W.ArticleContent = styled.div`
     }
 `
 
-W.ArticlePageSection = styled.section`
+const WArticlePageSection = styled.section`
     background-color: #FEFEFE;
     padding:25px 0px;
 `
 
-W.ArticlePageContainer = styled(WContainer)`
+const WArticlePageContainer = styled(WContainer)`
     flex-direction: column;
 `
 

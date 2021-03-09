@@ -30,11 +30,11 @@ export default function Pagination({
     let pageCount: object[] = []
     for (let item = 1; item <= totalPageCount; item++) {
         pageCount.push(
-            <W.PaginationItem>
-                <W.PageItemBlock>
+            <WPaginationItem>
+                <WPageItemBlock>
                     {item}
-                </W.PageItemBlock>
-            </W.PaginationItem>
+                </WPageItemBlock>
+            </WPaginationItem>
         )
     }
 
@@ -43,32 +43,31 @@ export default function Pagination({
     }
 
     return <>
-        <W.PaginationList >
-            <W.PaginationItem>
-                <W.LeftIcon onClick={() => handleClick()} icon={faChevronLeft} size="sm" />
-            </W.PaginationItem>
+        <WPaginationList >
+            <WPaginationItem>
+                <WLeftIcon onClick={() => handleClick()} icon={faChevronLeft} size="sm" />
+            </WPaginationItem>
             {pageCount}
-            <W.PaginationItem>
-                <W.RightIcon icon={faChevronRight} size="sm" />
-            </W.PaginationItem>
-        </W.PaginationList>
+            <WPaginationItem>
+                <WRightIcon icon={faChevronRight} size="sm" />
+            </WPaginationItem>
+        </WPaginationList>
     </>
 
 }
 
-const W: { [key: string]: any } = {}
 
 
 type LeftIcon = {
-    $temp: string,
-    temp: boolean
+    $temp?: string,
+    temp?: boolean
 }
 
 type RightIcon = {
 
 }
 
-W.PaginationList = styled.ul`
+const WPaginationList = styled.ul`
     display:flex;
     align-items: center;
     justify-content: center;
@@ -77,11 +76,11 @@ W.PaginationList = styled.ul`
     }
 `
 
-W.PaginationItem = styled.li`
+const WPaginationItem = styled.li`
     
 `
 
-W.PageItemBlock = styled.div`
+const WPageItemBlock = styled.div`
     padding:5px 10px;
     cursor: pointer;
     line-height: 32px;
@@ -90,13 +89,13 @@ W.PageItemBlock = styled.div`
     }
 `
 
-W.LeftIcon = styled(FontAwesomeIcon) <LeftIcon>`
+const WLeftIcon = styled(FontAwesomeIcon) <LeftIcon>`
     cursor: pointer;
     width:50px;
     // background-color:${props => props.$temp || "blue"};
 `
 
-W.RightIcon = styled(FontAwesomeIcon) <RightIcon>`
+const WRightIcon = styled(FontAwesomeIcon) <RightIcon>`
     cursor: pointer;
     width:50px;
 `

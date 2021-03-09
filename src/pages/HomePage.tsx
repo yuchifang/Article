@@ -15,19 +15,19 @@ export default function HomePage({ topicTitleList }: HeaderPageProps) {
     // columnsCount
     // mode  /"Sticky" Spatial
     return (
-        <W.HomePage>
-            <W.HomePageSection>
-                <W.HomePageContainer>
+        <WHomePage>
+            <WHomePageSection>
+                <WHomePageContainer>
                     <TopicBlock
                         showTitle={true}
                         title={topicTitleList[0].name}
                         rowsCount={3}
                         columnsCount={1}
                     />
-                </W.HomePageContainer>
-            </W.HomePageSection>
-            <W.HomePageSection>
-                <W.HomePageContainer>
+                </WHomePageContainer>
+            </WHomePageSection>
+            <WHomePageSection>
+                <WHomePageContainer>
                     <TopicBlock
                         showTitle={true}
                         title={topicTitleList[1].name}
@@ -35,35 +35,34 @@ export default function HomePage({ topicTitleList }: HeaderPageProps) {
                         columnsCount={2}
                         wrap={true}
                     />
-                </W.HomePageContainer>
-            </W.HomePageSection>
-            <W.HomePageSection>
-                <W.HomePageContainer>
+                </WHomePageContainer>
+            </WHomePageSection>
+            <WHomePageSection>
+                <WHomePageContainer>
                     <TopicBlock
                         showTitle={true}
                         title={topicTitleList[2].name}
                         rowsCount={4}
                         columnsCount={1}
                     />
-                </W.HomePageContainer>
-            </W.HomePageSection >
-        </W.HomePage>
+                </WHomePageContainer>
+            </WHomePageSection >
+        </WHomePage>
     )
 }
 
-let W: { [key: string]: any } = {}
 
-W.HomePageContainer = styled(WContainer)`
+const WHomePageContainer = styled(WContainer)`
     flex-direction: column;   
 `
 
-W.HomePageSection = styled.section`
+const WHomePageSection = styled.section`
     // >div:nth-child(even) {
     //     background-color: #eee;
     // }
 `
 
-W.HomePage = styled.div`
+const WHomePage = styled.div`
     >section:nth-child(even) {
         background-color: #EFEFEF;
     }

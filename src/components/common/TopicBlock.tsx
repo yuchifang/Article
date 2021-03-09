@@ -100,16 +100,16 @@ export default function TopicBlock({
     }
 
     return (
-        <W.TopicBlock>
-            {showTitle && <W.TopicTitle titlePlace={titlePlace}>{title}</W.TopicTitle>}
+        <WTopicBlock>
+            {showTitle && <WTopicTitle titlePlace={titlePlace}>{title}</WTopicTitle>}
             {filter &&
-                <W.FilterFeature>
-                    <W.FilterShowList show={filterList}>
-                        <W.FilterBlock onClick={() => handleFilterList()}>
+                <WFilterFeature>
+                    <WFilterShowList show={filterList}>
+                        <WFilterBlock onClick={() => handleFilterList()}>
                             <FontAwesomeIcon icon={faFilter} color={`${blue600}`} />
-                            <W.FilterText>篩選器</W.FilterText>
-                        </W.FilterBlock>
-                        <W.FilterList >
+                            <WFilterText>篩選器</WFilterText>
+                        </WFilterBlock>
+                        <WFilterList >
                             <Tag
                                 text="上傳時間"
                                 handleClick={handlePublicTime}
@@ -128,10 +128,10 @@ export default function TopicBlock({
                                 iconBackgroundColor={blue50}
                                 iconColor={blue100}
                             />
-                        </W.FilterList>
-                    </W.FilterShowList>
-                </W.FilterFeature>}
-            <W.ArticleInfoBlock  //@ts-ignore
+                        </WFilterList>
+                    </WFilterShowList>
+                </WFilterFeature>}
+            <WArticleInfoBlock  //@ts-ignore
                 wrap={wrap}>
                 {articleInfoList?.length > 0 && articleInfoList.map(
                     //@ts-ignore
@@ -149,8 +149,8 @@ export default function TopicBlock({
                         />
                     }
                 )}
-            </W.ArticleInfoBlock>
-        </W.TopicBlock >
+            </WArticleInfoBlock>
+        </WTopicBlock >
     )
 }
 
@@ -170,16 +170,15 @@ type WFilterShowList = {
     show: boolean
 }
 
-let W: { [key: string]: any } = {}
 
-W.TopicBlock = styled.div`
+const WTopicBlock = styled.div`
     padding: 25px 10px;
     ${MediaQueries.DesktopSCSS`
         padding:45px;
     `}
 `
 
-W.TopicTitle = styled.p<WTopicTitleProps>`
+const WTopicTitle = styled.p<WTopicTitleProps>`
     text-align:${props => props.titlePlace};
     color:${blue600};
     font-weight: bold;
@@ -188,7 +187,7 @@ W.TopicTitle = styled.p<WTopicTitleProps>`
     margin-bottom:30px;
 `
 
-W.FilterFeature = styled.div`
+const WFilterFeature = styled.div`
     display: flex;
     margin: 0 20px;
     flex-direction: column;
@@ -197,30 +196,30 @@ W.FilterFeature = styled.div`
     padding-bottom: 7px;
 `
 
-W.FilterBlock = styled.div`
+const WFilterBlock = styled.div`
     padding-bottom: 7px;
     margin-bottom:2px;
     cursor: pointer;
 `
 
-W.FilterShowList = styled.div<WFilterShowList>`
+const WFilterShowList = styled.div<WFilterShowList>`
     transition: max-height .5s .3s;
     max-height:${props => props.show ? "60px" : "20px"};
     overflow: hidden;
 `
 
-W.FilterList = styled.div<WFilterListProps>`
+const WFilterList = styled.div`
     transition: all .3s .5s;
     display:flex;
 `
 
-W.FilterText = styled.p`
+const WFilterText = styled.p`
     display: inline-block;
     margin: 0 10px;
     font-weight: bold;
 `
 
-W.ArticleInfoBlock = styled.div<WArticleInfoBlockProps>`
+const WArticleInfoBlock = styled.div<WArticleInfoBlockProps>`
     display: flex;
     justify-content: space-around;
     width:100%;
