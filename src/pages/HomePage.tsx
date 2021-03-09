@@ -14,6 +14,7 @@ export default function HomePage({ topicTitleList }: HeaderPageProps) {
     // rowsCount
     // columnsCount
     // mode  /"Sticky" Spatial
+    console.log("topicTitleList", topicTitleList)
     return (
         <WHomePage>
             <WHomePageSection>
