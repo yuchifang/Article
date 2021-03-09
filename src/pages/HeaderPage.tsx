@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faBook, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { blue400, blue50, blue600 } from '../styles/General'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { MediaQueries } from "../styles/media"
 type Tag = {
     name: string,
@@ -15,6 +15,7 @@ export type HeaderPageProps = {
 }
 
 export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
+    const history = useHistory()
     const [showSearchButton, setShowSearchButton] = useState(true)
     const searchRef = useRef<HTMLInputElement>(null)
 
@@ -25,6 +26,21 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
     const handleInputCancel = () => {
         if (searchRef.current && searchRef.current) {
             searchRef.current.value = ''
+        }
+    }
+
+    const handlePressEnter = (e: KeyboardEvent) => {
+        // 找title tag
+        if (e.key === 'Enter') {
+            if (searchRef.current && searchRef.current) {
+                const locationInfo = {
+                    pathname: `/ResultPage`,
+                    state: {
+                        searchValue: searchRef.current.value.trim(),
+                    }
+                }
+                history.push(locationInfo)
+            }
         }
     }
 
@@ -40,7 +56,11 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
                 <W.FeatureBlock>
                     <W.SearchBlock showSearch={!showSearchButton} >
                         <W.InputBlock>
-                            <W.SearchInput type="text" ref={searchRef} />
+                            <W.SearchInput
+                                type="text"
+                                ref={searchRef}
+                                onKeyPress={(e: KeyboardEvent) => handlePressEnter(e)}
+                            />
                             <W.SearchInputIcon>
                                 <FontAwesomeIcon
                                     onClick={handleInputCancel}
@@ -196,7 +216,7 @@ W.InputBlock = styled.div`
     display:flex;
     align-items: center;
     margin-right: 10px;
-    padding-right: 4px;
+    padding-right: 8px;
     &:hover{
         >div{
             svg{

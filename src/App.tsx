@@ -9,6 +9,7 @@ import ArticlePage from './pages/ArticlePage'
 import ResultPage from './pages/ResultPage'
 import { pipe, packTagsString, countRepeatTag, _map, stringToLower, objToArr, _sort, _slice } from "./utils/utils"
 import { RootState } from './store/reducers/RootReducer'
+import Pagination from './components/common/Pagination'
 /*
 // 注意
 // 寫到APP 上
@@ -47,15 +48,12 @@ function App() {
 
   // 3/5 add search Enter feature
 
-  // 點擊 headerTag 不會換頁
 
-  // search feature
   // 分頁
   // slider
   // font-size RWD 
-  // 搜尋結果 篩選  時間  人氣 
-  // 更新時間的 function
   // 考慮在HomePage 用物件map呈現?
+  // loading 狀態
 
   type Tag = {
     name: string,
@@ -84,12 +82,17 @@ function App() {
     dispatch(GetWriterArticles("pinkymini"))
   }, [])
 
+  const handleChange = (page: number) => {
+    console.log("sssss", page)
+  }
+
   return (
     <BrowserRouter>
       {
         // @ts-ignore
         articleList?.pinkymini?.actionStatus === "success" ?
           <>
+            <Pagination handleChange={handleChange} />
             <HeaderPage topicTitleList={topicTitleList} />
             <Switch>
               <Route exact path="/" component={() => <HomePage topicTitleList={topicTitleList} />} />

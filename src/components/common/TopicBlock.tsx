@@ -42,8 +42,12 @@ export default function TopicBlock({
     const propsArticleList = useMemo(() => {
         //@ts-ignore
         if (storeArticleList?.pinkymini?.actionStatus === "success") {
-            return pipe(
-                _filter((article: ArticleProps) => article.tags.some((element: string) => element.toLowerCase() === title.toLowerCase())),
+            return pipe( //1. 尋找所有文章的tag 或 title 是否符合title  2. 依據total hit 排列  3. 依據 rowsCount * columnsCount 要呈現幾個
+                _filter((article: ArticleProps) => {
+                    if (!!article && !article.title)
+                        return article.tags.some((element: string) => element.toLowerCase() === title.toLowerCase())
+                    if (article.title.toLowerCase().indexOf(title.toLowerCase()) > -1) return true
+                }),
                 _sort((articleA: ArticleProps, articleB: ArticleProps) => articleA.total_hits > articleB.total_hits ? -1 : 1),
                 _slice(0, rowsCount * columnsCount)
                 //@ts-ignore
