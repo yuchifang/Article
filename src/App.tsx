@@ -9,7 +9,7 @@ import ArticlePage from './pages/ArticlePage'
 import ResultPage from './pages/ResultPage'
 import { pipe, packTagsString, countRepeatTag, _map, stringToLower, objToArr, _sort, _slice } from "./utils/utils"
 import { RootState } from './store/reducers/RootReducer'
-import Pagination from './components/common/Pagination'
+
 /*
 // 注意
 // 寫到APP 上
@@ -46,9 +46,9 @@ function App() {
 
   // html Tag
 
-  // 3/5 add search Enter feature
-
-
+  // 改改 Topic padding margin
+  // 看看 store useState 的用法
+  // 重新整理store 會不會不見
   // 分頁
   // slider
   // font-size RWD 
@@ -82,9 +82,7 @@ function App() {
     dispatch(GetWriterArticles("pinkymini"))
   }, [])
 
-  const handleChange = (page: number) => {
-    console.log("sssss", page)
-  }
+
 
   return (
     <BrowserRouter>
@@ -92,7 +90,6 @@ function App() {
         // @ts-ignore
         articleList?.pinkymini?.actionStatus === "success" ?
           <>
-            <Pagination handleChange={handleChange} />
             <HeaderPage topicTitleList={topicTitleList} />
             <Switch>
               <Route exact path="/" component={() => <HomePage topicTitleList={topicTitleList} />} />

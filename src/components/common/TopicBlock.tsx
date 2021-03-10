@@ -15,6 +15,7 @@ import { faFilter, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { RootState } from '../../store/reducers/RootReducer'
 import Tag from "./Tag"
 import { MediaQueries } from "../../styles/media"
+import Pagination from "./Pagination"
 
 type ArticleProps = {
     articleId: string,
@@ -26,8 +27,14 @@ type ArticleProps = {
     title: string,
     total_hits: string
 }
+const singlePageItemCount = 10
+const defaultPageState = {
+    currentPage: 1,
+    maxIndex: singlePageItemCount,
+    minIndex: 0
+}
 
-export default function TopicBlock({
+export default function TopicPage({
     filter = false,
     showTitle = true,
     title = "標題",
@@ -37,7 +44,6 @@ export default function TopicBlock({
     wrap = false,
     titlePlace = "left"
 }) {
-
     const storeArticleList = useSelector((state: RootState) => state.WriterList)
     const propsArticleList = useMemo(() => {
         //@ts-ignore
@@ -60,12 +66,14 @@ export default function TopicBlock({
     const [articleInfoList, setArticleInfoList] = useState<ArticleProps[]>(propsArticleList)
     const [publicTimeActive, setPublicTimeActive] = useState(false)
     const [viewCountActive, setViewCountActive] = useState(true)
+    const [pageState, setPageState] = useState(defaultPageState)
 
     useEffect(() => {
         setArticleInfoList(propsArticleList)
         setViewCountActive(true)
         setPublicTimeActive(false)
         setFilterList(false)
+        setPageState(defaultPageState)
     }, [propsArticleList])
 
 
@@ -89,6 +97,14 @@ export default function TopicBlock({
         setFilterList(prevState => !prevState)
     }
 
+    const handleChange = (page: number) => {
+        setPageState({
+            currentPage: page,
+            maxIndex: singlePageItemCount * page,
+            minIndex: singlePageItemCount * (page - 1)
+        })
+    }
+
     let publicTimeIconStyle = {
         "vertical-align": "middle",
         "display": publicTimeActive ? "inline-block" : "none"
@@ -98,7 +114,6 @@ export default function TopicBlock({
         "vertical-align": "middle",
         "display": viewCountActive ? "inline-block" : "none"
     }
-
     return (
         <WTopicBlock>
             {showTitle && <WTopicTitle titlePlace={titlePlace}>{title}</WTopicTitle>}
@@ -136,20 +151,26 @@ export default function TopicBlock({
                 {articleInfoList?.length > 0 && articleInfoList.map(
                     //@ts-ignore
                     (articleInfo, index) => {
-                        return <ArticleInfo
-                            key={`${articleInfo.title + index}`}
-                            blockNumber={rowsCount * columnsCount}
-                            rowsCount={rowsCount}
-                            title={articleInfo.title}
-                            category={articleInfo.category}
-                            index={index}
-                            articleId={articleInfo.articleId}
-                            publicAt={articleInfo.public_at}
-                            views={articleInfo.total_hits}
-                        />
+                        if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
+                            return <ArticleInfo
+                                key={`${articleInfo.title + index}`}
+                                blockNumber={rowsCount * columnsCount}
+                                rowsCount={rowsCount}
+                                title={articleInfo.title}
+                                category={articleInfo.category}
+                                index={index}
+                                articleId={articleInfo.articleId}
+                                publicAt={articleInfo.public_at}
+                                views={articleInfo.total_hits}
+                            />
                     }
                 )}
             </WArticleInfoBlock>
+            <Pagination
+                currentPage={pageState.currentPage}
+                singlePageItemCount={singlePageItemCount}
+                ListLength={articleInfoList.length}
+                handleChange={handleChange} />
         </WTopicBlock >
     )
 }

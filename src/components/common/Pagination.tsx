@@ -1,59 +1,86 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { blue50, blue100, blue400, blue600 } from "../../styles/General"
 
-// (input)
-// total = length 
-// pageItem 一頁有幾個
-// currentPage
 
-// return currentPage
 export default function Pagination({
-    pages = [1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020],
-    pageItem = 5,
-    currentPage = 2,
-    handleChange = () => console.log("ddd")
+    ListLength = 20,
+    singlePageItemCount = 5,
+    currentPage = 1,
+    handleChange = () => console.log("page")
 
 }: {
-    pages?: number[],
-    pageItem?: number,
+    ListLength: number,
+    singlePageItemCount: number,
     currentPage?: number,
     handleChange?: (page: number) => void
 }) {
+    const [pageNumber, setPageNumber] = useState(1)
 
-    //每個東西都要執行一次
+    useEffect(() => {
+        handleChange?.(pageNumber)
+    }, [pageNumber])
 
-    const ListLength = pages.length
-    const totalPageCount = ListLength / pageItem
+    //如果在第二頁時 點其他HeaderTag 則會重新導回第一頁
+    useEffect(() => {
+        setPageNumber(currentPage)
+    }, [ListLength])
 
-    let pageCount: object[] = []
-    for (let item = 1; item <= totalPageCount; item++) {
-        pageCount.push(
-            <WPaginationItem>
-                <WNumberItem>
+
+    const maxPageCount = Math.ceil(ListLength / singlePageItemCount)
+
+    let isLeftButtonDisable = pageNumber === 1
+    let isRightButtonDisable = maxPageCount === pageNumber
+
+    let renderPageArr: object[] = []
+    for (let item = 1; item <= maxPageCount; item++) {
+        renderPageArr.push(
+            <WPaginationItem onClick={(e) => handlePageNumberClick(e)}>
+                <WNumberItem active={item === pageNumber}>
                     {item}
                 </WNumberItem>
             </WPaginationItem>
         )
     }
 
-    const handleClick = () => {
-        handleChange(5)
+    const handlePageNumberClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+        const target = e.target as Element
+        setPageNumber(Number(target.innerHTML))
+
+    }
+
+    const handleLeftClick = () => {
+        setPageNumber(prevState => prevState - 1)
+
+    }
+
+    const handleRightClick = () => {
+        setPageNumber(prevState => prevState + 1)
     }
 
     return <>
         <WPaginationList >
             <WPaginationItem>
-                <WIconButton>
-                    <WLeftIcon onClick={() => handleClick()} icon={faChevronLeft} size="sm" />
+                <WIconButton
+                    onClick={() => handleLeftClick()}
+                    cursor={isLeftButtonDisable}
+                    disabled={isLeftButtonDisable}>
+                    <WLeftIcon
+                        icon={faChevronLeft}
+                        size="sm" />
                 </WIconButton>
             </WPaginationItem>
-            {pageCount}
+            {renderPageArr}
             <WPaginationItem>
-                <WIconButton>
-                    <WRightIcon icon={faChevronRight} size="sm" />
+                <WIconButton
+                    onClick={() => handleRightClick()}
+                    cursor={isRightButtonDisable}
+                    disabled={isRightButtonDisable}>
+                    <WRightIcon
+                        icon={faChevronRight}
+                        size="sm" />
                 </WIconButton>
             </WPaginationItem>
         </WPaginationList>
@@ -63,14 +90,22 @@ export default function Pagination({
 
 
 
-type LeftIcon = {
-    $temp?: string,
-    temp?: boolean
+type WIconButtonProps = {
+    cursor?: boolean
 }
 
-type RightIcon = {
-
+type WNumberItemProps = {
+    active?: boolean
 }
+
+const WItemHightStyled = css`
+    color:${blue600};
+    border:solid 1px ${blue400};
+`
+const WItemNoHightStyled = css`
+    color:${blue100};
+    border:solid 1px ${blue50};
+`
 
 const WItemOnClickStyled = css`
     padding: 6px 10px;
@@ -80,8 +115,7 @@ const WItemOnClickStyled = css`
     color:${blue100};
     transition: all .3s;
     &:hover{
-        color:${blue600};
-        border:solid 1px ${blue400};
+        ${WItemHightStyled}
     }
 `
 
@@ -99,27 +133,32 @@ const WPaginationItem = styled.li`
     
 `
 
-const WNumberItem = styled.div`
+const WNumberItem = styled.div<WNumberItemProps>`
     ${WItemOnClickStyled};
+    ${props => props.active ? WItemHightStyled : ""};
 `
 
-const WIconButton = styled.button`
+const WIconButton = styled.button<WIconButtonProps>`
     ${WItemOnClickStyled};
+    
     background-color: transparent;
+    cursor: ${props => props.cursor ? " not-allowed" : "pointer"};
     padding: 8px 11px;
     &:focus{
         outline:none;
     }
-
+    &:hover{
+        ${props => props.cursor ? WItemNoHightStyled : WItemHightStyled};
+    }
 `
 
-const WLeftIcon = styled(FontAwesomeIcon) <LeftIcon>`
-    cursor: pointer;
+const WLeftIcon = styled(FontAwesomeIcon)`
+    
     width:50px;
 `
 
-const WRightIcon = styled(FontAwesomeIcon) <RightIcon>`
-    cursor: pointer;
+const WRightIcon = styled(FontAwesomeIcon)`
+    
     width:50px;
 `
 
