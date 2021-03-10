@@ -18,9 +18,6 @@ const GlobalStyle = createGlobalStyle`
     html{
       width: 100vw;
       font-size:16px;
-      ${MediaQueries.MobileSCSS`
-        font-size:12px
-      `}
     }
 `
 

@@ -95,23 +95,11 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
     );
 }
 
-type WSearchBlockProps = {
-    showSearch: boolean
-}
-
-type WSearchFeatureProps = {
-    showSearch: boolean
-}
-
-// type WSearchInputProps = {
-//     onKeyPress: (e: KeyboardEvent) => any
-// }
-
 
 const WHeaderSection = styled.header`
     position: relative;
     z-index: 1;
-    box-shadow: 0 1px 0.375rem rgba(0, 0, 0, .1),
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .1),
     0 4px 24px rgba(0, 0, 0, .06);
     width:100%;
 `
@@ -121,10 +109,10 @@ const WHeaderContainer = styled.div`
     margin :auto;
     padding: 0 0px;
     ${MediaQueries.MobileSCSS`
-        padding: 0px 15px;
+        padding: 0px 0.938rem;
     `}
     ${MediaQueries.DesktopSCSS`
-        padding: 0px 30px;
+        padding: 0px 1.875rem;
     `}
     display:flex;
     justify-content:space-between;
@@ -158,15 +146,15 @@ const WLogoLink = styled(Link)`
         background-color: ${blue50};
     }
     ${MediaQueries.DesktopSCSS`
-        margin: 3px 0px;
+        margin: 0.188rem 0px;
     `}   
     
 `
 
 const WLogTitle = styled.div`
     font-weight:bold;
-    font-size: 25px;
-    line-height: 30px;
+    font-size: 1.5625rem;
+    line-height: 1.875rem;
     color:${blue600};
     ${MediaQueries.DesktopSCSS`
         html {
@@ -194,30 +182,30 @@ const WFeature = styled.div`
     transition: all .5s;
 `
 
-const WSearchFeature = styled(WFeature) <WSearchFeatureProps>`
+const WSearchFeature = styled(WFeature) <{ showSearch: boolean }>`
     position: relative;
     opacity: ${props => props?.showSearch ? "1" : "0"};
     z-index:${props => props?.showSearch ? "auto" : "-1"};
 `
 
-const WSearchBlock = styled(WSearchFeature) <WSearchBlockProps>`
+const WSearchBlock = styled(WSearchFeature) <{ showSearch: boolean }>`
     display: flex;
     align-items: center;
     right:${props => props?.showSearch ? "-32px" : "-45px"};
     >svg{
         cursor:pointer;
-        border-radius: 0.375rem;
+        border-radius: 6px;
         vertical-align: middle;
     }
 `
 
 const WInputBlock = styled.div`
-    width:100px;
+    width: 6.25rem;
     ${MediaQueries.DesktopSCSS`
-        width: 150px;
+        width: 9.375rem;
     `}
     ${MediaQueries.MobileSCSS`
-        width: 120px;
+        width: 7.5rem;
     `}
     border:solid 1px #767676;
     border-radius: 12px;
@@ -254,10 +242,10 @@ const WSearchButton = styled(WSearchFeature)`
 
 const WSearchInput = styled.input`
     cursor:pointer;
-    font-size: 18px;
+    font-size: 1.125rem;
     vertical-align: middle;
     width: 100%;
-    padding: 4px 0px 4px 0.688rem;
+    padding: 0.25rem 0px 0.25rem 0.688rem;
     border:none;
     &:focus{
         outline: none;
@@ -275,17 +263,17 @@ const WNavbar = styled.nav`
 `
 const WNavbarItem = styled.div`
    
-    margin:0px 15px 0px 15px; 
+    margin:0px 0.938rem 0px 0.938rem; 
     border-radius: 4px;
     a{
         text-decoration: none;
         display: inline-block;
-        padding: 1.25rem 15px;
+        padding: 1.25rem 0.938rem;
         color: ${blue400};
         font-weight: bold;
         transition: all .1s;
         line-height: 1;
-        font-size: 16px;
+        font-size: 1rem;
     }
     &:hover{
         background-color: ${blue50};
@@ -294,6 +282,6 @@ const WNavbarItem = styled.div`
         }
     }  
     ${MediaQueries.MobileSCSS`
-        margin:3px 15px 3px 15px; 
+        margin:0.188rem 0.938rem 0.188rem 0.938rem; 
     `}
 `

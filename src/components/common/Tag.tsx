@@ -52,16 +52,14 @@ type WTagItemProps = {
     hasBorder?: boolean
 }
 
-type WTagBlockProps = {
-    cancelIcon?: IconProp
-}
 
 
-const WTagBlock = styled.div<WTagBlockProps>`
+const WTagBlock = styled.div<{ cancelIcon?: IconProp }>`
         width:${props => props.cancelIcon ? "100px" : "auto"};
     `
 const WTagClickBlock = styled.div`
         display: inline-block;
+        margin: 0.125rem 0.313rem;
         cursor:pointer;
     `
 const WTagItem = styled.div<WTagItemProps>`
@@ -69,7 +67,7 @@ const WTagItem = styled.div<WTagItemProps>`
         display: inline-block;
         font-size: 0.875rem;
         padding: 0.313rem;
-        margin: 0.125rem 0.313rem;
+     
         border-radius:5px;
         font-weight: bold;
         transition: all .3s;

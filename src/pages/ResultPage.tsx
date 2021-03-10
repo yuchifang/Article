@@ -27,7 +27,6 @@ export default function ResultPage({ location: { state: { searchValue } } }: Res
                 wrap={true}
                 rowsCount={2}
                 columnsCount={100} />
-
         </WResultPageContainer>
     )
 }
@@ -37,10 +36,10 @@ const WResultPageContainer = styled.div`
     margin :auto;
     padding: 0 0px;
     ${MediaQueries.MobileSCSS`
-        padding: 0px 15px;
+        padding: 0px 0.938rem;
     `}
     ${MediaQueries.DesktopSCSS`
-        padding: 0px 30px;
+        padding: 0px 1.875rem;
     `}
     display:flex;
     justify-content:space-between;

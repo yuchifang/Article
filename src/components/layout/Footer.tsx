@@ -11,7 +11,7 @@ export default function Footer() {
 
 
 const WFooterSection = styled.div`
-    padding:30px;
+    padding:1.875rem;
     background-color:${blue50}
 `
 const WFooterTitle = styled.p`

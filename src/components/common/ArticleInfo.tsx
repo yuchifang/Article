@@ -50,12 +50,8 @@ export default function ArticleInfo({
     )
 }
 
-type WArticleInfoProps = {
-    rowsCount: number;
-}
 
-
-const WArticleInfo = styled.div<WArticleInfoProps>`
+const WArticleInfo = styled.div<{ rowsCount: number }>`
         box-sizing: border-box;
         width: calc( 90% / ${props => props.rowsCount});
         margin: 0.625rem;

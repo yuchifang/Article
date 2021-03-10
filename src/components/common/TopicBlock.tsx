@@ -180,38 +180,23 @@ export default function TopicBlock({
     )
 }
 
-type WTopicTitleProps = {
-    titlePlace: string
-}
-
-type WFilterListProps = {
-    show: boolean
-}
-
-type WArticleInfoBlockProps = {
-    wrap: boolean
-}
-
-type WFilterShowList = {
-    show: boolean
-}
-
 
 const WTopicBlock = styled.div`
     width:100%;
-    padding: 25px 0.625rem;
+    padding: 1.563rem 0.625rem;
+    box-sizing: border-box;
     ${MediaQueries.DesktopSCSS`
-        padding:45px;
+        padding:2.813rem;
     `}
 `
 
-const WTopicTitle = styled.p<WTopicTitleProps>`
+const WTopicTitle = styled.p<{ titlePlace: string }>`
     text-align:${props => props.titlePlace};
     color:${blue600};
     font-weight: bold;
-    font-size: 30px;
+    font-size: 1.875rem;
     line-height: 1;
-    margin-bottom:30px;
+    margin-bottom:1.875rem;
 `
 
 const WFilterFeature = styled.div`
@@ -220,18 +205,18 @@ const WFilterFeature = styled.div`
     flex-direction: column;
     align-items: flex-start;
     border-bottom: 1px solid #ddd;
-    padding-bottom: 7px;
+    padding-bottom: 0.438rem;
 `
 
 const WFilterBlock = styled.div`
-    padding-bottom: 7px;
-    margin-bottom:2px;
+    padding-bottom: 0.438rem;
+    margin-bottom:0.125rem;
     cursor: pointer;
 `
 
-const WFilterShowList = styled.div<WFilterShowList>`
+const WFilterShowList = styled.div<{ show: boolean }>`
     transition: max-height .5s .3s;
-    max-height:${props => props.show ? "60px" : "1.25rem"};
+    max-height:${props => props.show ? "60px" : "20px"};
     overflow: hidden;
 `
 
@@ -246,7 +231,7 @@ const WFilterText = styled.p`
     font-weight: bold;
 `
 
-const WArticleInfoBlock = styled.div<WArticleInfoBlockProps>`
+const WArticleInfoBlock = styled.div<{ wrap: boolean }>`
     display: flex;
     justify-content: space-around;
     width:100%;

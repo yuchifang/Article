@@ -44,8 +44,9 @@ function App() {
   // https://overreacted.io/before-you-memo/
   // >看看自己專案的命名規則 component/  變數
 
-
-
+  // 每個架構看一次
+  // 製作RWD
+  // article 的主頁有點怪
   // RWD << font size
   // 將 type 做修改
 

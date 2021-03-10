@@ -11,10 +11,10 @@ export const WContainer = css`
     margin: auto;
     padding: 0 0.625rem;
     ${MediaQueries.MobileSCSS`
-        padding: 0px 15px;
+        padding: 0px 0.938rem;
     `}
     ${MediaQueries.DesktopSCSS`
-        padding: 0px 30px;
+        padding: 0px 1.875rem;
     `} 
     
 `

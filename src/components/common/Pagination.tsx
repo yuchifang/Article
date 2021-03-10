@@ -89,15 +89,6 @@ export default function Pagination({
 }
 
 
-
-type WIconButtonProps = {
-    cursor?: boolean
-}
-
-type WNumberItemProps = {
-    active?: boolean
-}
-
 const WItemHightStyled = css`
     color:${blue600};
     border:solid 1px ${blue400};
@@ -133,12 +124,12 @@ const WPaginationItem = styled.li`
     
 `
 
-const WNumberItem = styled.div<WNumberItemProps>`
+const WNumberItem = styled.div<{ active?: boolean }>`
     ${WItemOnClickStyled};
     ${props => props.active ? WItemHightStyled : ""};
 `
 
-const WIconButton = styled.button<WIconButtonProps>`
+const WIconButton = styled.button<{ cursor?: boolean }>`
     ${WItemOnClickStyled};
     
     background-color: transparent;
