@@ -107,7 +107,7 @@ const WHeaderSection = styled.header`
 const WHeaderContainer = styled.div`
     max-width: 1280px;
     margin :auto;
-    padding: 0 0px;
+    padding: 0px  0.625rem;
     ${MediaQueries.MobileSCSS`
         padding: 0px 0.938rem;
     `}

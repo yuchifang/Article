@@ -23,7 +23,7 @@ export const objToArr = (obj: any) => {
 }
 export const _slice = (x: number, y: number) => (arr: []) => arr.slice(x, y)
 export const _filter = (f: any) => (arr: []) => arr.filter(f)
-export function timestampToDate(timestamp: Date) {
+export function timestampToDate(timestamp: any) {
     let timestampNumber = Number(timestamp)
     if (timestamp.toString().length === 10) timestampNumber = timestampNumber * 1000
     if (timestamp.toString().length === 13) timestampNumber = timestampNumber

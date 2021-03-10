@@ -8,6 +8,7 @@ import { RouteComponentProps } from "react-router-dom"
 import { RootState } from '../store/reducers/RootReducer'
 import { blue50 } from "../styles/General"
 import Tag from "../components/common/Tag"
+import { MediaQueries } from '../styles/media'
 
 type Location = {
     articleId: string
@@ -78,17 +79,19 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
                             <WArticleFigure>
                                 <WImg src={article.avatar} />
                             </WArticleFigure>
-                            <WAuthor>作者:{article.authorName}</WAuthor>
-                            <WPublicTime>{timestampToDate(article?.public_at)}</WPublicTime>
-                            <WTagList>
-                                {(!!article?.tags && article?.tags.length > 0) ? article?.tags.map((item: Tag, index: number) =>
-                                    <Tag
-                                        iconBackgroundColor={blue50}
-                                        text={item.tag}
-                                        key={index}
-                                        handleClick={(e) => handleTagClick(e)} />
-                                ) : null}
-                            </WTagList>
+                            <WAuthorInfoContent>
+                                <WAuthor>作者:{article.authorName}</WAuthor>
+                                <WPublicTime>{timestampToDate(article?.public_at)}</WPublicTime>
+                                <WTagList>
+                                    {(!!article?.tags && article?.tags.length > 0) ? article?.tags.map((item: Tag, index: number) =>
+                                        <Tag
+                                            iconBackgroundColor={blue50}
+                                            text={item.tag}
+                                            key={index}
+                                            handleClick={(e) => handleTagClick(e)} />
+                                    ) : null}
+                                </WTagList>
+                            </WAuthorInfoContent>
                         </WArticleInfo>
                         <WArticleContent dangerouslySetInnerHTML={{ __html: article.body }} />
                     </WArticleBlock>
@@ -134,9 +137,26 @@ const WArticleTitle = styled.h1`
 `
 
 const WArticleInfo = styled.div`
-    position: absolute;
-    left: -25rem;
-    width: 15.625rem;
+  
+    position: relative;
+    left:0;
+    width:auto;
+    display:flex;
+    margin-bottom: 15px;
+    justify-content: space-around;
+    align-items: center;
+    ${MediaQueries.DesktopLCSS`
+        display:block;
+        position: absolute;
+        left: -20rem;
+        width: 15.625rem;
+    `}
+`
+
+const WAuthorInfoContent = styled.div`
+    display: flex;
+    flex-direction: column;
+   
 `
 
 const WArticleFigure = styled.figure`

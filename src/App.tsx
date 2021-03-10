@@ -14,7 +14,6 @@ import { RootState } from './store/reducers/RootReducer'
 // 注意
 // 寫到APP 上
 fromEvent??
-Result 加 container max-width <<
 
 //看看可不可以把 style 物件 宣告到同頁
 // 想辦法做一起引入一隻style index.js
@@ -44,9 +43,10 @@ function App() {
   // https://overreacted.io/before-you-memo/
   // >看看自己專案的命名規則 component/  變數
 
-  // 每個架構看一次
+
   // 製作RWD
-  // article 的主頁有點怪
+  // 980 一個級距
+
   // RWD << font size
   // 將 type 做修改
 
