@@ -42,7 +42,8 @@ export default function TopicPage({
     rowsCount = 4,
     columnsCount = 1,
     wrap = false,
-    titlePlace = "left"
+    titlePlace = "left",
+    hasPagination = false
 }) {
     const storeArticleList = useSelector((state: RootState) => state.WriterList)
     const propsArticleList = useMemo(() => {
@@ -166,11 +167,11 @@ export default function TopicPage({
                     }
                 )}
             </WArticleInfoBlock>
-            <Pagination
+            {hasPagination && <Pagination
                 currentPage={pageState.currentPage}
                 singlePageItemCount={singlePageItemCount}
                 ListLength={articleInfoList.length}
-                handleChange={handleChange} />
+                handleChange={handleChange} />}
         </WTopicBlock >
     )
 }

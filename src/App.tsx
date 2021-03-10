@@ -44,13 +44,15 @@ function App() {
   // https://overreacted.io/before-you-memo/
   // >看看自己專案的命名規則 component/  變數
 
-  // html Tag
 
-  // 改改 Topic padding margin
+
+  // RWD << font size
+  // slider <<
+  // 三個狀態 << 初始,loading, 完成
+  // TopicBlock 改動?
+
   // 看看 store useState 的用法
   // 重新整理store 會不會不見
-  // 分頁
-  // slider
   // font-size RWD 
   // 考慮在HomePage 用物件map呈現?
   // loading 狀態
