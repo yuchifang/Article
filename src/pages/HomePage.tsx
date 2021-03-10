@@ -4,7 +4,7 @@ import {
     _filter,
     _log
 } from '../utils/utils'
-import TopicPage from '../components/common/TopicBlock'
+import TopicBlock from '../components/common/TopicBlock'
 import { WContainer } from '../styles/General'
 import { HeaderPageProps } from "./HeaderPage"
 
@@ -19,7 +19,7 @@ export default function HomePage({ topicTitleList }: HeaderPageProps) {
         <WHomePage>
             <WHomePageSection>
                 <WHomePageContainer>
-                    <TopicPage
+                    <TopicBlock
                         showTitle={true}
                         title={topicTitleList[0].name}
                         rowsCount={3}
@@ -29,7 +29,7 @@ export default function HomePage({ topicTitleList }: HeaderPageProps) {
             </WHomePageSection>
             <WHomePageSection>
                 <WHomePageContainer>
-                    <TopicPage
+                    <TopicBlock
                         showTitle={true}
                         title={topicTitleList[1].name}
                         rowsCount={2}
@@ -40,7 +40,7 @@ export default function HomePage({ topicTitleList }: HeaderPageProps) {
             </WHomePageSection>
             <WHomePageSection>
                 <WHomePageContainer>
-                    <TopicPage
+                    <TopicBlock
                         showTitle={true}
                         title={topicTitleList[2].name}
                         rowsCount={4}
@@ -53,7 +53,8 @@ export default function HomePage({ topicTitleList }: HeaderPageProps) {
 }
 
 
-const WHomePageContainer = styled(WContainer)`
+const WHomePageContainer = styled.div`
+    ${WContainer};
     flex-direction: column;   
 `
 

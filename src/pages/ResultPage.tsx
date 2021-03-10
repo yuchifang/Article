@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { pipe, _filter, packTagsString, countRepeatTag, _map, stringToLower, objToArr, _sort, _slice } from '../utils/utils'
-import TopicPage from '../components/common/TopicBlock'
+import TopicBlock from '../components/common/TopicBlock'
 import { RouteComponentProps } from 'react-router-dom'
 import styled from 'styled-components'
 import { MediaQueries } from '../styles/media'
@@ -18,7 +18,7 @@ export default function ResultPage({ location: { state: { searchValue } } }: Res
 
     return (
         <WResultPageContainer>
-            <TopicPage
+            <TopicBlock
                 filter={true}
                 hasPagination={true}
                 titlePlace="center"
@@ -36,7 +36,7 @@ const WResultPageContainer = styled.div`
     max-width: 1280px;
     margin :auto;
     padding: 0 0px;
-    ${MediaQueries.MobileCSS`
+    ${MediaQueries.MobileSCSS`
         padding: 0px 15px;
     `}
     ${MediaQueries.DesktopSCSS`

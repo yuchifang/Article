@@ -27,6 +27,7 @@ type ArticleProps = {
     title: string,
     total_hits: string
 }
+
 const singlePageItemCount = 10
 const defaultPageState = {
     currentPage: 1,
@@ -34,7 +35,8 @@ const defaultPageState = {
     minIndex: 0
 }
 
-export default function TopicPage({
+
+export default function TopicBlock({
     filter = false,
     showTitle = true,
     title = "標題",
@@ -68,6 +70,8 @@ export default function TopicPage({
     const [publicTimeActive, setPublicTimeActive] = useState(false)
     const [viewCountActive, setViewCountActive] = useState(true)
     const [pageState, setPageState] = useState(defaultPageState)
+
+    const showPagination = articleInfoList.length / singlePageItemCount > 1 ? true : false
 
     useEffect(() => {
         setArticleInfoList(propsArticleList)
@@ -167,7 +171,7 @@ export default function TopicPage({
                     }
                 )}
             </WArticleInfoBlock>
-            {hasPagination && <Pagination
+            {(hasPagination && showPagination) && <Pagination
                 currentPage={pageState.currentPage}
                 singlePageItemCount={singlePageItemCount}
                 ListLength={articleInfoList.length}
@@ -194,7 +198,8 @@ type WFilterShowList = {
 
 
 const WTopicBlock = styled.div`
-    padding: 25px 10px;
+    width:100%;
+    padding: 25px 0.625rem;
     ${MediaQueries.DesktopSCSS`
         padding:45px;
     `}
@@ -211,7 +216,7 @@ const WTopicTitle = styled.p<WTopicTitleProps>`
 
 const WFilterFeature = styled.div`
     display: flex;
-    margin: 0 20px;
+    margin: 0 1.25rem;
     flex-direction: column;
     align-items: flex-start;
     border-bottom: 1px solid #ddd;
@@ -226,7 +231,7 @@ const WFilterBlock = styled.div`
 
 const WFilterShowList = styled.div<WFilterShowList>`
     transition: max-height .5s .3s;
-    max-height:${props => props.show ? "60px" : "20px"};
+    max-height:${props => props.show ? "60px" : "1.25rem"};
     overflow: hidden;
 `
 
@@ -237,7 +242,7 @@ const WFilterList = styled.div`
 
 const WFilterText = styled.p`
     display: inline-block;
-    margin: 0 10px;
+    margin: 0 0.625rem;
     font-weight: bold;
 `
 

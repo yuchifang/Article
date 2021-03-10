@@ -47,9 +47,12 @@ function App() {
 
 
   // RWD << font size
+  // 將 type 做修改
+
   // slider <<
   // 三個狀態 << 初始,loading, 完成
-  // TopicBlock 改動?
+  // TopicBlock 改動 是否要再 TopicBlock處理資料 還是單純render?
+  // go top ?
 
   // 看看 store useState 的用法
   // 重新整理store 會不會不見

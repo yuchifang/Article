@@ -108,7 +108,7 @@ const WItemNoHightStyled = css`
 `
 
 const WItemOnClickStyled = css`
-    padding: 6px 10px;
+    padding: 0.375rem 0.625rem;
     cursor: pointer;
     line-height: 1;
     border:solid 1px ${blue50};
@@ -123,9 +123,9 @@ const WPaginationList = styled.ul`
     display:flex;
     align-items: center;
     justify-content: center;
-    padding: 5px 5px;
+    padding: 0.313rem 0.313rem;
     >li + li {
-        margin-left:5px;
+        margin-left:0.313rem;
     }
 `
 
@@ -143,7 +143,7 @@ const WIconButton = styled.button<WIconButtonProps>`
     
     background-color: transparent;
     cursor: ${props => props.cursor ? " not-allowed" : "pointer"};
-    padding: 8px 11px;
+    padding: 0.5rem 0.688rem;
     &:focus{
         outline:none;
     }
@@ -154,11 +154,11 @@ const WIconButton = styled.button<WIconButtonProps>`
 
 const WLeftIcon = styled(FontAwesomeIcon)`
     
-    width:50px;
+    width:3.125rem;
 `
 
 const WRightIcon = styled(FontAwesomeIcon)`
     
-    width:50px;
+    width:3.125rem;
 `
 

@@ -111,7 +111,7 @@ type WSearchFeatureProps = {
 const WHeaderSection = styled.header`
     position: relative;
     z-index: 1;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, .1),
+    box-shadow: 0 1px 0.375rem rgba(0, 0, 0, .1),
     0 4px 24px rgba(0, 0, 0, .06);
     width:100%;
 `
@@ -120,7 +120,7 @@ const WHeaderContainer = styled.div`
     max-width: 1280px;
     margin :auto;
     padding: 0 0px;
-    ${MediaQueries.MobileCSS`
+    ${MediaQueries.MobileSCSS`
         padding: 0px 15px;
     `}
     ${MediaQueries.DesktopSCSS`
@@ -135,7 +135,7 @@ const WHeaderContainer = styled.div`
 
 const WLogoBlock = styled.div`
     width:50%;
-    font-size:20px;
+    font-size:1.25rem;
     box-sizing: border-box;
    
     ${MediaQueries.DesktopSCSS`
@@ -147,12 +147,12 @@ const WLogoLink = styled(Link)`
     display: inline-flex;
     align-items: center;
     text-decoration: none;
-    padding: 8px 10px;
+    padding: 0.5rem 0.625rem;
     margin: 0px 0px;
     border-radius: 4px;
     transition: all .1s;
     svg {
-        margin-right:20px;
+        margin-right:1.25rem;
     }
     &:hover{
         background-color: ${blue50};
@@ -168,6 +168,12 @@ const WLogTitle = styled.div`
     font-size: 25px;
     line-height: 30px;
     color:${blue600};
+    ${MediaQueries.DesktopSCSS`
+        html {
+            font-size:1px;
+        }
+
+    `}
 `
 
 const WFeatureBlock = styled.div`
@@ -183,7 +189,7 @@ const WFeatureBlock = styled.div`
 `
 
 const WFeature = styled.div`
-    padding: 0 10px;
+    padding: 0 0.625rem;
   
     transition: all .5s;
 `
@@ -200,7 +206,7 @@ const WSearchBlock = styled(WSearchFeature) <WSearchBlockProps>`
     right:${props => props?.showSearch ? "-32px" : "-45px"};
     >svg{
         cursor:pointer;
-        border-radius: 6px;
+        border-radius: 0.375rem;
         vertical-align: middle;
     }
 `
@@ -210,7 +216,7 @@ const WInputBlock = styled.div`
     ${MediaQueries.DesktopSCSS`
         width: 150px;
     `}
-    ${MediaQueries.MobileCSS`
+    ${MediaQueries.MobileSCSS`
         width: 120px;
     `}
     border:solid 1px #767676;
@@ -218,8 +224,8 @@ const WInputBlock = styled.div`
     overflow:hidden;
     display:flex;
     align-items: center;
-    margin-right: 10px;
-    padding-right: 8px;
+    margin-right: 0.625rem;
+    padding-right: 0.5rem;
     &:hover{
         >div{
             svg{
@@ -230,7 +236,7 @@ const WInputBlock = styled.div`
 `
 
 const WSearchInputIcon = styled.div`
-    width: 10px;
+    width: 0.625rem;
     display: flex;
     align-items: center;
     >svg{
@@ -251,7 +257,7 @@ const WSearchInput = styled.input`
     font-size: 18px;
     vertical-align: middle;
     width: 100%;
-    padding: 4px 0px 4px 11px;
+    padding: 4px 0px 4px 0.688rem;
     border:none;
     &:focus{
         outline: none;
@@ -274,7 +280,7 @@ const WNavbarItem = styled.div`
     a{
         text-decoration: none;
         display: inline-block;
-        padding: 20px 15px;
+        padding: 1.25rem 15px;
         color: ${blue400};
         font-weight: bold;
         transition: all .1s;
@@ -287,7 +293,7 @@ const WNavbarItem = styled.div`
             color:${blue600};
         }
     }  
-    ${MediaQueries.MobileCSS`
+    ${MediaQueries.MobileSCSS`
         margin:3px 15px 3px 15px; 
     `}
 `

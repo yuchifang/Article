@@ -29,7 +29,7 @@ export default function Tag({
     text
 }: TagProps) {
     return (
-        <WTagBlock>
+        <WTagBlock cancelIcon={cancelIcon}>
             <WTagClickBlock
                 onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => handleClick(e)}>
                 <WTagItem
@@ -52,10 +52,13 @@ type WTagItemProps = {
     hasBorder?: boolean
 }
 
+type WTagBlockProps = {
+    cancelIcon?: IconProp
+}
 
 
-const WTagBlock = styled.div`
-        width:100px;
+const WTagBlock = styled.div<WTagBlockProps>`
+        width:${props => props.cancelIcon ? "100px" : "auto"};
     `
 const WTagClickBlock = styled.div`
         display: inline-block;
@@ -64,10 +67,10 @@ const WTagClickBlock = styled.div`
 const WTagItem = styled.div<WTagItemProps>`
         vertical-align: middle;
         display: inline-block;
-        font-size: 14px;
-        padding: 5px;
-        margin: 2px 5px;
-        border-radius: 5px;
+        font-size: 0.875rem;
+        padding: 0.313rem;
+        margin: 0.125rem 0.313rem;
+        border-radius:5px;
         font-weight: bold;
         transition: all .3s;
         ${props => props.hasBorder ? "border: 1px solid #aaa;" : ""}

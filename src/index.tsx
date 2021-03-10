@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from "react-redux"
 import store from "./store/store"
 import { createGlobalStyle } from "styled-components"
+import { MediaQueries } from "./styles/media"
 
 const GlobalStyle = createGlobalStyle`
     *{
@@ -14,8 +15,12 @@ const GlobalStyle = createGlobalStyle`
         list-style: none;
     }
     
-    html,body{
+    html{
       width: 100vw;
+      font-size:16px;
+      ${MediaQueries.MobileSCSS`
+        font-size:12px
+      `}
     }
 `
 

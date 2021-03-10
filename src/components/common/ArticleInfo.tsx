@@ -58,10 +58,10 @@ type WArticleInfoProps = {
 const WArticleInfo = styled.div<WArticleInfoProps>`
         box-sizing: border-box;
         width: calc( 90% / ${props => props.rowsCount});
-        margin: 10px;
+        margin: 0.625rem;
         cursor:pointer;
         ${MediaQueries.DesktopSCSS`
-            margin: 20px;
+            margin: 1.25rem;
         `}
         &:hover{
             figure{
@@ -87,24 +87,24 @@ const WInfoImg = styled.img`
 
 const WInfoCategory = styled.p`
         color: ${blue400};
-        font-size: 14px;
+        font-size: 0.875rem;
         transition: all .3s;
     `
 
 const WInfoTitle = styled.p`
         color: ${blue600};
-        font-size: 18px;
+        font-size: 1.125rem;
         transition: all .3s;
         font-weight: bold;
     `
 
 const WPublicTime = styled.p`
         color: ${blue400};
-        font-size: 14px;
+        font-size: 0.875rem;
     `
 
 const WViewCount = styled.p`
         color: ${blue400};
-        font-size: 14px;
+        font-size: 0.875rem;
     `
 

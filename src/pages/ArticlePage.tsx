@@ -105,11 +105,11 @@ const WTagList = styled.div`
 `
 
 // const  WTag = styled.div`
-//     padding: 5px;
+//     padding: 0.313rem;
 //     border: 1px solid black;
 //     border-radius: 15px;
 //     line-height: 0.8;
-//     margin: 2px 5px;
+//     margin: 2px 0.313rem;
 //     cursor: pointer;
 // `
 
@@ -124,7 +124,7 @@ const WCategory = styled.p`
     line-height: 20px;
     margin:auto;
     font-weight: bold; 
-    padding-left:10px;   
+    padding-left:0.625rem;   
 `
 
 const WArticleTitle = styled.h1`
@@ -135,13 +135,13 @@ const WArticleTitle = styled.h1`
 
 const WArticleInfo = styled.div`
     position: absolute;
-    left: -60%;
+    left: -25rem;
     width: 250px;
 `
 
 const WArticleFigure = styled.figure`
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 0.313rem;
 `
 
 const WImg = styled.img`
@@ -149,25 +149,25 @@ const WImg = styled.img`
 `
 
 const WAuthor = styled.p`
-    margin-bottom:5px;
+    margin-bottom:0.313rem;
 `
 
 const WPublicTime = styled.p`
-    margin-bottom:5px;
+    margin-bottom:0.313rem;
 `
 
 const WArticleBlock = styled.div`
     position:relative;
     max-width:580px;
     margin:auto;
-    padding-top:50px;
+    padding-top:3.125rem;
 `
 
 const WArticleContent = styled.div`
     p{
-        padding:5px 0px;
+        padding:0.313rem 0px;
         >img{
-            margin: 10px auto;
+            margin: 0.625rem auto;
             display:block;
         }
     }
@@ -178,7 +178,8 @@ const WArticlePageSection = styled.section`
     padding:25px 0px;
 `
 
-const WArticlePageContainer = styled(WContainer)`
+const WArticlePageContainer = styled.div`
+    ${WContainer};
     flex-direction: column;
 `
 
