@@ -111,7 +111,7 @@ const WHeaderContainer = styled.div`
     ${MediaQueries.MobileSCSS`
         padding: 0px 0.938rem;
     `}
-    ${MediaQueries.DesktopSCSS`
+    ${MediaQueries.MobileLCSS`
         padding: 0px 1.875rem;
     `}
     display:flex;
@@ -126,7 +126,7 @@ const WLogoBlock = styled.div`
     font-size:1.25rem;
     box-sizing: border-box;
    
-    ${MediaQueries.DesktopSCSS`
+    ${MediaQueries.MobileLCSS`
         width: unset;
     `}   
 `
@@ -145,7 +145,7 @@ const WLogoLink = styled(Link)`
     &:hover{
         background-color: ${blue50};
     }
-    ${MediaQueries.DesktopSCSS`
+    ${MediaQueries.MobileLCSS`
         margin: 0.188rem 0px;
     `}   
     
@@ -156,7 +156,7 @@ const WLogTitle = styled.div`
     font-size: 1.5625rem;
     line-height: 1.875rem;
     color:${blue600};
-    ${MediaQueries.DesktopSCSS`
+    ${MediaQueries.MobileLCSS`
         html {
             font-size:1px;
         }
@@ -170,7 +170,7 @@ const WFeatureBlock = styled.div`
     justify-content: flex-end;
     width:50%;
     align-items: center;
-    ${MediaQueries.DesktopSCSS`
+    ${MediaQueries.MobileLCSS`
         width: unset;
         order:2;
     `}
@@ -201,7 +201,7 @@ const WSearchBlock = styled(WSearchFeature) <{ showSearch: boolean }>`
 
 const WInputBlock = styled.div`
     width: 6.25rem;
-    ${MediaQueries.DesktopSCSS`
+    ${MediaQueries.MobileLCSS`
         width: 9.375rem;
     `}
     ${MediaQueries.MobileSCSS`
@@ -257,7 +257,7 @@ const WNavbar = styled.nav`
     align-items: center;
     display: flex;
     justify-content: center;
-    ${MediaQueries.DesktopSCSS`
+    ${MediaQueries.MobileLCSS`
         width: unset;
     `}
 `

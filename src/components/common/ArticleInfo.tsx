@@ -53,10 +53,11 @@ export default function ArticleInfo({
 
 const WArticleInfo = styled.div<{ rowsCount: number }>`
         box-sizing: border-box;
-        width: calc( 90% / ${props => props.rowsCount});
         margin: 0.625rem;
         cursor:pointer;
-        ${MediaQueries.DesktopSCSS`
+        width:90%;
+        ${MediaQueries.MobileLCSS`
+            width: calc( 90% / ${(props: any) => props.rowsCount});
             margin: 1.25rem;
         `}
         &:hover{

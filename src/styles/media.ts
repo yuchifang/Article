@@ -19,7 +19,7 @@ const MediaCSS = (size: number) => (...args: any[]) => css`
 export const MediaQueries = {
     MobileSCSS: MediaCSS(size.mobile),
     MobileMCSS: MediaCSS(size.mobileM),
-    DesktopSCSS: MediaCSS(size.desktopS),
+    MobileLCSS: MediaCSS(size.desktopS),
     DesktopMCSS: MediaCSS(size.desktopM),
     DesktopLCSS: MediaCSS(size.desktopL),
 }

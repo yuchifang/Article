@@ -13,7 +13,7 @@ export const WContainer = css`
     ${MediaQueries.MobileSCSS`
         padding: 0px 0.938rem;
     `}
-    ${MediaQueries.DesktopSCSS`
+    ${MediaQueries.MobileLCSS`
         padding: 0px 1.875rem;
     `} 
     

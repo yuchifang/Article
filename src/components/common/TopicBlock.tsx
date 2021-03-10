@@ -185,7 +185,7 @@ const WTopicBlock = styled.div`
     width:100%;
     padding: 1.563rem 0.625rem;
     box-sizing: border-box;
-    ${MediaQueries.DesktopSCSS`
+    ${MediaQueries.MobileLCSS`
         padding:2.813rem;
     `}
 `
