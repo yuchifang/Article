@@ -4,15 +4,16 @@ import { blue600, blue400 } from '../../styles/General'
 import { Link, useHistory } from 'react-router-dom'
 import { timestampToDate } from '../../utils/utils'
 import { MediaQueries } from "../../styles/media"
-type ArticleInfoProps = {
-    blockNumber?: number,
-    rowsCount: number,
+type ArticleInfoProps = { //blockNumber 
+    blockCount?: number,
+    rowsCount?: number,
     title: string,
     category: string,
     index: number,
     articleId: string,
     publicAt: string,
     views: string,
+    imgSrc?: string
 }
 
 
@@ -20,11 +21,12 @@ export default function ArticleInfo({
     category,
     title,
     index,
-    blockNumber,
+    blockCount,
     rowsCount,
     articleId,
     publicAt,
-    views
+    views,
+    imgSrc = `https://fakeimg.pl/350x200/?text=fakeImg${index}`
 }: ArticleInfoProps) {
     const history = useHistory()
     const handleClick = (articleId: string): void => {
@@ -40,7 +42,7 @@ export default function ArticleInfo({
     return (
         <WArticleInfo onClick={() => handleClick(articleId)} rowsCount={rowsCount}>
             <WInfoFigure>
-                <WInfoImg src={`https://fakeimg.pl/350x200/?text=fakeImg${index}`} alt="fakeImg" />
+                <WInfoImg src={imgSrc} alt="fakeImg" />
             </WInfoFigure>
             <WInfoTitle>{title}</WInfoTitle>
             {!!category && category !== "未分類" && category.length > 0 && <WInfoCategory>{category}</WInfoCategory>}
@@ -51,7 +53,7 @@ export default function ArticleInfo({
 }
 
 
-const WArticleInfo = styled.div<{ rowsCount: number }>`
+const WArticleInfo = styled.div<{ rowsCount?: number }>`
         box-sizing: border-box;
         margin: 0.625rem;
         cursor:pointer;

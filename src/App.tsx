@@ -9,7 +9,6 @@ import ArticlePage from './pages/ArticlePage'
 import ResultPage from './pages/ResultPage'
 import { pipe, packTagsString, countRepeatTag, _map, stringToLower, objToArr, _sort, _slice } from "./utils/utils"
 import { RootState } from './store/reducers/RootReducer'
-
 /*
 // 注意
 // 寫到APP 上
@@ -43,19 +42,26 @@ function App() {
   // https://overreacted.io/before-you-memo/
   // >看看自己專案的命名規則 component/  變數
 
+  // 重新看一次 
 
-  // 製作RWD
-  // 980 一個級距
+
   // slider
 
   // 三個狀態 << 初始,loading, 完成
 
+  // ArticleInfo 模組 傳img 進去
+  // 想想怎麼使用Carousel
+
   // TopicBlock 改動 是否要再 TopicBlock處理資料 還是單純render?
   // go top ?
+
+  // 製作一個slider 先
 
   // 看看 store useState 的用法
   // 重新整理store 會不會不見
   // 考慮在HomePage 用物件map呈現?
+
+
 
   type Tag = {
     name: string,

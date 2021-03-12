@@ -16,6 +16,9 @@ import { RootState } from '../../store/reducers/RootReducer'
 import Tag from "./Tag"
 import { MediaQueries } from "../../styles/media"
 import Pagination from "./Pagination"
+import { useRWD } from '../../utils/hooks'
+import Carousel from '../common/Carousel'
+
 
 type ArticleProps = {
     articleId: string,
@@ -40,13 +43,14 @@ export default function TopicBlock({
     filter = false,
     showTitle = true,
     title = "標題",
-    blockNumber = 4,
+    blockCount: blockCount = 4,
     rowsCount = 4,
     columnsCount = 1,
     wrap = false,
     titlePlace = "left",
     hasPagination = false
 }) {
+    const device = useRWD()
     const storeArticleList = useSelector((state: RootState) => state.WriterList)
     const propsArticleList = useMemo(() => {
         //@ts-ignore
@@ -119,6 +123,7 @@ export default function TopicBlock({
         "vertical-align": "middle",
         "display": viewCountActive ? "inline-block" : "none"
     }
+
     return (
         <WTopicBlock>
             {showTitle && <WTopicTitle titlePlace={titlePlace}>{title}</WTopicTitle>}
@@ -153,29 +158,32 @@ export default function TopicBlock({
                 </WFilterFeature>}
             <WArticleInfoBlock  //@ts-ignore
                 wrap={wrap}>
-                {articleInfoList?.length > 0 && articleInfoList.map(
-                    //@ts-ignore
-                    (articleInfo, index) => {
-                        if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
-                            return <ArticleInfo
-                                key={`${articleInfo.title + index}`}
-                                blockNumber={rowsCount * columnsCount}
-                                rowsCount={rowsCount}
-                                title={articleInfo.title}
-                                category={articleInfo.category}
-                                index={index}
-                                articleId={articleInfo.articleId}
-                                publicAt={articleInfo.public_at}
-                                views={articleInfo.total_hits}
-                            />
-                    }
-                )}
+                {device === "PC" &&
+                    articleInfoList?.length > 0 && articleInfoList.map(
+                        //@ts-ignore
+                        (articleInfo, index) => {
+                            if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
+                                return <ArticleInfo
+                                    key={`${articleInfo.title + index}`}
+                                    blockCount={rowsCount * columnsCount}
+                                    rowsCount={rowsCount}
+                                    title={articleInfo.title}
+                                    category={articleInfo.category}
+                                    index={index}
+                                    articleId={articleInfo.articleId}
+                                    publicAt={articleInfo.public_at}
+                                    views={articleInfo.total_hits}
+                                />
+                        }
+                    )}
+                {device === "Mobile" && <Carousel carouselArr={articleInfoList} />}
             </WArticleInfoBlock>
-            {(hasPagination && showPagination) && <Pagination
-                currentPage={pageState.currentPage}
-                singlePageItemCount={singlePageItemCount}
-                ListLength={articleInfoList.length}
-                handleChange={handleChange} />}
+            {(hasPagination && showPagination) &&
+                <Pagination
+                    currentPage={pageState.currentPage}
+                    singlePageItemCount={singlePageItemCount}
+                    ListLength={articleInfoList.length}
+                    handleChange={handleChange} />}
         </WTopicBlock >
     )
 }
