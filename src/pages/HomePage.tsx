@@ -20,6 +20,7 @@ export default function HomePage({ topicTitleList }: HeaderPageProps) {
             <WHomePageSection>
                 <WHomePageContainer>
                     <TopicBlock
+                        showCarousel={true}
                         showTitle={true}
                         title={topicTitleList[0].name}
                         rowsCount={3}
@@ -41,6 +42,7 @@ export default function HomePage({ topicTitleList }: HeaderPageProps) {
             <WHomePageSection>
                 <WHomePageContainer>
                     <TopicBlock
+                        showCarousel={true}
                         showTitle={true}
                         title={topicTitleList[2].name}
                         rowsCount={4}

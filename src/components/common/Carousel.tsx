@@ -1,23 +1,9 @@
 import React, { useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import ArticleInfo from "./ArticleInfo"
-//  三個模組
-//  - 自動輪播
-//  - slider
-// --自動輪播
-// --左右按鍵 控制 選擇
-// --淡入淡出
-// --陣列選擇每一格做輸出
-
-// -lightBox
 
 
-// Carousel
 
-// 一個陣列
-// 可見寬度 是多少 >> 一個item 的 寬度
-// 一個item 寬度 
-// 計算出 keyframes 位移量 >> 需要  1.有幾個 item  2. 一個item 多寬
 
 const moveLeft = (moveDistance: number) => keyframes`
   0% {
@@ -42,10 +28,10 @@ export default function Carousel({
 }) {
 
 
-    const getArrLength = carouselArr.length
+    const arrLength = carouselArr.length
     const [itemDimension, setItemDimension] = useState({ height: 200, width: 200 })
     const distance = itemDimension.width
-    const totalDistance = getArrLength * distance
+    const totalDistance = arrLength * distance
     const handleItemDimension = (e: React.SyntheticEvent<HTMLImageElement, Event>, index: number): void => {
         const target = e.target as HTMLElement
         if (index === 0) {
@@ -59,7 +45,7 @@ export default function Carousel({
 
     return (
         <WViewBlock>
-            <WAnimationBlock moveLeft={moveLeft} distance={totalDistance} widthParameter={getArrLength * 2} animationSeconds={animationSeconds}>
+            <WAnimationBlock moveLeft={moveLeft} distance={totalDistance} widthParameter={arrLength * 2} animationSeconds={arrLength}>
                 {carouselArr.map((articleInfo, index) =>
                     <WLi>
                         <ArticleInfo
@@ -109,7 +95,7 @@ const WAnimationBlock = styled.ul<{
     position:relative;
     display:flex;
     width: ${props => props.widthParameter}00%;
-    animation: ${props => props.moveLeft && props.moveLeft(props.distance)} ${props => props.animationSeconds}s infinite linear ;
+    animation: ${props => props.moveLeft && props.moveLeft(props.distance)} ${props => props.animationSeconds}5s infinite linear ;
     &:hover {
         animation-play-state: paused;
     }

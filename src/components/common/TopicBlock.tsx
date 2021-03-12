@@ -29,6 +29,7 @@ type ArticleProps = {
     tags: string[],
     title: string,
     total_hits: string
+    showCarousel?: boolean
 }
 
 const singlePageItemCount = 10
@@ -48,7 +49,8 @@ export default function TopicBlock({
     columnsCount = 1,
     wrap = false,
     titlePlace = "left",
-    hasPagination = false
+    hasPagination = false,
+    showCarousel = false
 }) {
     const device = useRWD()
     const storeArticleList = useSelector((state: RootState) => state.WriterList)
@@ -158,25 +160,28 @@ export default function TopicBlock({
                 </WFilterFeature>}
             <WArticleInfoBlock  //@ts-ignore
                 wrap={wrap}>
-                {device === "PC" &&
-                    articleInfoList?.length > 0 && articleInfoList.map(
-                        //@ts-ignore
-                        (articleInfo, index) => {
-                            if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
-                                return <ArticleInfo
-                                    key={`${articleInfo.title + index}`}
-                                    blockCount={rowsCount * columnsCount}
-                                    rowsCount={rowsCount}
-                                    title={articleInfo.title}
-                                    category={articleInfo.category}
-                                    index={index}
-                                    articleId={articleInfo.articleId}
-                                    publicAt={articleInfo.public_at}
-                                    views={articleInfo.total_hits}
-                                />
-                        }
-                    )}
-                {device === "Mobile" && <Carousel carouselArr={articleInfoList} />}
+                {articleInfoList?.length > 0 &&
+                    <>
+                        {!showCarousel && articleInfoList.map(
+                            //@ts-ignore
+                            (articleInfo, index) => {
+                                if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
+                                    return <ArticleInfo
+                                        key={`${articleInfo.title + index}`}
+                                        blockCount={rowsCount * columnsCount}
+                                        rowsCount={rowsCount}
+                                        title={articleInfo.title}
+                                        category={articleInfo.category}
+                                        index={index}
+                                        articleId={articleInfo.articleId}
+                                        publicAt={articleInfo.public_at}
+                                        views={articleInfo.total_hits}
+                                    />
+                            }
+                        )}
+                        {device === "Mobile" && showCarousel && <Carousel carouselArr={articleInfoList} />}
+                    </>
+                }
             </WArticleInfoBlock>
             {(hasPagination && showPagination) &&
                 <Pagination
