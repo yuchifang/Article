@@ -9,13 +9,14 @@
 陣列選擇每一格做輸出
 ### lightBox
 ### go top
-
+### loading
 
 # 整理  
 Carousel render props?
+建立完整的Button
 
-看看可不可以把 style 物件 宣告到同頁
-想辦法做一起引入一隻style index.js
+獨立一些function?
+
 
 每個component 如果沒有傳值的問題
 取得作者姓名? 一個 或 多個

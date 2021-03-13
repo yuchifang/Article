@@ -4,7 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faBook, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { blue400, blue50, blue600 } from '../styles/General'
 import { Link, useHistory } from 'react-router-dom'
+
 import { MediaQueries } from "../styles/media"
+
 type Tag = {
     name: string,
     value: number
@@ -30,7 +32,6 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
     }
 
     const handlePressEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        // 找title tag
         if (e.key === 'Enter') {
             if (searchRef.current && searchRef.current) {
                 const locationInfo = {

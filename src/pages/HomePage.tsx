@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React from 'react'
+
 import {
     _filter,
     _log
@@ -10,11 +10,6 @@ import { HeaderPageProps } from "./HeaderPage"
 
 export default function HomePage({ topicTitleList }: HeaderPageProps) {
 
-
-    // rowsCount
-    // columnsCount
-    // mode  /"Sticky" Spatial
-    console.log("topicTitleList", topicTitleList)
     return (
         <WHomePage>
             <WHomePageSection>
