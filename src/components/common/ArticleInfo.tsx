@@ -1,10 +1,10 @@
-import React from 'react'
 import styled from 'styled-components'
 import { blue600, blue400 } from '../../styles/General'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { timestampToDate } from '../../utils/utils'
 import { MediaQueries } from "../../styles/media"
-type ArticleInfoProps = { //blockNumber 
+
+type ArticleInfoProps = {
     blockCount?: number,
     rowsCount?: number,
     title: string,

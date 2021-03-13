@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { GetArticle } from '../store/actions/articleAction'
 import { useDispatch, useSelector } from 'react-redux'
@@ -51,7 +51,6 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
 
     const handleTagClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const target = e.target as Element;
-        console.log({ target });
         const locationInfo = {
             pathname: `/ResultPage`,
             state: {
@@ -63,41 +62,46 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
     }
 
 
-    console.log("article", article)
 
     return (
-        (article?.status === "success") ?
-            <WArticlePageSection>
-                <WArticlePageContainer>
-                    <WArticleHeader>
-                        {!!article.category && article.category !== "未分類" && article.category.length > 0 &&
-                            <WCategory>{article.category}</WCategory>}
-                        <WArticleTitle>{article.title}</WArticleTitle>
-                    </WArticleHeader>
-                    <WArticleBlock>
-                        <WArticleInfo>
-                            <WArticleFigure>
-                                <WImg src={article.avatar} />
-                            </WArticleFigure>
-                            <WAuthorInfoContent>
-                                <WAuthor>作者:{article.authorName}</WAuthor>
-                                <WPublicTime>{timestampToDate(article?.public_at)}</WPublicTime>
-                                <WTagList>
-                                    {(!!article?.tags && article?.tags.length > 0) ? article?.tags.map((item: Tag, index: number) =>
-                                        <Tag
-                                            iconBackgroundColor={blue50}
-                                            text={item.tag}
-                                            key={index}
-                                            handleClick={(e) => handleTagClick(e)} />
-                                    ) : null}
-                                </WTagList>
-                            </WAuthorInfoContent>
-                        </WArticleInfo>
-                        <WArticleContent dangerouslySetInnerHTML={{ __html: article.body }} />
-                    </WArticleBlock>
-                </WArticlePageContainer>
-            </WArticlePageSection>
-            : null
+        <>
+            {
+                article?.status === "success" &&
+                <WArticlePageSection>
+                    <WArticlePageContainer>
+                        <WArticleHeader>
+                            {!!article.category && article.category !== "未分類" && article.category.length > 0 &&
+                                <WCategory>{article.category}</WCategory>}
+                            <WArticleTitle>{article.title}</WArticleTitle>
+                        </WArticleHeader>
+                        <WArticleBlock>
+                            <WArticleInfo>
+                                <WArticleFigure>
+                                    <WImg src={article.avatar} />
+                                </WArticleFigure>
+                                <WAuthorInfoContent>
+                                    <WAuthor>作者:{article.authorName}</WAuthor>
+                                    <WPublicTime>{timestampToDate(article?.public_at)}</WPublicTime>
+                                    <WTagList>
+                                        {(!!article && !!article?.tags && article?.tags.length > 0) &&
+                                            article?.tags.map((item: Tag, index: number) =>
+                                                <Tag
+                                                    iconBackgroundColor={blue50}
+                                                    text={item.tag}
+                                                    key={index}
+                                                    handleClick={(e) => handleTagClick(e)} />
+                                            )}
+                                    </WTagList>
+                                </WAuthorInfoContent>
+                            </WArticleInfo>
+                            <WArticleContent dangerouslySetInnerHTML={{ __html: article.body }} />
+                        </WArticleBlock>
+                    </WArticlePageContainer>
+                </WArticlePageSection>
+            }
+            {article?.status === "loading" && <h1>Loading</h1>}
+            {article?.status === "error" && <h1>Error</h1>}
+        </>
     )
 }
 
@@ -107,14 +111,6 @@ const WTagList = styled.div`
     flex-wrap: wrap;
 `
 
-// const  WTag = styled.div`
-//     padding: 0.313rem;
-//     border: 1px solid black;
-//     border-radius: 0.938rem;
-//     line-height: 0.8;
-//     margin: 2px 0.313rem;
-//     cursor: pointer;
-// `
 
 const WArticleHeader = styled.div`
     max-width:720px;

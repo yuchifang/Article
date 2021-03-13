@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
 
 const moveLeft = (moveDistance: number) => keyframes`
@@ -12,8 +12,8 @@ const moveLeft = (moveDistance: number) => keyframes`
 
 `;
 
-
-export default React.memo(function Carousel({
+// renderProps
+export default function Carousel({
     carouselArr = ["https://fakeimg.pl/350x200/ff00bb/?text=1", "https://fakeimg.pl/350x200/ffff22/?text=2", "https://fakeimg.pl/350x200/ff1100/?text=3", "https://fakeimg.pl/350x200/111100/?text=4"],
     children,
 }: {
@@ -40,6 +40,9 @@ export default React.memo(function Carousel({
         })
     }, [])
 
+    // AnimationBlock 為 Carousel 最上層 此層的children 放你要map的陣列
+    // 陣列的每個Item 需要由 AnimationItemBlock 包住
+    // AnimationItemBlock 裡面要包 一個GetDimensionBlock 及 陣列的item
     const AnimationBlock = ({ children }: { children: any }) => <>
         <WViewBlock>
             <WAnimationBlock moveLeft={moveLeft} distance={totalDistance} widthParameter={arrLength * 2} animationSeconds={arrLength}>
@@ -47,7 +50,7 @@ export default React.memo(function Carousel({
             </WAnimationBlock>
         </WViewBlock>
     </>
-
+    //Carousel 最上層 此層的children 放你要map的陣列
     const AnimationItemBlock = ({ children }: { children: any }) => <>
         <WLi>
             {children}
@@ -66,7 +69,7 @@ export default React.memo(function Carousel({
         GetDimensionBlock
     })
 
-})
+}
 
 const WViewBlock = styled.div`
     width: 100%;

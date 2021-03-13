@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { blue50, blue100 } from '../../styles/General'
 export default function Footer() {

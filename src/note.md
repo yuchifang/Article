@@ -12,6 +12,15 @@
 ### loading
 
 # 整理  
+
+三個狀態 << 初始,loading, 完成
+
+TAG TopicBlock props問題
+Pagination 問題 測測number 是否有自己想的雷同
+Carousel 問題 沒看
+ArticleInfo 問題 props
+
+
 建立完整的Button
 
 獨立一些function?
@@ -27,7 +36,7 @@ https://overreacted.io/before-you-memo/
 
 重新看一次 
 
-三個狀態 << 初始,loading, 完成
+
 
 ArticleInfo 模組 傳img 進去
 想想怎麼使用Carousel render props

@@ -51,8 +51,8 @@ const defaultPageState = {
 export default function TopicBlock({
     filter = false,
     showTitle = true,
-    title = "標題",
-    blockCount: blockCount = 4,
+    searchValue = "標題",
+    blockCount = 4,
     rowsCount = 4,
     columnsCount = 1,
     wrap = false,
@@ -62,14 +62,14 @@ export default function TopicBlock({
 }) {
     const device = useRWD()
     const storeArticleList = useSelector((state: RootState) => state.WriterList)
-    const propsArticleList = useMemo(() => {
+    const ArticleInfoList = useMemo(() => {
         //@ts-ignore
         if (storeArticleList?.pinkymini?.actionStatus === "success") {
             return pipe( //1. 尋找所有文章的tag 或 title 是否符合title  2. 依據total hit 排列  3. 依據 rowsCount * columnsCount 要呈現幾個
                 _filter((article: ArticleProps) => {
                     if (!!article && !!article.title)
-                        if (article.title.toLowerCase().indexOf(title.toLowerCase()) > -1) return true
-                    return article.tags.some((element: string) => element.toLowerCase() === title.toLowerCase())
+                        if (article.title.toLowerCase().indexOf(searchValue.toLowerCase()) > -1) return true
+                    return article.tags.some((element: string) => element.toLowerCase() === searchValue.toLowerCase())
                 }),
                 _sort((articleA: ArticleProps, articleB: ArticleProps) => articleA.total_hits > articleB.total_hits ? -1 : 1),
                 _slice(0, rowsCount * columnsCount)
@@ -77,27 +77,28 @@ export default function TopicBlock({
             )(storeArticleList.pinkymini.articles)
 
         }
-    }, [storeArticleList, title])
+    }, [storeArticleList, searchValue])
 
     const [filterListOpen, setFilterListOpen] = useState<boolean>(false)
-    const [articleInfoList, setArticleInfoList] = useState<ArticleProps[]>(propsArticleList)
+    const [articleInfoFilteredList, setArticleInfoFilteredList] = useState<ArticleProps[]>(ArticleInfoList)
     const [publicTimeActive, setPublicTimeActive] = useState<boolean>(false)
     const [viewCountActive, setViewCountActive] = useState<boolean>(true)
     const [pageState, setPageState] = useState<DefaultPageState>(defaultPageState)
 
-    const showPagination = articleInfoList.length / singlePageItemCount > 1 ? true : false
+    const showPagination = articleInfoFilteredList.length / singlePageItemCount > 1 ? true : false
 
+    //每次點選不同的header主題 需要重新render
     useEffect(() => {
-        setArticleInfoList(propsArticleList)
+        setArticleInfoFilteredList(ArticleInfoList)
         setViewCountActive(true)
         setPublicTimeActive(false)
         setFilterListOpen(false)
         setPageState(defaultPageState)
-    }, [propsArticleList])
+    }, [ArticleInfoList])
 
 
     const handlePublicTimeFilter = () => {
-        setArticleInfoList(prevState => prevState.sort((articleA: ArticleProps, articleB: ArticleProps) =>
+        setArticleInfoFilteredList(prevState => prevState.sort((articleA: ArticleProps, articleB: ArticleProps) =>
             Number(articleA.public_at) > Number(articleB.public_at) ? -1 : 1))
         setPublicTimeActive(true)
         setViewCountActive(false)
@@ -105,7 +106,7 @@ export default function TopicBlock({
     }
 
     const handleViewCountFilter = () => {
-        setArticleInfoList(prevState => prevState.sort((articleA: ArticleProps, articleB: ArticleProps) =>
+        setArticleInfoFilteredList(prevState => prevState.sort((articleA: ArticleProps, articleB: ArticleProps) =>
             Number(articleA.total_hits) > Number(articleB.total_hits) ? -1 : 1))
         setViewCountActive(true)
         setPublicTimeActive(false)
@@ -137,100 +138,108 @@ export default function TopicBlock({
 
     return (
         <WTopicBlock>
-            {showTitle && <WTopicTitle titlePlace={titlePlace}>{title}</WTopicTitle>}
-            {filter &&
-                <WFilterFeature>
-                    <WFilterShowList show={filterListOpen}>
-                        <WFilterBlock onClick={() => handleFilterList()}>
-                            <FontAwesomeIcon icon={faFilter} color={`${blue600}`} />
-                            <WFilterText>篩選器</WFilterText>
-                        </WFilterBlock>
-                        <WFilterList >
-                            <Tag
-                                text="上傳時間"
-                                handleClick={handlePublicTimeFilter}
-                                iconStyle={publicTimeIconStyle}
-                                // cancelIcon={faTimes}
-                                isItemActive={publicTimeActive}
-                                iconBackgroundColor={blue50}
-                                iconColor={blue100}
-                            />
-                            <Tag
-                                text="觀看次數"
-                                handleClick={handleViewCountFilter}
-                                iconStyle={viewCountIconStyle}
-                                // cancelIcon={faTimes}
-                                isItemActive={viewCountActive}
-                                iconBackgroundColor={blue50}
-                                iconColor={blue100}
-                            />
-                        </WFilterList>
-                    </WFilterShowList>
-                </WFilterFeature>}
-            <WArticleInfoBlock wrap={wrap}>
-                {articleInfoList?.length > 0 &&
-                    <>
-                        {(device === "PC" || !showCarousel) && articleInfoList.map(
-                            (articleInfo, index) => {
-                                if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
-                                    return <ArticleInfo
-                                        key={`${articleInfo.title + index}`}
-                                        blockCount={rowsCount * columnsCount}
-                                        rowsCount={rowsCount}
-                                        title={articleInfo.title}
-                                        category={articleInfo.category}
-                                        index={index}
-                                        articleId={articleInfo.articleId}
-                                        publicAt={articleInfo.public_at}
-                                        views={articleInfo.total_hits}
+            {showTitle && <WTopicTitle titlePlace={titlePlace}>{searchValue}</WTopicTitle>}
+            {
+                ArticleInfoList.length > 0 &&
+                <>
+                    {filter &&
+                        <WFilterFeature>
+                            <WFilterShowList show={filterListOpen}>
+                                <WFilterBlock onClick={() => handleFilterList()}>
+                                    <FontAwesomeIcon icon={faFilter} color={`${blue600}`} />
+                                    <WFilterText>篩選器</WFilterText>
+                                </WFilterBlock>
+                                <WFilterList >
+                                    <Tag
+                                        text="上傳時間"
+                                        handleClick={handlePublicTimeFilter}
+                                        iconStyle={publicTimeIconStyle}
+                                        // cancelIcon={faTimes}
+                                        isItemActive={publicTimeActive}
+                                        iconBackgroundColor={blue50}
+                                        iconColor={blue100}
                                     />
-                            }
-                        )}
-                        {device === "Mobile" && showCarousel &&
-                            <Carousel carouselArr={articleInfoList} >
-                                {({ AnimationBlock, AnimationItemBlock, GetDimensionBlock }: {
-                                    AnimationBlock: any,
-                                    AnimationItemBlock: any,
-                                    GetDimensionBlock: any
-                                }) =>
-                                    <AnimationBlock>
-                                        {articleInfoList.map((articleInfo, index) =>
-                                            <AnimationItemBlock>
-                                                <ArticleInfo
-                                                    key={`${articleInfo.title + index}`}
-                                                    title={articleInfo.title}
-                                                    category={articleInfo.category}
-                                                    index={index}
-                                                    articleId={articleInfo.articleId}
-                                                    publicAt={articleInfo.public_at}
-                                                    views={articleInfo.total_hits}
-                                                />
-                                                <GetDimensionBlock />
-                                            </AnimationItemBlock>
-                                        )}
-                                        {articleInfoList.map((articleInfo, index) =>
-                                            <ArticleInfo
+                                    <Tag
+                                        text="觀看次數"
+                                        handleClick={handleViewCountFilter}
+                                        iconStyle={viewCountIconStyle}
+                                        // cancelIcon={faTimes}
+                                        isItemActive={viewCountActive}
+                                        iconBackgroundColor={blue50}
+                                        iconColor={blue100}
+                                    />
+                                </WFilterList>
+                            </WFilterShowList>
+                        </WFilterFeature>}
+                    <WArticleInfoBlock wrap={wrap}>
+                        {articleInfoFilteredList?.length > 0 &&
+                            <>
+                                {(device === "PC" || !showCarousel) && articleInfoFilteredList.map(
+                                    (articleInfo, index) => {
+                                        if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
+                                            return <ArticleInfo
                                                 key={`${articleInfo.title + index}`}
+                                                blockCount={rowsCount * columnsCount}
+                                                rowsCount={rowsCount}
                                                 title={articleInfo.title}
                                                 category={articleInfo.category}
                                                 index={index}
                                                 articleId={articleInfo.articleId}
                                                 publicAt={articleInfo.public_at}
                                                 views={articleInfo.total_hits}
-                                            />)}
-                                    </AnimationBlock>
+                                            />
+                                    }
+                                )}
+                                {device === "Mobile" && showCarousel &&
+                                    <Carousel carouselArr={articleInfoFilteredList} >
+                                        {({ AnimationBlock, AnimationItemBlock, GetDimensionBlock }: {
+                                            AnimationBlock: any,
+                                            AnimationItemBlock: any,
+                                            GetDimensionBlock: any
+                                        }) =>
+                                            <AnimationBlock>
+                                                {articleInfoFilteredList.map((articleInfo, index) =>
+                                                    <AnimationItemBlock>
+                                                        <ArticleInfo
+                                                            key={`${articleInfo.title + index}`}
+                                                            title={articleInfo.title}
+                                                            category={articleInfo.category}
+                                                            index={index}
+                                                            articleId={articleInfo.articleId}
+                                                            publicAt={articleInfo.public_at}
+                                                            views={articleInfo.total_hits}
+                                                        />
+                                                        <GetDimensionBlock />
+                                                    </AnimationItemBlock>
+                                                )}
+                                                {articleInfoFilteredList.map((articleInfo, index) =>
+                                                    <ArticleInfo
+                                                        key={`${articleInfo.title + index}`}
+                                                        title={articleInfo.title}
+                                                        category={articleInfo.category}
+                                                        index={index}
+                                                        articleId={articleInfo.articleId}
+                                                        publicAt={articleInfo.public_at}
+                                                        views={articleInfo.total_hits}
+                                                    />)}
+                                            </AnimationBlock>
+                                        }
+                                    </Carousel>
                                 }
-                            </Carousel>
+                            </>
                         }
-                    </>
-                }
-            </WArticleInfoBlock>
-            {(hasPagination && showPagination) &&
-                <Pagination
-                    currentPage={pageState.currentPage}
-                    singlePageItemCount={singlePageItemCount}
-                    ListLength={articleInfoList.length}
-                    handleChange={handleChange} />}
+                    </WArticleInfoBlock>
+                    {(hasPagination && showPagination) &&
+                        <Pagination
+                            currentPage={pageState.currentPage}
+                            singlePageItemCount={singlePageItemCount}
+                            ListLength={articleInfoFilteredList.length}
+                            handleChange={handleChange} />}
+                </>
+            }
+            {
+                ArticleInfoList.length === 0 && <h1>找不到文章</h1>
+            }
         </WTopicBlock >
     )
 }

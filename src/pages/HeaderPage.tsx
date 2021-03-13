@@ -80,7 +80,7 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
                     </WSearchButton>
                 </WFeatureBlock>
                 <WNavbar>
-                    {topicTitleList?.length > 0 && topicTitleList.map((obj: Tag, index: number) =>
+                    {topicTitleList.map((obj: Tag, index: number) =>
                         <WNavbarItem key={obj.name + index}>
                             <Link to={{
                                 pathname: `/ResultPage`,

@@ -1,5 +1,4 @@
 import { ARTICLE_LOADING, ARTICLE_SUCCESS, ARTICLE_FAIL } from '../actions/actionType'
-import { Action } from 'redux';
 
 export type typeArticleState = {
     articleId: {

@@ -45,17 +45,24 @@ function App() {
     <BrowserRouter>
       {
         // @ts-ignore
-        articleList?.pinkymini?.actionStatus === "success" ?
-          <>
-            <HeaderPage topicTitleList={topicTitleList} />
-            <Switch>
-              <Route exact path="/" component={() => <HomePage topicTitleList={topicTitleList} />} />
-              <Route path="/ArticlePage" component={ArticlePage} />
-              <Route path="/ResultPage" component={ResultPage} />
-            </Switch>
-            <Footer />
-          </>
-          : null
+        (articleList?.pinkymini?.actionStatus === "success" && topicTitleList?.length > 0) &&
+        <>
+          <HeaderPage topicTitleList={topicTitleList} />
+          <Switch>
+            <Route exact path="/" component={() => <HomePage topicTitleList={topicTitleList} />} />
+            <Route path="/ArticlePage" component={ArticlePage} />
+            <Route path="/ResultPage" component={ResultPage} />
+          </Switch>
+          <Footer />
+        </>
+      }
+      {
+        // @ts-ignore
+        articleList?.pinkymini?.actionStatus === "loading" && <h1>Loading</h1>
+      }
+      {
+        //@ts-ignore
+        articleList?.pinkymini?.actionStatus === "error" && <h1>Error</h1>
       }
     </BrowserRouter >
   );

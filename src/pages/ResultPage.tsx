@@ -1,7 +1,3 @@
-import React, { useMemo } from 'react'
-import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { pipe, _filter, packTagsString, countRepeatTag, _map, stringToLower, objToArr, _sort, _slice } from '../utils/utils'
 import TopicBlock from '../components/common/TopicBlock'
 import { RouteComponentProps } from 'react-router-dom'
 import styled from 'styled-components'
@@ -23,7 +19,7 @@ export default function ResultPage({ location: { state: { searchValue } } }: Res
                 hasPagination={true}
                 titlePlace="center"
                 showTitle={true}
-                title={searchValue}
+                searchValue={searchValue}
                 wrap={true}
                 rowsCount={2}
                 columnsCount={100} />

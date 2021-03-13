@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-
 import {
     _filter,
     _log
@@ -9,15 +8,16 @@ import { WContainer } from '../styles/General'
 import { HeaderPageProps } from "./HeaderPage"
 
 export default function HomePage({ topicTitleList }: HeaderPageProps) {
+    // console.log("topicTitleList", topicTitleList)
 
     return (
-        <WHomePage>
+        < WHomePage >
             <WHomePageSection>
                 <WHomePageContainer>
                     <TopicBlock
                         showCarousel={true}
                         showTitle={true}
-                        title={topicTitleList[0].name}
+                        searchValue={topicTitleList[0].name}
                         rowsCount={3}
                         columnsCount={1}
                     />
@@ -27,7 +27,7 @@ export default function HomePage({ topicTitleList }: HeaderPageProps) {
                 <WHomePageContainer>
                     <TopicBlock
                         showTitle={true}
-                        title={topicTitleList[1].name}
+                        searchValue={topicTitleList[1].name}
                         rowsCount={2}
                         columnsCount={2}
                         wrap={true}
@@ -39,13 +39,13 @@ export default function HomePage({ topicTitleList }: HeaderPageProps) {
                     <TopicBlock
                         showCarousel={true}
                         showTitle={true}
-                        title={topicTitleList[2].name}
+                        searchValue={topicTitleList[2].name}
                         rowsCount={4}
                         columnsCount={1}
                     />
                 </WHomePageContainer>
             </WHomePageSection >
-        </WHomePage>
+        </WHomePage >
     )
 }
 
