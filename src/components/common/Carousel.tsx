@@ -1,9 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
-import ArticleInfo from "./ArticleInfo"
-
-
-
 
 const moveLeft = (moveDistance: number) => keyframes`
   0% {
@@ -17,69 +13,60 @@ const moveLeft = (moveDistance: number) => keyframes`
 `;
 
 
-export default function Carousel({
+export default React.memo(function Carousel({
     carouselArr = ["https://fakeimg.pl/350x200/ff00bb/?text=1", "https://fakeimg.pl/350x200/ffff22/?text=2", "https://fakeimg.pl/350x200/ff1100/?text=3", "https://fakeimg.pl/350x200/111100/?text=4"],
-    animationSeconds = 35,
-
+    children,
 }: {
     carouselArr?: any[],
-    animationSeconds?: number,
-
+    children?: any
 }) {
-
-
+    const [itemDimension, setItemDimension] = useState<number>(0)
+    const imgRef = useRef<HTMLImageElement>(null)
     const arrLength = carouselArr.length
-    const [itemDimension, setItemDimension] = useState({ height: 200, width: 200 })
-    const distance = itemDimension.width
+    const distance = itemDimension
     const totalDistance = arrLength * distance
-    const handleItemDimension = (e: React.SyntheticEvent<HTMLImageElement, Event>, index: number): void => {
-        const target = e.target as HTMLElement
-        if (index === 0) {
-            setItemDimension((preState) => ({
-                ...preState,
-                height: target.offsetHeight,
-                width: target.offsetWidth,
-            }))
-        }
-    }
 
-    return (
+    useEffect(() => {
+        const handleImgWidth = () => {
+            if (!!imgRef && !!imgRef.current && !!imgRef?.current?.offsetWidth) {
+                setItemDimension(imgRef?.current?.offsetWidth)
+            }
+        }
+        handleImgWidth()
+
+        window.addEventListener('resize', handleImgWidth)
+        return (() => {
+            window.removeEventListener('resize', handleImgWidth)
+        })
+    }, [])
+
+    const AnimationBlock = ({ children }: { children: any }) => <>
         <WViewBlock>
             <WAnimationBlock moveLeft={moveLeft} distance={totalDistance} widthParameter={arrLength * 2} animationSeconds={arrLength}>
-                {carouselArr.map((articleInfo, index) =>
-                    <WLi>
-                        <ArticleInfo
-                            key={`${articleInfo.title + index}`}
-                            title={articleInfo.title}
-                            category={articleInfo.category}
-                            index={index}
-                            articleId={articleInfo.articleId}
-                            publicAt={articleInfo.public_at}
-                            views={articleInfo.total_hits}
-                        />
-                        <WInfoFigure>
-                            <WImg onLoad={(e) => handleItemDimension(e, index)} src={"https://fakeimg.pl/350x200/ff00bb/?text=1"} alt="fakeImg" />
-                        </WInfoFigure>
-
-                    </WLi>
-                )}
-                {carouselArr.map((articleInfo, index) =>
-                    <WLi>
-                        <ArticleInfo
-                            key={`${articleInfo.title + index}`}
-                            title={articleInfo.title}
-                            category={articleInfo.category}
-                            index={index}
-                            articleId={articleInfo.articleId}
-                            publicAt={articleInfo.public_at}
-                            views={articleInfo.total_hits}
-                        />
-                    </WLi>
-                )}
+                {children}
             </WAnimationBlock>
-        </WViewBlock >
-    )
-}
+        </WViewBlock>
+    </>
+
+    const AnimationItemBlock = ({ children }: { children: any }) => <>
+        <WLi>
+            {children}
+        </WLi>
+    </>
+
+    const GetDimensionBlock = () => <>
+        <WInfoFigure>
+            <WImg ref={imgRef} src={"https://fakeimg.pl/350x200/ff00bb/?text=1"} alt="fakeImg" />
+        </WInfoFigure>
+    </>
+
+    return children({
+        AnimationBlock,
+        AnimationItemBlock,
+        GetDimensionBlock
+    })
+
+})
 
 const WViewBlock = styled.div`
     width: 100%;
@@ -115,6 +102,7 @@ const WImg = styled.img`
 const WInfoFigure = styled.figure`
     width: 100%;
     position: absolute;
+    height: 0;
     z-index: -1;
     opacity: 0;
    

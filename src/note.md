@@ -12,7 +12,6 @@
 ### loading
 
 # 整理  
-Carousel render props?
 建立完整的Button
 
 獨立一些function?

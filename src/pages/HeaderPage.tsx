@@ -18,7 +18,7 @@ export type HeaderPageProps = {
 
 export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
     const history = useHistory()
-    const [showSearchButton, setShowSearchButton] = useState(true)
+    const [showSearchButton, setShowSearchButton] = useState<boolean>(true)
     const searchRef = useRef<HTMLInputElement>(null)
 
     const handleSearch = () => {

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import {
     pipe,
     _filter,
@@ -6,13 +6,14 @@ import {
     _sort,
     _log
 } from '../../utils/utils'
-import ArticleInfo from './ArticleInfo'
 import { useSelector } from 'react-redux'
-import { blue600, blue100, blue50 } from '../../styles/General'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFilter, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faFilter } from '@fortawesome/free-solid-svg-icons'
+
 import { RootState } from '../../store/reducers/RootReducer'
+import { blue600, blue100, blue50 } from '../../styles/General'
+import ArticleInfo from './ArticleInfo'
 import Tag from "./Tag"
 import { MediaQueries } from "../../styles/media"
 import Pagination from "./Pagination"
@@ -32,7 +33,14 @@ type ArticleProps = {
     showCarousel?: boolean
 }
 
+type DefaultPageState = {
+    currentPage: number,
+    maxIndex: number,
+    minIndex: number
+}
+
 const singlePageItemCount = 10
+
 const defaultPageState = {
     currentPage: 1,
     maxIndex: singlePageItemCount,
@@ -71,11 +79,11 @@ export default function TopicBlock({
         }
     }, [storeArticleList, title])
 
-    const [filterList, setFilterList] = useState(false)
+    const [filterListOpen, setFilterListOpen] = useState<boolean>(false)
     const [articleInfoList, setArticleInfoList] = useState<ArticleProps[]>(propsArticleList)
-    const [publicTimeActive, setPublicTimeActive] = useState(false)
-    const [viewCountActive, setViewCountActive] = useState(true)
-    const [pageState, setPageState] = useState(defaultPageState)
+    const [publicTimeActive, setPublicTimeActive] = useState<boolean>(false)
+    const [viewCountActive, setViewCountActive] = useState<boolean>(true)
+    const [pageState, setPageState] = useState<DefaultPageState>(defaultPageState)
 
     const showPagination = articleInfoList.length / singlePageItemCount > 1 ? true : false
 
@@ -83,29 +91,29 @@ export default function TopicBlock({
         setArticleInfoList(propsArticleList)
         setViewCountActive(true)
         setPublicTimeActive(false)
-        setFilterList(false)
+        setFilterListOpen(false)
         setPageState(defaultPageState)
     }, [propsArticleList])
 
 
-    const handlePublicTime = () => {
+    const handlePublicTimeFilter = () => {
         setArticleInfoList(prevState => prevState.sort((articleA: ArticleProps, articleB: ArticleProps) =>
             Number(articleA.public_at) > Number(articleB.public_at) ? -1 : 1))
         setPublicTimeActive(true)
         setViewCountActive(false)
-        setFilterList(prevState => !prevState)
+        setFilterListOpen(prevState => !prevState)
     }
 
-    const handleViewCount = () => {
+    const handleViewCountFilter = () => {
         setArticleInfoList(prevState => prevState.sort((articleA: ArticleProps, articleB: ArticleProps) =>
             Number(articleA.total_hits) > Number(articleB.total_hits) ? -1 : 1))
         setViewCountActive(true)
         setPublicTimeActive(false)
-        setFilterList(prevState => !prevState)
+        setFilterListOpen(prevState => !prevState)
     }
 
     const handleFilterList = () => {
-        setFilterList(prevState => !prevState)
+        setFilterListOpen(prevState => !prevState)
     }
 
     const handleChange = (page: number) => {
@@ -126,12 +134,13 @@ export default function TopicBlock({
         "display": viewCountActive ? "inline-block" : "none"
     }
 
+
     return (
         <WTopicBlock>
             {showTitle && <WTopicTitle titlePlace={titlePlace}>{title}</WTopicTitle>}
             {filter &&
                 <WFilterFeature>
-                    <WFilterShowList show={filterList}>
+                    <WFilterShowList show={filterListOpen}>
                         <WFilterBlock onClick={() => handleFilterList()}>
                             <FontAwesomeIcon icon={faFilter} color={`${blue600}`} />
                             <WFilterText>篩選器</WFilterText>
@@ -139,7 +148,7 @@ export default function TopicBlock({
                         <WFilterList >
                             <Tag
                                 text="上傳時間"
-                                handleClick={handlePublicTime}
+                                handleClick={handlePublicTimeFilter}
                                 iconStyle={publicTimeIconStyle}
                                 // cancelIcon={faTimes}
                                 isItemActive={publicTimeActive}
@@ -148,7 +157,7 @@ export default function TopicBlock({
                             />
                             <Tag
                                 text="觀看次數"
-                                handleClick={handleViewCount}
+                                handleClick={handleViewCountFilter}
                                 iconStyle={viewCountIconStyle}
                                 // cancelIcon={faTimes}
                                 isItemActive={viewCountActive}
@@ -158,12 +167,10 @@ export default function TopicBlock({
                         </WFilterList>
                     </WFilterShowList>
                 </WFilterFeature>}
-            <WArticleInfoBlock  //@ts-ignore
-                wrap={wrap}>
+            <WArticleInfoBlock wrap={wrap}>
                 {articleInfoList?.length > 0 &&
                     <>
-                        {!showCarousel && articleInfoList.map(
-                            //@ts-ignore
+                        {(device === "PC" || !showCarousel) && articleInfoList.map(
                             (articleInfo, index) => {
                                 if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
                                     return <ArticleInfo
@@ -179,7 +186,42 @@ export default function TopicBlock({
                                     />
                             }
                         )}
-                        {device === "Mobile" && showCarousel && <Carousel carouselArr={articleInfoList} />}
+                        {device === "Mobile" && showCarousel &&
+                            <Carousel carouselArr={articleInfoList} >
+                                {({ AnimationBlock, AnimationItemBlock, GetDimensionBlock }: {
+                                    AnimationBlock: any,
+                                    AnimationItemBlock: any,
+                                    GetDimensionBlock: any
+                                }) =>
+                                    <AnimationBlock>
+                                        {articleInfoList.map((articleInfo, index) =>
+                                            <AnimationItemBlock>
+                                                <ArticleInfo
+                                                    key={`${articleInfo.title + index}`}
+                                                    title={articleInfo.title}
+                                                    category={articleInfo.category}
+                                                    index={index}
+                                                    articleId={articleInfo.articleId}
+                                                    publicAt={articleInfo.public_at}
+                                                    views={articleInfo.total_hits}
+                                                />
+                                                <GetDimensionBlock />
+                                            </AnimationItemBlock>
+                                        )}
+                                        {articleInfoList.map((articleInfo, index) =>
+                                            <ArticleInfo
+                                                key={`${articleInfo.title + index}`}
+                                                title={articleInfo.title}
+                                                category={articleInfo.category}
+                                                index={index}
+                                                articleId={articleInfo.articleId}
+                                                publicAt={articleInfo.public_at}
+                                                views={articleInfo.total_hits}
+                                            />)}
+                                    </AnimationBlock>
+                                }
+                            </Carousel>
+                        }
                     </>
                 }
             </WArticleInfoBlock>

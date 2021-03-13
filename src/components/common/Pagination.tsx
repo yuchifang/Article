@@ -17,7 +17,7 @@ export default function Pagination({
     currentPage?: number,
     handleChange?: (page: number) => void
 }) {
-    const [pageNumber, setPageNumber] = useState(1)
+    const [pageNumber, setPageNumber] = useState<number>(1)
 
     useEffect(() => {
         handleChange?.(pageNumber)
