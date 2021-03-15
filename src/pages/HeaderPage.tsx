@@ -7,13 +7,13 @@ import { Link, useHistory } from 'react-router-dom'
 
 import { MediaQueries } from "../styles/media"
 
-type Tag = {
+type NavItem = {
     name: string,
     value: number
 }
 
 export type HeaderPageProps = {
-    topicTitleList: Tag[],
+    topicTitleList: NavItem[],
 }
 
 export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
@@ -80,7 +80,7 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
                     </WSearchButton>
                 </WFeatureBlock>
                 <WNavbar>
-                    {topicTitleList.map((obj: Tag, index: number) =>
+                    {topicTitleList.map((obj: NavItem, index: number) =>
                         <WNavbarItem key={obj.name + index}>
                             <Link to={{
                                 pathname: `/ResultPage`,

@@ -15,21 +15,23 @@ export default function HomePage({ topicTitleList }: HeaderPageProps) {
             <WHomePageSection>
                 <WHomePageContainer>
                     <TopicBlock
-                        showCarousel={true}
-                        showTitle={true}
                         searchValue={topicTitleList[0].name}
                         rowsCount={3}
                         columnsCount={1}
+
+                        showCarousel={true}
+                        showTitle={true}
                     />
                 </WHomePageContainer>
             </WHomePageSection>
             <WHomePageSection>
                 <WHomePageContainer>
                     <TopicBlock
-                        showTitle={true}
                         searchValue={topicTitleList[1].name}
                         rowsCount={2}
                         columnsCount={2}
+
+                        showTitle={true}
                         wrap={true}
                     />
                 </WHomePageContainer>
@@ -37,10 +39,11 @@ export default function HomePage({ topicTitleList }: HeaderPageProps) {
             <WHomePageSection>
                 <WHomePageContainer>
                     <TopicBlock
-                        showCarousel={true}
-                        showTitle={true}
                         searchValue={topicTitleList[2].name}
+                        showCarousel={true}
                         rowsCount={4}
+
+                        showTitle={true}
                         columnsCount={1}
                     />
                 </WHomePageContainer>

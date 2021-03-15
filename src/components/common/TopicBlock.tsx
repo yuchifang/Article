@@ -30,13 +30,26 @@ type ArticleProps = {
     tags: string[],
     title: string,
     total_hits: string
-    showCarousel?: boolean
+
 }
 
 type DefaultPageState = {
     currentPage: number,
     maxIndex: number,
     minIndex: number
+}
+
+type TopicBlockProps = {
+    searchValue: string,
+    rowsCount: number,
+    columnsCount: number,
+
+    showCarousel?: boolean,
+    showTitle?: boolean,
+    wrap?: boolean,
+    filter?: boolean,
+    hasPagination?: boolean,
+    titlePlace?: string,
 }
 
 const singlePageItemCount = 10
@@ -52,14 +65,15 @@ export default function TopicBlock({
     filter = false,
     showTitle = true,
     searchValue = "標題",
-    blockCount = 4,
     rowsCount = 4,
     columnsCount = 1,
     wrap = false,
     titlePlace = "left",
     hasPagination = false,
     showCarousel = false
-}) {
+
+}: TopicBlockProps) {
+
     const device = useRWD()
     const storeArticleList = useSelector((state: RootState) => state.WriterList)
     const ArticleInfoList = useMemo(() => {
@@ -154,7 +168,7 @@ export default function TopicBlock({
                                         text="上傳時間"
                                         handleClick={handlePublicTimeFilter}
                                         iconStyle={publicTimeIconStyle}
-                                        // cancelIcon={faTimes}
+
                                         isItemActive={publicTimeActive}
                                         iconBackgroundColor={blue50}
                                         iconColor={blue100}
@@ -163,7 +177,7 @@ export default function TopicBlock({
                                         text="觀看次數"
                                         handleClick={handleViewCountFilter}
                                         iconStyle={viewCountIconStyle}
-                                        // cancelIcon={faTimes}
+
                                         isItemActive={viewCountActive}
                                         iconBackgroundColor={blue50}
                                         iconColor={blue100}
@@ -179,7 +193,6 @@ export default function TopicBlock({
                                         if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
                                             return <ArticleInfo
                                                 key={`${articleInfo.title + index}`}
-                                                blockCount={rowsCount * columnsCount}
                                                 rowsCount={rowsCount}
                                                 title={articleInfo.title}
                                                 category={articleInfo.category}
@@ -192,10 +205,10 @@ export default function TopicBlock({
                                 )}
                                 {device === "Mobile" && showCarousel &&
                                     <Carousel carouselArr={articleInfoFilteredList} >
-                                        {({ AnimationBlock, AnimationItemBlock, GetDimensionBlock }: {
+                                        {({ AnimationBlock, AnimationItemBlock }: {
                                             AnimationBlock: any,
                                             AnimationItemBlock: any,
-                                            GetDimensionBlock: any
+
                                         }) =>
                                             <AnimationBlock>
                                                 {articleInfoFilteredList.map((articleInfo, index) =>
@@ -203,13 +216,13 @@ export default function TopicBlock({
                                                         <ArticleInfo
                                                             key={`${articleInfo.title + index}`}
                                                             title={articleInfo.title}
-                                                            category={articleInfo.category}
                                                             index={index}
                                                             articleId={articleInfo.articleId}
                                                             publicAt={articleInfo.public_at}
                                                             views={articleInfo.total_hits}
+
+                                                            category={articleInfo.category}
                                                         />
-                                                        <GetDimensionBlock />
                                                     </AnimationItemBlock>
                                                 )}
                                                 {articleInfoFilteredList.map((articleInfo, index) =>

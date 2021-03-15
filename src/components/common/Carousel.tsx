@@ -21,7 +21,7 @@ export default function Carousel({
     children?: any
 }) {
     const [itemDimension, setItemDimension] = useState<number>(0)
-    const imgRef = useRef<HTMLImageElement>(null)
+    const imgRef = useRef<HTMLLIElement>(null)
     const arrLength = carouselArr.length
     const distance = itemDimension
     const totalDistance = arrLength * distance
@@ -52,21 +52,14 @@ export default function Carousel({
     </>
     //Carousel 最上層 此層的children 放你要map的陣列
     const AnimationItemBlock = ({ children }: { children: any }) => <>
-        <WLi>
+        <WLi ref={imgRef}>
             {children}
         </WLi>
-    </>
-
-    const GetDimensionBlock = () => <>
-        <WInfoFigure>
-            <WImg ref={imgRef} src={"https://fakeimg.pl/350x200/ff00bb/?text=1"} alt="fakeImg" />
-        </WInfoFigure>
     </>
 
     return children({
         AnimationBlock,
         AnimationItemBlock,
-        GetDimensionBlock
     })
 
 }

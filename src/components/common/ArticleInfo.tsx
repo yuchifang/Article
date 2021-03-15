@@ -5,15 +5,15 @@ import { timestampToDate } from '../../utils/utils'
 import { MediaQueries } from "../../styles/media"
 
 type ArticleInfoProps = {
-    blockCount?: number,
-    rowsCount?: number,
     title: string,
-    category: string,
     index: number,
     articleId: string,
     publicAt: string,
     views: string,
+
+    category?: string,
     imgSrc?: string
+    rowsCount?: number,
 }
 
 
@@ -21,7 +21,6 @@ export default function ArticleInfo({
     category,
     title,
     index,
-    blockCount,
     rowsCount,
     articleId,
     publicAt,

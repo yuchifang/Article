@@ -86,9 +86,9 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
                                         {(!!article && !!article?.tags && article?.tags.length > 0) &&
                                             article?.tags.map((item: Tag, index: number) =>
                                                 <Tag
+                                                    key={index}
                                                     iconBackgroundColor={blue50}
                                                     text={item.tag}
-                                                    key={index}
                                                     handleClick={(e) => handleTagClick(e)} />
                                             )}
                                     </WTagList>
@@ -141,7 +141,7 @@ const WArticleInfo = styled.div`
     margin-bottom: 15px;
     justify-content: space-around;
     align-items: center;
-    ${MediaQueries.DesktopLCSS`
+    ${MediaQueries.DesktopMCSS`
         display:block;
         position: absolute;
         left: -20rem;

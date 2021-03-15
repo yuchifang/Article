@@ -8,12 +8,14 @@ import { blue50, blue100, blue400, blue600 } from "../../styles/General"
 export default function Pagination({
     ListLength = 20,
     singlePageItemCount = 5,
+
     currentPage = 1,
     handleChange = () => console.log("page")
 
 }: {
     ListLength: number,
     singlePageItemCount: number,
+
     currentPage?: number,
     handleChange?: (page: number) => void
 }) {
@@ -34,9 +36,9 @@ export default function Pagination({
     let isLeftButtonDisable = pageNumber === 1
     let isRightButtonDisable = maxPageCount === pageNumber
 
-    let renderPageArr: object[] = []
+    let pageArrRender: object[] = []
     for (let item = 1; item <= maxPageCount; item++) {
-        renderPageArr.push(
+        pageArrRender.push(
             <WPaginationItem onClick={(e) => handlePageNumberClick(e)}>
                 <WNumberItem active={item === pageNumber}>
                     {item}
@@ -72,7 +74,7 @@ export default function Pagination({
                         size="sm" />
                 </WIconButton>
             </WPaginationItem>
-            {renderPageArr}
+            {pageArrRender}
             <WPaginationItem>
                 <WIconButton
                     onClick={() => handleRightClick()}

@@ -15,14 +15,16 @@ export default function ResultPage({ location: { state: { searchValue } } }: Res
     return (
         <WResultPageContainer>
             <TopicBlock
+                searchValue={searchValue}
+                rowsCount={2}
+                columnsCount={100}
+
                 filter={true}
+                showTitle={true}
                 hasPagination={true}
                 titlePlace="center"
-                showTitle={true}
-                searchValue={searchValue}
                 wrap={true}
-                rowsCount={2}
-                columnsCount={100} />
+            />
         </WResultPageContainer>
     )
 }

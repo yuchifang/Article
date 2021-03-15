@@ -4,18 +4,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { blue100 } from "../../styles/General"
 
+
 type TagProps = {
+    iconBackgroundColor: string,
+    handleClick: (e?: any) => void,
+    text: string,
+
     hasBorder?: boolean,
-    iconBackgroundColor?: string,
     iconColor?: string,
     isItemActive?: boolean,
-    handleClick: (e?: any) => void,
     iconStyle?: {
         "vertical-align": string,
         "display": string
     },
     cancelIcon?: IconProp,
-    text: string
 }
 
 
