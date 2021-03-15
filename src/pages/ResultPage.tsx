@@ -1,4 +1,4 @@
-import TopicBlock from '../components/common/TopicBlock'
+import TopicBlock from '../components/common/TopicBlock/TopicBlock'
 import { RouteComponentProps } from 'react-router-dom'
 import styled from 'styled-components'
 import { MediaQueries } from '../styles/media'

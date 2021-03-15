@@ -47,6 +47,7 @@ export default function Carousel({
         <WViewBlock>
             <WAnimationBlock moveLeft={moveLeft} distance={totalDistance} widthParameter={arrLength * 2} animationSeconds={arrLength}>
                 {children}
+                {children}
             </WAnimationBlock>
         </WViewBlock>
     </>
