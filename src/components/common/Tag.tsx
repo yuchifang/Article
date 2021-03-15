@@ -33,7 +33,7 @@ export default function Tag({
     return (
         <WTagBlock cancelIcon={cancelIcon}>
             <WTagClickBlock
-                onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => handleClick(e)}>
+                onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => handleClick?.(e)}>
                 <WTagItem
                     iconBackgroundColor={iconBackgroundColor}
                     isItemActive={isItemActive}

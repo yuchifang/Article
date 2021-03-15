@@ -158,6 +158,7 @@ const WAuthorInfoContent = styled.div`
 const WArticleFigure = styled.figure`
     text-align: center;
     margin-bottom: 0.313rem;
+    margin-right: 0.625rem;
 `
 
 const WImg = styled.img`

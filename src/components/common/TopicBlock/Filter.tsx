@@ -21,11 +21,11 @@ export default function Filter({
     const [viewCountActive, setViewCountActive] = useState<boolean>(true)
 
     useEffect(() => {
-        setArticleInfoFilteredList(ArticleInfoList)
+        setArticleInfoFilteredList?.(ArticleInfoList)
         setViewCountActive(true)
         setPublicTimeActive(false)
         setFilterListOpen(false)
-        setPageState(defaultPageState)
+        setPageState?.(defaultPageState)
     }, [ArticleInfoList])
 
     const handleFilterList = () => {

@@ -26,7 +26,6 @@ export const GetWriterArticles = (userId = "pinkymini") => (dispatch: ThunkDispa
 
     axios.get(`https://emma.pixnet.cc/blog/articles?user=${userId}&per_page=100`)
         .then((res) => {
-            console.log("res", res);
             dispatch({
                 type: ARTICLE_LIST_SUCCESS,
                 payload: { res: res, userId: userId }
@@ -48,7 +47,6 @@ export const GetArticle = (articleId: string, authorName: string) => (dispatch: 
     })
     axios.get(`https://emma.pixnet.cc/blog/articles/${articleId}?user=${authorName}`)
         .then((res) => {
-            console.log("res", res)
             dispatch({
                 type: ARTICLE_SUCCESS,
                 payload: { res: res, articleId: articleId }

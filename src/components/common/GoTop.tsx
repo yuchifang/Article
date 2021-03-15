@@ -39,7 +39,7 @@ const TopIconBlock = styled.div<{ showGoTopIcon: boolean }>`
     z-index:${props => props.showGoTopIcon ? "2" : "-2"};
     position:fixed;
     right:35px;
-    bottom:50px;
+    bottom:56px;
     cursor: pointer;
     padding: 14px 19px;
     background-color:#ccc;
