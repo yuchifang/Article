@@ -9,6 +9,7 @@ import ArticlePage from './pages/ArticlePage'
 import ResultPage from './pages/ResultPage'
 import { pipe, packTagsString, countRepeatTag, _map, stringToLower, objToArr, _sort, _slice } from "./utils/utils"
 import { RootState } from './store/reducers/RootReducer'
+import GoTop from '../src/components/common/GoTop'
 
 function App() {
 
@@ -54,6 +55,7 @@ function App() {
             <Route path="/ResultPage" component={ResultPage} />
           </Switch>
           <Footer />
+          <GoTop />
         </>
       }
       {

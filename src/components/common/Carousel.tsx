@@ -42,7 +42,7 @@ export default function Carousel({
 
     // AnimationBlock 為 Carousel 最上層 此層的children 放你要map的陣列
     // 陣列的每個Item 需要由 AnimationItemBlock 包住
-    // AnimationItemBlock 裡面要包 一個GetDimensionBlock 及 陣列的item
+
     const AnimationBlock = ({ children }: { children: any }) => <>
         <WViewBlock>
             <WAnimationBlock moveLeft={moveLeft} distance={totalDistance} widthParameter={arrLength * 2} animationSeconds={arrLength}>

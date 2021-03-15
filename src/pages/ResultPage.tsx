@@ -25,6 +25,7 @@ export default function ResultPage({ location: { state: { searchValue } } }: Res
                 titlePlace="center"
                 wrap={true}
             />
+
         </WResultPageContainer>
     )
 }
