@@ -1,20 +1,16 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, Suspense, lazy, useEffect } from 'react'
 import {
     pipe,
     _filter,
     _slice,
     _sort,
-    _log
 } from '../../../utils/utils'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFilter } from '@fortawesome/free-solid-svg-icons'
 
 import { RootState } from '../../../store/reducers/RootReducer'
-import { blue600, blue100, blue50 } from '../../../styles/General'
+import { blue600 } from '../../../styles/General'
 import ArticleInfo from '../ArticleInfo'
-import Tag from "../Tag"
 import { MediaQueries } from "../../../styles/media"
 import Pagination from "../Pagination"
 import { useRWD } from '../../../utils/hooks'
@@ -50,6 +46,7 @@ type TopicBlockProps = {
     filter?: boolean,
     hasPagination?: boolean,
     titlePlace?: string,
+    titleHasIcon?: boolean
 }
 
 const singlePageItemCount = 10
@@ -70,10 +67,12 @@ export default function TopicBlock({
     wrap = false,
     titlePlace = "left",
     hasPagination = false,
-    showCarousel = false
+    showCarousel = false,
+    titleHasIcon = false
 
 }: TopicBlockProps) {
 
+    const LazyArticleInfo = lazy(() => import('../ArticleInfo'));
     const device = useRWD()
     const storeArticleList = useSelector((state: RootState) => state.WriterList)
     const ArticleInfoList = useMemo(() => {
@@ -110,33 +109,45 @@ export default function TopicBlock({
 
     return (
         <WTopicBlock>
-            {showTitle && <WTopicTitle titlePlace={titlePlace}>{searchValue}</WTopicTitle>}
+            {showTitle &&
+                <WTopicTitle titlePlace={titlePlace}>
+                    {titleHasIcon ? "#" : ""}
+                    {searchValue}
+                </WTopicTitle>}
             {
                 ArticleInfoList.length > 0 &&
                 <>
                     {filter &&
                         <Filter
-                            ArticleInfoList={ArticleInfoList}
-                            setPageState={setPageState}
-                            setArticleInfoFilteredList={setArticleInfoFilteredList} />
+                            setArticleInfoFilteredList={setArticleInfoFilteredList}
+                            setFilterListOpen={setFilterListOpen}
+                            filterListOpen={filterListOpen}
+                            setPublicTimeActive={setPublicTimeActive}
+                            publicTimeActive={publicTimeActive}
+                            setViewCountActive={setViewCountActive}
+                            viewCountActive={viewCountActive} />
                     }
                     <WArticleInfoBlock wrap={wrap}>
+
                         {articleInfoFilteredList?.length > 0 &&
                             <>
                                 {(device === "PC" || !showCarousel)
                                     && articleInfoFilteredList.map(
                                         (articleInfo, index) => {
                                             if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
-                                                return <ArticleInfo
-                                                    key={`${articleInfo.title + index}`}
-                                                    rowsCount={rowsCount}
-                                                    title={articleInfo.title}
-                                                    category={articleInfo.category}
-                                                    index={index}
-                                                    articleId={articleInfo.articleId}
-                                                    publicAt={articleInfo.public_at}
-                                                    views={articleInfo.total_hits}
-                                                />
+                                                return <Suspense fallback={<h1>Loading</h1>}>
+                                                    <LazyArticleInfo
+                                                        key={`${articleInfo.title + index}`}
+                                                        rowsCount={rowsCount}
+                                                        title={articleInfo.title}
+                                                        category={articleInfo.category}
+                                                        index={index}
+                                                        articleId={articleInfo.articleId}
+                                                        publicAt={articleInfo.public_at}
+                                                        views={articleInfo.total_hits}
+                                                    />
+                                                </Suspense >
+
                                         }
                                     )}
                                 {device === "Mobile" && showCarousel &&
@@ -149,16 +160,18 @@ export default function TopicBlock({
                                             <AnimationBlock>
                                                 {articleInfoFilteredList.map((articleInfo, index) =>
                                                     <AnimationItemBlock>
-                                                        <ArticleInfo
-                                                            key={`${articleInfo.title + index}`}
-                                                            title={articleInfo.title}
-                                                            index={index}
-                                                            articleId={articleInfo.articleId}
-                                                            publicAt={articleInfo.public_at}
-                                                            views={articleInfo.total_hits}
-
-                                                            category={articleInfo.category}
-                                                        />
+                                                        <Suspense fallback={<h1>Loading</h1>}>
+                                                            <LazyArticleInfo
+                                                                key={`${articleInfo.title + index}`}
+                                                                rowsCount={rowsCount}
+                                                                title={articleInfo.title}
+                                                                category={articleInfo.category}
+                                                                index={index}
+                                                                articleId={articleInfo.articleId}
+                                                                publicAt={articleInfo.public_at}
+                                                                views={articleInfo.total_hits}
+                                                            />
+                                                        </Suspense >
                                                     </AnimationItemBlock>
                                                 )}
                                             </AnimationBlock>
@@ -167,6 +180,7 @@ export default function TopicBlock({
                                 }
                             </>
                         }
+
                     </WArticleInfoBlock>
                     {(hasPagination && showPagination) &&
                         <Pagination
@@ -177,7 +191,10 @@ export default function TopicBlock({
                 </>
             }
             {
-                ArticleInfoList.length === 0 && <h1>找不到文章</h1>
+                ArticleInfoList.length === 0 && <>
+                    <WAlertTitle>找不到相關文章</WAlertTitle>
+                    <h2>找不到與您關鍵字相符的文章 請重新搜尋不同的關鍵字</h2>
+                </>
             }
         </WTopicBlock >
     )
@@ -207,4 +224,10 @@ const WArticleInfoBlock = styled.div<{ wrap: boolean }>`
     justify-content: space-around;
     width:100%;
     flex-wrap:${props => props.wrap ? "wrap" : "nowrap"}
+`
+
+const WAlertTitle = styled.div`
+    font-size: 1.875rem;
+    font-weight:bold;
+    margin: 0 0  0.625rem 0
 `

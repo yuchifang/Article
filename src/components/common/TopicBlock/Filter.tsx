@@ -67,22 +67,19 @@ export default function Filter({
                 </WFilterBlock>
                 <WFilterList >
                     <Tag
-                        text="上傳時間"
-                        handleClick={handlePublicTimeFilter}
-                        iconStyle={publicTimeIconStyle}
-
-                        isItemActive={publicTimeActive}
-                        iconBackgroundColor={blue50}
-                        iconColor={blue100}
-                    />
-                    <Tag
                         text="觀看次數"
                         handleClick={handleViewCountFilter}
-                        iconStyle={viewCountIconStyle}
-
-                        isItemActive={viewCountActive}
                         iconBackgroundColor={blue50}
-                        iconColor={blue100}
+                        isItemActive={viewCountActive}
+                        TextColor={blue100}
+                    />
+                    <Tag
+                        text="上傳時間"
+                        handleClick={handlePublicTimeFilter}
+                        iconBackgroundColor={blue50}
+
+                        isItemActive={publicTimeActive}
+                        TextColor={blue100}
                     />
                 </WFilterList>
             </WFilterShowList>
