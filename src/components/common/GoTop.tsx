@@ -8,20 +8,35 @@ import { useEffect, useState } from 'react'
 
 export default function GoTop() {
     const [showGoTopIcon, setShowGoTopIcon] = useState<boolean>(false)
+    const [webHeight, setWebHeight] = useState<number>(0)
+
+    const handleScroll = () => {
+        if (window.scrollY === 0) {
+            setShowGoTopIcon(false)
+            return
+        }
+        if (window.scrollY < webHeight) {
+            console.log("ssss");
+            setWebHeight(window.scrollY)
+            setShowGoTopIcon(true)
+            return
+        }
+
+        if (window.scrollY > webHeight) {
+            setWebHeight(window.scrollY)
+            setShowGoTopIcon(false)
+        }
+
+        setShowGoTopIcon(false)
+    }
 
     useEffect(() => {
-        const handleHeight = () => {
-            if (window.scrollY === 0) {
-                setShowGoTopIcon(false)
-                return
-            }
-            setShowGoTopIcon(true)
-        }
-        window.addEventListener('scroll', handleHeight)
+
+        window.addEventListener('scroll', handleScroll)
         return (() => {
-            window.removeEventListener('scroll', handleHeight)
+            window.removeEventListener('scroll', handleScroll)
         })
-    }, [])
+    }, [webHeight])
 
     const handleClick = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' })

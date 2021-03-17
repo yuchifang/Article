@@ -6,7 +6,7 @@ import { blue400, blue50, blue600 } from '../styles/General'
 import { Link, useHistory } from 'react-router-dom'
 
 import { MediaQueries } from "../styles/media"
-import { useOutsideAlert } from '../utils/hooks'
+import { useOutsideClick } from '../utils/hooks'
 
 type NavItem = {
     name: string,
@@ -21,7 +21,7 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
     const history = useHistory()
     const [isSearchFeatureVisible, setIsSearchFeatureVisible] = useState<boolean>(false)
 
-    const outSideRef = useOutsideAlert({ handleOutsideClick: () => setIsSearchFeatureVisible(true) })
+    const outSideRef = useOutsideClick({ handleOutsideClick: () => setIsSearchFeatureVisible(false) })
 
     const searchRef = useRef<HTMLInputElement>(null)
 

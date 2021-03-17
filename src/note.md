@@ -12,12 +12,7 @@
 
 # 整理  
 
-
-goTop 在上滑動時才顯示
-
 看看哪邊可以用render props
-// 簡化 Carousel ??
-
 
 redux toolkit
 

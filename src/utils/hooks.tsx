@@ -23,7 +23,7 @@ export const useRWD = () => {
 
 
 
-export function useOutsideAlert({ handleOutsideClick }: { handleOutsideClick: (value?: any) => void }): React.RefObject<HTMLDivElement> {
+export function useOutsideClick({ handleOutsideClick }: { handleOutsideClick: (value?: any) => void }): React.RefObject<HTMLDivElement> {
 
     const wrapper = useRef<HTMLDivElement>(null)
 
