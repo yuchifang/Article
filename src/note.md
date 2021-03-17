@@ -12,6 +12,9 @@
 
 # 整理  
 
+//component 可以加 onDelete 之類的
+<Component onDelete={handleDelete}></Component>
+
 看看哪邊可以用render props
 
 redux toolkit
