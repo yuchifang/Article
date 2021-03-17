@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faBook, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { blue400, blue50, blue600 } from '../styles/General'
 import { Link, useHistory } from 'react-router-dom'
 
 import { MediaQueries } from "../styles/media"
+import { useOutsideAlert } from '../utils/hooks'
 
 type NavItem = {
     name: string,
@@ -18,11 +19,14 @@ export type HeaderPageProps = {
 
 export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
     const history = useHistory()
-    const [showSearchButton, setShowSearchButton] = useState<boolean>(true)
+    const [isSearchFeatureVisible, setIsSearchFeatureVisible] = useState<boolean>(false)
+
+    const outSideRef = useOutsideAlert({ handleOutsideClick: () => setIsSearchFeatureVisible(true) })
+
     const searchRef = useRef<HTMLInputElement>(null)
 
     const handleSearch = () => {
-        setShowSearchButton?.(prevState => !prevState)
+        setIsSearchFeatureVisible?.(prevState => !prevState)
     }
 
     const handleInputCancel = () => {
@@ -54,8 +58,8 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
                         <WLogTitle>Article</WLogTitle>
                     </WLogoLink>
                 </WLogoBlock>
-                <WFeatureBlock>
-                    <WSearchBlock showSearch={!showSearchButton} >
+                <WFeatureBlock >
+                    <WSearchBlock ref={outSideRef} isSearchFeatureVisible={!isSearchFeatureVisible} >
                         <WInputBlock>
                             <WSearchInput
                                 type="text"
@@ -75,7 +79,8 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
                             icon={faTimes}
                             color={`${blue600}`} />
                     </WSearchBlock>
-                    <WSearchButton showSearch={showSearchButton} onClick={handleSearch}>
+
+                    <WSearchButton isSearchFeatureVisible={isSearchFeatureVisible} onClick={handleSearch}>
                         <FontAwesomeIcon icon={faSearch} color={`${blue600}`} />
                     </WSearchButton>
                 </WFeatureBlock>
@@ -177,22 +182,23 @@ const WFeatureBlock = styled.div`
     `}
 `
 
-const WFeature = styled.div`
-    padding: 0 0.625rem;
+const WFeature = css`
+    margin: 0 0.625rem;
   
     transition: all .5s;
 `
 
-const WSearchFeature = styled(WFeature) <{ showSearch: boolean }>`
+const WSearchFeature = styled.div <{ isSearchFeatureVisible: boolean }>`
+    ${WFeature}
     position: relative;
-    opacity: ${props => props?.showSearch ? "1" : "0"};
-    z-index:${props => props?.showSearch ? "auto" : "-1"};
+    opacity: ${props => props?.isSearchFeatureVisible ? "0" : "1"};
+    z-index:${props => props?.isSearchFeatureVisible ? "-1" : "auto"};
 `
 
-const WSearchBlock = styled(WSearchFeature) <{ showSearch: boolean }>`
+const WSearchBlock = styled(WSearchFeature) <{ isSearchFeatureVisible: boolean }>`
     display: flex;
     align-items: center;
-    right:${props => props?.showSearch ? "-32px" : "-45px"};
+    right:${props => props?.isSearchFeatureVisible ? "-45px" : "-32px"};
     >svg{
         cursor:pointer;
         border-radius: 6px;

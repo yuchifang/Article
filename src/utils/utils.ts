@@ -1,4 +1,4 @@
-const RA = require('ramda');
+// const RA = require('ramda');
 // export const arrCompileTagsArr = RA.reduce((articleAccumulator, currentArticle) => [...articleAccumulator, ...currentArticle.tags], [])
 // export const arrCompileRepeatObj = RA.reduce((tagAccumulator, currentTag) => {
 //     tagAccumulator[currentTag] = tagAccumulator[currentTag] ? tagAccumulator[currentTag] + 1 : 1

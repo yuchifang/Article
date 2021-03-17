@@ -6,7 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from "react-redux"
 import store from "./store/store"
 import { createGlobalStyle } from "styled-components"
-import { MediaQueries } from "./styles/media"
 
 const GlobalStyle = createGlobalStyle`
     *{

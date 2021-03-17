@@ -17,7 +17,7 @@ interface ArticlePageProps extends RouteComponentProps<{}, {}, Location> {
 
 }
 
-type Tag = {
+type TagType = {
     added_by: string;
     is_poi: boolean,
     locked: number,
@@ -33,7 +33,7 @@ type ArticleState = {
     avatar?: string,
     authorName?: string,
     public_at?: string,
-    tags?: Tag[]
+    tags?: TagType[]
 }
 
 export default function ArticlePage({ location: { state: { articleId } }, history }: ArticlePageProps) {
@@ -47,7 +47,7 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
 
     useEffect(() => {
         dispatch(GetArticle(articleId, authorName))
-    }, [authorName, articleId])
+    }, [authorName, articleId, dispatch])
 
     const handleTagClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const target = e.target as Element;
@@ -84,7 +84,7 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
                                     <WPublicTime>{timestampToDate(article?.public_at)}</WPublicTime>
                                     <WTagList>
                                         {(!!article && !!article?.tags && article?.tags.length > 0) &&
-                                            article?.tags.map((item: Tag, index: number) =>
+                                            article?.tags.map((item: TagType, index: number) =>
                                                 <Tag
                                                     key={index}
                                                     iconBackgroundColor={blue50}

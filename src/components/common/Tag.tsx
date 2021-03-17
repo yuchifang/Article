@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from "styled-components"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { blue100 } from "../../styles/General"
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { blue100 } from "../../styles/General"
 
 type TagProps = {
     iconBackgroundColor: string,
@@ -11,44 +11,55 @@ type TagProps = {
     text: string,
 
     hasBorder?: boolean,
-    iconColor?: string,
+    TextColor?: string,
     isItemActive?: boolean,
-    iconStyle?: {
-        "vertical-align": string,
-        "display": string
-    },
-    cancelIcon?: IconProp,
+
+    useIcon?: boolean,
+    renderIcon?: () => JSX.Element
 }
 
 
 export default function Tag({
     iconBackgroundColor,
-    iconColor,
+    TextColor,
     isItemActive,
     handleClick,
-    iconStyle,
-    cancelIcon,
+    useIcon,
+    renderIcon,
     text
 }: TagProps) {
+
+    let IconStyle = {
+        "vertical-align": "middle",
+        "margin-left": "5px",
+        "display": isItemActive ? "inline-block" : "none"
+    }
+
     return (
-        <WTagBlock cancelIcon={cancelIcon}>
+        <WTagBlock useIcon={useIcon}>
             <WTagClickBlock
                 onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => handleClick?.(e)}>
                 <WTagItem
                     iconBackgroundColor={iconBackgroundColor}
                     isItemActive={isItemActive}
-                    iconColor={iconColor}
+                    TextColor={TextColor}
                 >
                     {text}
                 </WTagItem>
-                {cancelIcon && <FontAwesomeIcon icon={cancelIcon} style={iconStyle} />}
+                {useIcon &&
+                    <>
+                        {renderIcon && renderIcon()}
+                        {!renderIcon && <FontAwesomeIcon icon={faTimes} style={IconStyle} />}
+                    </>
+                }
+
             </WTagClickBlock>
         </WTagBlock >
     )
 }
 
 type WTagItemProps = {
-    iconColor?: string,
+    TextColor?: string,
     isItemActive?: boolean,
     iconBackgroundColor?: string,
     hasBorder?: boolean
@@ -56,8 +67,8 @@ type WTagItemProps = {
 
 
 
-const WTagBlock = styled.div<{ cancelIcon?: IconProp }>`
-        width:${props => props.cancelIcon ? "100px" : "auto"};
+const WTagBlock = styled.div<{ useIcon?: boolean }>`
+        width:${props => props.useIcon ? "100px" : "auto"};
     `
 const WTagClickBlock = styled.div`
         display: inline-block;
@@ -74,7 +85,7 @@ const WTagItem = styled.div<WTagItemProps>`
         font-weight: bold;
         transition: all .3s;
         ${props => props.hasBorder ? "border: 1px solid #aaa;" : ""}
-        color:${props => props.iconColor || `${blue100}`};
+        color:${props => props.TextColor || `${blue100}`};
         background-color:${props => props.isItemActive ? props.iconBackgroundColor : "transparent"};
         &:hover{
             background-color:${props => props.iconBackgroundColor || "transparent"};

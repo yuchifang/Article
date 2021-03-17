@@ -38,7 +38,7 @@ function App() {
 
   useEffect(() => {
     dispatch(GetWriterArticles("pinkymini"))
-  }, [])
+  }, [dispatch])
 
 
 

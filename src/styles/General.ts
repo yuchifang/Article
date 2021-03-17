@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import { css } from 'styled-components'
 import { MediaQueries } from "../styles/media"
 export const blue600 = "#1f292e"
 export const blue400 = "#78909c";

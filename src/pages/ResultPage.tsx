@@ -24,6 +24,7 @@ export default function ResultPage({ location: { state: { searchValue } } }: Res
                 hasPagination={true}
                 titlePlace="center"
                 wrap={true}
+                titleHasIcon={true}
             />
 
         </WResultPageContainer>

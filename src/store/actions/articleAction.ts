@@ -1,5 +1,5 @@
 import axios from 'axios'
-import fakeData from '../../data.json'
+// import fakeData from '../../data.json'
 import { ThunkDispatch } from 'redux-thunk';
 import { Action } from 'redux';
 import {

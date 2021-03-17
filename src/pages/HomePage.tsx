@@ -1,8 +1,5 @@
 import styled from 'styled-components'
-import {
-    _filter,
-    _log
-} from '../utils/utils'
+
 import TopicBlock from '../components/common/TopicBlock/TopicBlock'
 import { WContainer } from '../styles/General'
 import { HeaderPageProps } from "./HeaderPage"

@@ -18,7 +18,9 @@ export default function Pagination({
 
     currentPage?: number,
     handleChange?: (page: number) => void
+
 }) {
+
     const [pageNumber, setPageNumber] = useState<number>(1)
 
     useEffect(() => {
@@ -39,7 +41,7 @@ export default function Pagination({
     let pageArrRender: object[] = []
     for (let item = 1; item <= maxPageCount; item++) {
         pageArrRender.push(
-            <WPaginationItem onClick={(e) => handlePageNumberClick(e)}>
+            <WPaginationItem key={item} onClick={(e) => handlePageNumberClick(e)}>
                 <WNumberItem active={item === pageNumber}>
                     {item}
                 </WNumberItem>

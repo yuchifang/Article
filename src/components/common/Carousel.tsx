@@ -21,15 +21,15 @@ export default function Carousel({
     children?: any
 }) {
     const [itemDimension, setItemDimension] = useState<number>(0)
-    const imgRef = useRef<HTMLLIElement>(null)
+    const liRef = useRef<HTMLLIElement>(null)
     const arrLength = carouselArr.length
     const distance = itemDimension
     const totalDistance = arrLength * distance
 
     useEffect(() => {
         const handleImgWidth = () => {
-            if (!!imgRef && !!imgRef.current && !!imgRef?.current?.offsetWidth) {
-                setItemDimension(imgRef?.current?.offsetWidth)
+            if (!!liRef && !!liRef.current && !!liRef?.current?.offsetWidth) {
+                setItemDimension(liRef?.current?.offsetWidth)
             }
         }
         handleImgWidth()
@@ -53,12 +53,12 @@ export default function Carousel({
     </>
     //Carousel 最上層 此層的children 放你要map的陣列
     const AnimationItemBlock = ({ children }: { children: any }) => <>
-        <WLi ref={imgRef}>
+        <WLi ref={liRef}>
             {children}
         </WLi>
     </>
 
-    return children({
+    return children?.({
         AnimationBlock,
         AnimationItemBlock,
     })
@@ -91,17 +91,4 @@ const WLi = styled.li`
     width: 100%;
 `
 
-const WImg = styled.img`
-    vertical-align: middle;
-    width:100%;
-`
-
-const WInfoFigure = styled.figure`
-    width: 100%;
-    position: absolute;
-    height: 0;
-    z-index: -1;
-    opacity: 0;
-   
-`
 
