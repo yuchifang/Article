@@ -12,14 +12,11 @@
 
 # 整理  
 
-Pagination 換頁的部分 useEffect
 
 goTop 在上滑動時才顯示
 
 看看哪邊可以用render props
 // 簡化 Carousel ??
-
-dispatch 為啥要放入useEffect
 
 
 redux toolkit

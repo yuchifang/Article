@@ -31,9 +31,7 @@ export function useOutsideAlert({ handleOutsideClick }: { handleOutsideClick: (v
         function OutsideClick(event: any) {
             //@ts-ignore
             if (wrapper && wrapper.current && !wrapper?.current?.contains(event.target)) {
-                console.log(handleOutsideClick)
                 handleOutsideClick?.()
-                console.log("sssss")
             }
         }
 

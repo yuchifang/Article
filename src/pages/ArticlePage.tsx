@@ -47,7 +47,7 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
 
     useEffect(() => {
         dispatch(GetArticle(articleId, authorName))
-    }, [authorName, articleId, dispatch])
+    }, [authorName, articleId])
 
     const handleTagClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const target = e.target as Element;

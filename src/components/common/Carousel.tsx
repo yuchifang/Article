@@ -21,15 +21,15 @@ export default function Carousel({
     children?: any
 }) {
     const [itemDimension, setItemDimension] = useState<number>(0)
-    const liRef = useRef<HTMLLIElement>(null)
+    const DivRef = useRef<HTMLDivElement>(null)
     const arrLength = carouselArr.length
     const distance = itemDimension
     const totalDistance = arrLength * distance
 
     useEffect(() => {
         const handleImgWidth = () => {
-            if (!!liRef && !!liRef.current && !!liRef?.current?.offsetWidth) {
-                setItemDimension(liRef?.current?.offsetWidth)
+            if (!!DivRef && !!DivRef.current && !!DivRef?.current?.offsetWidth) {
+                setItemDimension(DivRef?.current?.offsetWidth)
             }
         }
         handleImgWidth()
@@ -41,26 +41,18 @@ export default function Carousel({
     }, [])
 
     // AnimationBlock 為 Carousel 最上層 此層的children 放你要map的陣列
-    // 陣列的每個Item 需要由 AnimationItemBlock 包住
 
     const AnimationBlock = ({ children }: { children: any }) => <>
-        <WViewBlock>
+        <WViewBlock ref={DivRef}>
             <WAnimationBlock moveLeft={moveLeft} distance={totalDistance} widthParameter={arrLength * 2} animationSeconds={arrLength}>
                 {children}
                 {children}
             </WAnimationBlock>
         </WViewBlock>
     </>
-    //Carousel 最上層 此層的children 放你要map的陣列
-    const AnimationItemBlock = ({ children }: { children: any }) => <>
-        <WLi ref={liRef}>
-            {children}
-        </WLi>
-    </>
 
     return children?.({
         AnimationBlock,
-        AnimationItemBlock,
     })
 
 }
@@ -70,7 +62,7 @@ const WViewBlock = styled.div`
     overflow: hidden;
 `
 
-const WAnimationBlock = styled.ul<{
+const WAnimationBlock = styled.div<{
     moveLeft?: (num: number) => any,
     distance: number,
     widthParameter: number,
@@ -85,10 +77,5 @@ const WAnimationBlock = styled.ul<{
     }
 `
 
-const WLi = styled.li`
-    position:relative;
-    box-sizing: border-box;
-    width: 100%;
-`
 
 

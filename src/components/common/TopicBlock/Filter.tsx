@@ -48,15 +48,6 @@ export default function Filter({
         setFilterListOpen(prevState => !prevState)
     }
 
-    let publicTimeIconStyle = {
-        "vertical-align": "middle",
-        "display": publicTimeActive ? "inline-block" : "none"
-    }
-
-    let viewCountIconStyle = {
-        "vertical-align": "middle",
-        "display": viewCountActive ? "inline-block" : "none"
-    }
 
     return (
         <WFilterFeature>

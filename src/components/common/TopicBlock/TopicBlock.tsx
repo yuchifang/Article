@@ -1,4 +1,4 @@
-import { useState, useMemo, Suspense, lazy, useEffect } from 'react'
+import { useState, useMemo, Suspense, lazy, useCallback } from 'react'
 import {
     pipe,
     _filter,
@@ -10,7 +10,6 @@ import styled from 'styled-components'
 
 import { RootState } from '../../../store/reducers/RootReducer'
 import { blue600 } from '../../../styles/General'
-import ArticleInfo from '../ArticleInfo'
 import { MediaQueries } from "../../../styles/media"
 import Pagination from "../Pagination"
 import { useRWD } from '../../../utils/hooks'
@@ -99,13 +98,82 @@ export default function TopicBlock({
 
     const showPagination = articleInfoFilteredList.length / singlePageItemCount > 1 ? true : false
 
-    const handleChange = (page: number) => {
+    const handleChange = useCallback((page: number) => {
         setPageState({
             currentPage: page,
             maxIndex: singlePageItemCount * page,
             minIndex: singlePageItemCount * (page - 1)
         })
-    }
+    }, [pageState.currentPage])
+
+
+    const articleContentRender = useMemo(() =>
+        <>
+            <WArticleInfoBlock wrap={wrap}>
+
+                {articleInfoFilteredList?.length > 0 &&
+                    <>
+                        {(device === "PC" || !showCarousel)
+                            && articleInfoFilteredList.map(
+                                (articleInfo, index) => {
+                                    if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
+                                        return <Suspense
+                                            key={`${articleInfo.title + index}`}
+                                            fallback={<h1>Loading</h1>}>
+                                            <LazyArticleInfo
+                                                rowsCount={rowsCount}
+                                                title={articleInfo.title}
+                                                category={articleInfo.category}
+                                                index={index}
+                                                articleId={articleInfo.articleId}
+                                                publicAt={articleInfo.public_at}
+                                                views={articleInfo.total_hits}
+                                            />
+                                        </Suspense >
+
+                                }
+                            )}
+                        {device === "Mobile" && showCarousel &&
+                            <Carousel carouselArr={articleInfoFilteredList} >
+                                {({ AnimationBlock, AnimationItemBlock }: {
+                                    AnimationBlock: any,
+                                    AnimationItemBlock: any,
+
+                                }) =>
+                                    <AnimationBlock>
+                                        {articleInfoFilteredList.map((articleInfo, index) =>
+                                            <Suspense
+                                                key={`${articleInfo.title + index}`}
+                                                fallback={<h1>Loading</h1>}>
+                                                <LazyArticleInfo
+                                                    rowsCount={rowsCount}
+                                                    title={articleInfo.title}
+                                                    category={articleInfo.category}
+                                                    index={index}
+                                                    articleId={articleInfo.articleId}
+                                                    publicAt={articleInfo.public_at}
+                                                    views={articleInfo.total_hits}
+                                                />
+                                            </Suspense >
+                                        )}
+                                    </AnimationBlock>
+                                }
+                            </Carousel>
+                        }
+                    </>
+                }
+
+            </WArticleInfoBlock>
+            {
+                (hasPagination && showPagination) &&
+                <Pagination
+                    currentPage={pageState.currentPage}
+                    singlePageItemCount={singlePageItemCount}
+                    ListLength={articleInfoFilteredList.length}
+                    handleChange={handleChange} />
+            }
+        </>
+        , [wrap, articleInfoFilteredList, device, hasPagination, pageState.currentPage, pageState.maxIndex, rowsCount, showPagination, showCarousel])
 
     return (
         <WTopicBlock>
@@ -119,75 +187,13 @@ export default function TopicBlock({
                 <>
                     {filter &&
                         <Filter
+                            ArticleInfoList={ArticleInfoList}
+                            setPageState={setPageState}
                             setArticleInfoFilteredList={setArticleInfoFilteredList}
-                            setFilterListOpen={setFilterListOpen}
-                            filterListOpen={filterListOpen}
-                            setPublicTimeActive={setPublicTimeActive}
-                            publicTimeActive={publicTimeActive}
-                            setViewCountActive={setViewCountActive}
-                            viewCountActive={viewCountActive} />
+
+                        />
                     }
-                    <WArticleInfoBlock wrap={wrap}>
-
-                        {articleInfoFilteredList?.length > 0 &&
-                            <>
-                                {(device === "PC" || !showCarousel)
-                                    && articleInfoFilteredList.map(
-                                        (articleInfo, index) => {
-                                            if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
-                                                return <Suspense fallback={<h1>Loading</h1>}>
-                                                    <LazyArticleInfo
-                                                        key={`${articleInfo.title + index}`}
-                                                        rowsCount={rowsCount}
-                                                        title={articleInfo.title}
-                                                        category={articleInfo.category}
-                                                        index={index}
-                                                        articleId={articleInfo.articleId}
-                                                        publicAt={articleInfo.public_at}
-                                                        views={articleInfo.total_hits}
-                                                    />
-                                                </Suspense >
-
-                                        }
-                                    )}
-                                {device === "Mobile" && showCarousel &&
-                                    <Carousel carouselArr={articleInfoFilteredList} >
-                                        {({ AnimationBlock, AnimationItemBlock }: {
-                                            AnimationBlock: any,
-                                            AnimationItemBlock: any,
-
-                                        }) =>
-                                            <AnimationBlock>
-                                                {articleInfoFilteredList.map((articleInfo, index) =>
-                                                    <AnimationItemBlock>
-                                                        <Suspense fallback={<h1>Loading</h1>}>
-                                                            <LazyArticleInfo
-                                                                key={`${articleInfo.title + index}`}
-                                                                rowsCount={rowsCount}
-                                                                title={articleInfo.title}
-                                                                category={articleInfo.category}
-                                                                index={index}
-                                                                articleId={articleInfo.articleId}
-                                                                publicAt={articleInfo.public_at}
-                                                                views={articleInfo.total_hits}
-                                                            />
-                                                        </Suspense >
-                                                    </AnimationItemBlock>
-                                                )}
-                                            </AnimationBlock>
-                                        }
-                                    </Carousel>
-                                }
-                            </>
-                        }
-
-                    </WArticleInfoBlock>
-                    {(hasPagination && showPagination) &&
-                        <Pagination
-                            currentPage={pageState.currentPage}
-                            singlePageItemCount={singlePageItemCount}
-                            ListLength={articleInfoFilteredList.length}
-                            handleChange={handleChange} />}
+                    {articleContentRender}
                 </>
             }
             {

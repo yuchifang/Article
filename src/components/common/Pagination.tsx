@@ -25,12 +25,12 @@ export default function Pagination({
 
     useEffect(() => {
         handleChange?.(pageNumber)
-    }, [pageNumber])
+    }, [pageNumber, handleChange])
 
     //如果在第二頁時 點其他HeaderTag 則會重新導回第一頁
     useEffect(() => {
         setPageNumber(currentPage)
-    }, [ListLength])
+    }, [currentPage])
 
 
     const maxPageCount = Math.ceil(ListLength / singlePageItemCount)
