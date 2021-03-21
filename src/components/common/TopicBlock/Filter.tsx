@@ -59,14 +59,14 @@ export default function Filter({
                 <WFilterList >
                     <Tag
                         text="觀看次數"
-                        handleClick={handleViewCountFilter}
+                        onClick={handleViewCountFilter}
                         iconBackgroundColor={blue50}
                         isItemActive={viewCountActive}
                         TextColor={blue100}
                     />
                     <Tag
                         text="上傳時間"
-                        handleClick={handlePublicTimeFilter}
+                        onClick={handlePublicTimeFilter}
                         iconBackgroundColor={blue50}
 
                         isItemActive={publicTimeActive}

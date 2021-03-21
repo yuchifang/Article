@@ -7,7 +7,7 @@ import { blue100 } from "../../styles/General"
 
 type TagProps = {
     iconBackgroundColor: string,
-    handleClick: (e?: any) => void,
+    onClick: (e?: any) => void,
     text: string,
 
     hasBorder?: boolean,
@@ -23,7 +23,7 @@ export default function Tag({
     iconBackgroundColor,
     TextColor,
     isItemActive,
-    handleClick,
+    onClick,
     useIcon,
     renderIcon,
     text
@@ -38,7 +38,7 @@ export default function Tag({
     return (
         <WTagBlock useIcon={useIcon}>
             <WTagClickBlock
-                onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => handleClick?.(e)}>
+                onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => onClick?.(e)}>
                 <WTagItem
                     iconBackgroundColor={iconBackgroundColor}
                     isItemActive={isItemActive}

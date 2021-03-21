@@ -9,6 +9,8 @@ import { RootState } from '../store/reducers/RootReducer'
 import { blue50 } from "../styles/General"
 import Tag from "../components/common/Tag"
 import { MediaQueries } from '../styles/media'
+import Spinner from '../components/common/Spinner'
+
 
 type Location = {
     articleId: string
@@ -89,7 +91,7 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
                                                     key={index}
                                                     iconBackgroundColor={blue50}
                                                     text={item.tag}
-                                                    handleClick={(e) => handleTagClick(e)} />
+                                                    onClick={(e) => handleTagClick(e)} />
                                             )}
                                     </WTagList>
                                 </WAuthorInfoContent>
@@ -99,7 +101,7 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
                     </WArticlePageContainer>
                 </WArticlePageSection>
             }
-            {article?.status === "loading" && <h1>Loading</h1>}
+            {article?.status === "loading" && <Spinner />}
             {article?.status === "error" && <h1>Error</h1>}
         </>
     )
@@ -133,18 +135,19 @@ const WArticleTitle = styled.h1`
 `
 
 const WArticleInfo = styled.div`
-  
+    
     position: relative;
     left:0;
-    width:auto;
+    width:100%;
     display:flex;
-    margin-bottom: 15px;
+    padding: 0px 0.625rem  15px 0.625rem;
+    box-sizing: border-box;
     justify-content: space-around;
     align-items: center;
     ${MediaQueries.DesktopMCSS`
         display:block;
         position: absolute;
-        left: -20rem;
+        left: -16rem;
         width: 15.625rem;
     `}
 `
@@ -174,18 +177,33 @@ const WPublicTime = styled.p`
 `
 
 const WArticleBlock = styled.div`
+    width: 100%;
+    max-width 460px;
     position:relative;
-    max-width:580px;
     margin:auto;
     padding-top:3.125rem;
+    ${MediaQueries.MobileSCSS`
+        max-width:580px;
+    `}
 `
 
 const WArticleContent = styled.div`
+    width:100%;
+    padding:0px 10px 0px 10px;
+    box-sizing: border-box;
+    *{
+        max-width: 100%;
+        display: inline-block;
+        box-sizing: border-box;
+        white-space: break-spaces;
+    }
     p{
+        width:100%;
         padding:0.313rem 0px;
         >img{
             margin: 0.625rem auto;
             display:block;
+            width:100%;
         }
     }
 `

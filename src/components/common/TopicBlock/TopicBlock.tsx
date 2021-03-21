@@ -15,6 +15,7 @@ import Pagination from "../Pagination"
 import { useRWD } from '../../../utils/hooks'
 import Carousel from '../Carousel'
 import Filter from './Filter'
+import Spinner from '../Spinner'
 
 export type ArticleProps = {
     articleId: string,
@@ -119,7 +120,7 @@ export default function TopicBlock({
                                     if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
                                         return <Suspense
                                             key={`${articleInfo.title + index}`}
-                                            fallback={<h1>Loading</h1>}>
+                                            fallback={<Spinner />}>
                                             <LazyArticleInfo
                                                 rowsCount={rowsCount}
                                                 title={articleInfo.title}
@@ -144,7 +145,7 @@ export default function TopicBlock({
                                         {articleInfoFilteredList.map((articleInfo, index) =>
                                             <Suspense
                                                 key={`${articleInfo.title + index}`}
-                                                fallback={<h1>Loading</h1>}>
+                                                fallback={<Spinner />}>
                                                 <LazyArticleInfo
                                                     rowsCount={rowsCount}
                                                     title={articleInfo.title}
@@ -170,7 +171,7 @@ export default function TopicBlock({
                     currentPage={pageState.currentPage}
                     singlePageItemCount={singlePageItemCount}
                     ListLength={articleInfoFilteredList.length}
-                    handleChange={handleChange} />
+                    onChange={handleChange} />
             }
         </>
         , [wrap, articleInfoFilteredList, device, hasPagination, pageState.currentPage, pageState.maxIndex, rowsCount, showPagination, showCarousel])

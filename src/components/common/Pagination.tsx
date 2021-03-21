@@ -10,22 +10,22 @@ export default function Pagination({
     singlePageItemCount = 5,
 
     currentPage = 1,
-    handleChange = () => console.log("page")
+    onChange = () => console.log("page")
 
 }: {
     ListLength: number,
     singlePageItemCount: number,
 
     currentPage?: number,
-    handleChange?: (page: number) => void
+    onChange?: (page: number) => void
 
 }) {
 
     const [pageNumber, setPageNumber] = useState<number>(1)
 
     useEffect(() => {
-        handleChange?.(pageNumber)
-    }, [pageNumber, handleChange])
+        onChange?.(pageNumber)
+    }, [pageNumber, onChange])
 
     //如果在第二頁時 點其他HeaderTag 則會重新導回第一頁
     useEffect(() => {

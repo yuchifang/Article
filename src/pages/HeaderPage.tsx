@@ -7,6 +7,8 @@ import { Link, useHistory } from 'react-router-dom'
 
 import { MediaQueries } from "../styles/media"
 import { useOutsideClick } from '../utils/hooks'
+// import Spinner from '../components/common/Spinner'
+
 
 type NavItem = {
     name: string,

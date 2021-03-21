@@ -10,6 +10,7 @@ import ResultPage from './pages/ResultPage'
 import { pipe, packTagsString, countRepeatTag, _map, stringToLower, objToArr, _sort, _slice } from "./utils/utils"
 import { RootState } from './store/reducers/RootReducer'
 import GoTop from '../src/components/common/GoTop'
+import Spinner from './components/common/Spinner'
 
 function App() {
 
@@ -60,7 +61,7 @@ function App() {
       }
       {
         // @ts-ignore
-        articleList?.pinkymini?.actionStatus === "loading" && <h1>Loading</h1>
+        articleList?.pinkymini?.actionStatus === "loading" && <Spinner />
       }
       {
         //@ts-ignore

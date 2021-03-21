@@ -12,8 +12,12 @@
 
 # 整理  
 
+// Carousel renderList
+
 //component 可以加 onDelete 之類的
-<Component onDelete={handleDelete}></Component>
+//<Component onDelete={handleDelete}></Component>
+
+//ArticlePage RWD
 
 看看哪邊可以用render props
 
