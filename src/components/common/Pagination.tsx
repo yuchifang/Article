@@ -8,16 +8,14 @@ import { blue50, blue100, blue400, blue600 } from "../../styles/General"
 export default function Pagination({
     ListLength = 20,
     singlePageItemCount = 5,
-
     currentPage = 1,
     onChange = () => console.log("page")
 
 }: {
     ListLength: number,
     singlePageItemCount: number,
-
-    currentPage?: number,
-    onChange?: (page: number) => void
+    currentPage: number,
+    onChange: (page: number) => void
 
 }) {
 
@@ -25,7 +23,7 @@ export default function Pagination({
 
     useEffect(() => {
         onChange?.(pageNumber)
-    }, [pageNumber, onChange])
+    }, [pageNumber])
 
     //如果在第二頁時 點其他HeaderTag 則會重新導回第一頁
     useEffect(() => {
