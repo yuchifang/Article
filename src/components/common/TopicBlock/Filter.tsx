@@ -10,63 +10,44 @@ export default function Filter({
     setArticleInfoFilteredList,
     ArticleInfoList,
     setPageState,
+    onClickFilter,
+    onClickPublicTime,
+    onClickFilterList,
+    filterListOpen,
+    publicTimeActive,
+    viewCountActive
 }: {
     setArticleInfoFilteredList: (value: React.SetStateAction<ArticleProps[]>) => void,
     setPageState: (value: React.SetStateAction<DefaultPageStateType>) => void,
     ArticleInfoList: ArticleProps[],
+    onClickFilter: () => void,
+    onClickPublicTime: () => void,
+    onClickFilterList: () => void,
+    filterListOpen: boolean,
+    publicTimeActive: boolean,
+    viewCountActive: boolean
 }) {
 
-    const [filterListOpen, setFilterListOpen] = useState<boolean>(false)
-    const [publicTimeActive, setPublicTimeActive] = useState<boolean>(false)
-    const [viewCountActive, setViewCountActive] = useState<boolean>(true)
-
-    useEffect(() => {
-        setArticleInfoFilteredList?.(ArticleInfoList)
-        setViewCountActive(true)
-        setPublicTimeActive(false)
-        setFilterListOpen(false)
-        setPageState?.(defaultPageState)
-    }, [ArticleInfoList])
-
-    const handleFilterList = () => {
-        setFilterListOpen(prevState => !prevState)
-    }
-
-    const handlePublicTimeFilter = () => {
-        setArticleInfoFilteredList(prevState => prevState.sort((articleA: ArticleProps, articleB: ArticleProps) =>
-            Number(articleA.public_at) > Number(articleB.public_at) ? -1 : 1))
-        setPublicTimeActive(true)
-        setViewCountActive(false)
-        setFilterListOpen(prevState => !prevState)
-    }
-
-    const handleViewCountFilter = () => {
-        setArticleInfoFilteredList(prevState => prevState.sort((articleA: ArticleProps, articleB: ArticleProps) =>
-            Number(articleA.total_hits) > Number(articleB.total_hits) ? -1 : 1))
-        setViewCountActive(true)
-        setPublicTimeActive(false)
-        setFilterListOpen(prevState => !prevState)
-    }
 
 
     return (
         <WFilterFeature>
             <WFilterShowList show={filterListOpen}>
-                <WFilterBlock onClick={() => handleFilterList()}>
+                <WFilterBlock onClick={() => onClickFilterList()}>
                     <FontAwesomeIcon icon={faFilter} color={`${blue600}`} />
                     <WFilterText>篩選器</WFilterText>
                 </WFilterBlock>
                 <WFilterList >
                     <Tag
                         text="觀看次數"
-                        onClick={handleViewCountFilter}
+                        onClick={onClickFilter}
                         iconBackgroundColor={blue50}
                         isItemActive={viewCountActive}
                         TextColor={blue100}
                     />
                     <Tag
                         text="上傳時間"
-                        onClick={handlePublicTimeFilter}
+                        onClick={onClickPublicTime}
                         iconBackgroundColor={blue50}
 
                         isItemActive={publicTimeActive}

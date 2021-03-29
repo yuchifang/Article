@@ -1,4 +1,4 @@
-import { useState, useMemo, Suspense, lazy, useCallback } from 'react'
+import { useEffect, useState, useMemo, Suspense, lazy, useCallback } from 'react'
 import {
     pipe,
     _filter,
@@ -16,6 +16,7 @@ import { useRWD } from '../../../utils/hooks'
 import Carousel from '../Carousel'
 import Filter from './Filter'
 import Spinner from '../Spinner'
+import ArticleInfo from '../ArticleInfo'
 
 export type ArticleProps = {
     articleId: string,
@@ -72,7 +73,6 @@ export default function TopicBlock({
 
 }: TopicBlockProps) {
 
-    const LazyArticleInfo = lazy(() => import('../ArticleInfo'));
     const device = useRWD()
     const storeArticleList = useSelector((state: RootState) => state.WriterList)
     const ArticleInfoList = useMemo(() => {
@@ -95,6 +95,18 @@ export default function TopicBlock({
 
     const [articleInfoFilteredList, setArticleInfoFilteredList] = useState<ArticleProps[]>(ArticleInfoList)
 
+    const [filterListOpen, setFilterListOpen] = useState<boolean>(false)
+    const [publicTimeActive, setPublicTimeActive] = useState<boolean>(false)
+    const [viewCountActive, setViewCountActive] = useState<boolean>(true)
+    console.log({ articleInfoFilteredList })
+    useEffect(() => {
+        setArticleInfoFilteredList?.(ArticleInfoList)
+        setViewCountActive(true)
+        setPublicTimeActive(false)
+        setFilterListOpen(false)
+        setPageState?.(defaultPageState)
+    }, [ArticleInfoList])
+
     const [pageState, setPageState] = useState<DefaultPageStateType>(defaultPageState)
 
     const showPagination = articleInfoFilteredList.length / singlePageItemCount > 1 ? true : false
@@ -108,29 +120,27 @@ export default function TopicBlock({
     }, [pageState.currentPage])
 
 
-    const articleContentRender = useMemo(() =>
+    const articleContentRender =
         <>
             <WArticleInfoBlock wrap={wrap}>
-
+                {console.log("sss")}
                 {articleInfoFilteredList?.length > 0 &&
                     <>
                         {(device === "PC" || !showCarousel)
                             && articleInfoFilteredList.map(
                                 (articleInfo, index) => {
                                     if (pageState.maxIndex >= index + 1 && index + 1 > pageState.minIndex)
-                                        return <Suspense
-                                            key={`${articleInfo.title + index}`}
-                                            fallback={<Spinner />}>
-                                            <LazyArticleInfo
-                                                rowsCount={rowsCount}
-                                                title={articleInfo.title}
-                                                category={articleInfo.category}
-                                                index={index}
-                                                articleId={articleInfo.articleId}
-                                                publicAt={articleInfo.public_at}
-                                                views={articleInfo.total_hits}
-                                            />
-                                        </Suspense >
+                                        return <ArticleInfo
+
+                                            rowsCount={rowsCount}
+                                            title={articleInfo.title}
+                                            category={articleInfo.category}
+                                            index={index}
+                                            articleId={articleInfo.articleId}
+                                            publicAt={articleInfo.public_at}
+                                            views={articleInfo.total_hits}
+                                        />
+
 
                                 }
                             )}
@@ -143,19 +153,15 @@ export default function TopicBlock({
                                 }) =>
                                     <AnimationBlock>
                                         {articleInfoFilteredList.map((articleInfo, index) =>
-                                            <Suspense
-                                                key={`${articleInfo.title + index}`}
-                                                fallback={<Spinner />}>
-                                                <LazyArticleInfo
-                                                    rowsCount={rowsCount}
-                                                    title={articleInfo.title}
-                                                    category={articleInfo.category}
-                                                    index={index}
-                                                    articleId={articleInfo.articleId}
-                                                    publicAt={articleInfo.public_at}
-                                                    views={articleInfo.total_hits}
-                                                />
-                                            </Suspense >
+                                            <ArticleInfo
+                                                rowsCount={rowsCount}
+                                                title={articleInfo.title}
+                                                category={articleInfo.category}
+                                                index={index}
+                                                articleId={articleInfo.articleId}
+                                                publicAt={articleInfo.public_at}
+                                                views={articleInfo.total_hits}
+                                            />
                                         )}
                                     </AnimationBlock>
                                 }
@@ -174,7 +180,29 @@ export default function TopicBlock({
                     onChange={handleChange} />
             }
         </>
-        , [wrap, articleInfoFilteredList, device, hasPagination, pageState.currentPage, pageState.maxIndex, rowsCount, showPagination, showCarousel])
+
+
+
+    const handleFilterList = () => {
+        setFilterListOpen(prevState => !prevState)
+    }
+
+    const handlePublicTimeFilter = () => {
+        setArticleInfoFilteredList(prevState => prevState.sort((articleA: ArticleProps, articleB: ArticleProps) =>
+            Number(articleA.public_at) > Number(articleB.public_at) ? -1 : 1))
+        setPublicTimeActive(true)
+        setViewCountActive(false)
+        setFilterListOpen(prevState => !prevState)
+    }
+
+    const handleViewCountFilter = () => {
+        setArticleInfoFilteredList(prevState => prevState.sort((articleA: ArticleProps, articleB: ArticleProps) =>
+            Number(articleA.total_hits) > Number(articleB.total_hits) ? -1 : 1))
+        setViewCountActive(true)
+        setPublicTimeActive(false)
+        setFilterListOpen(prevState => !prevState)
+    }
+
 
     return (
         <WTopicBlock>
@@ -191,7 +219,12 @@ export default function TopicBlock({
                             ArticleInfoList={ArticleInfoList}
                             setPageState={setPageState}
                             setArticleInfoFilteredList={setArticleInfoFilteredList}
-
+                            onClickFilter={handleViewCountFilter}
+                            onClickPublicTime={handlePublicTimeFilter}
+                            onClickFilterList={handleFilterList}
+                            filterListOpen={filterListOpen}
+                            publicTimeActive={publicTimeActive}
+                            viewCountActive={viewCountActive}
                         />
                     }
                     {articleContentRender}
