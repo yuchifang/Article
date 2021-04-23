@@ -1,6 +1,7 @@
 import axios from 'axios'
 // import fakeData from '../../data.json'
 import { ThunkDispatch } from 'redux-thunk';
+import store from "../store"
 import { Action } from 'redux';
 import {
     ARTICLE_LIST_LOADING,
@@ -15,6 +16,9 @@ import { typeArticleListState } from "../reducers/WriterListReducer"
 import { typeArticleState } from '../reducers/ArticleReducer'
 
 export const GetWriterArticles = (userId = "pinkymini") => (dispatch: ThunkDispatch<typeArticleListState, void, Action>) => {
+
+
+
     dispatch({
         type: ARTICLE_LIST_LOADING,
         payload: { userId }
@@ -39,23 +43,24 @@ export const GetWriterArticles = (userId = "pinkymini") => (dispatch: ThunkDispa
         })
 }
 
-
 export const GetArticle = (articleId: string, authorName: string) => (dispatch: ThunkDispatch<typeArticleState, void, Action>) => {
-    dispatch({
-        type: ARTICLE_LOADING,
-        payload: { articleId: articleId }
-    })
-    axios.get(`https://emma.pixnet.cc/blog/articles/${articleId}?user=${authorName}`)
-        .then((res) => {
-            dispatch({
-                type: ARTICLE_SUCCESS,
-                payload: { res: res, articleId: articleId }
-            })
+    if (!store.getState().Article[articleId]) {
+        dispatch({
+            type: ARTICLE_LOADING,
+            payload: { articleId: articleId }
         })
-        .catch((rej) => {
-            dispatch({
-                type: ARTICLE_FAIL,
-                payload: { rej: rej, articleId: articleId }
+        axios.get(`https://emma.pixnet.cc/blog/articles/${articleId}?user=${authorName}`)
+            .then((res) => {
+                dispatch({
+                    type: ARTICLE_SUCCESS,
+                    payload: { res: res, articleId: articleId }
+                })
             })
-        })
+            .catch((rej) => {
+                dispatch({
+                    type: ARTICLE_FAIL,
+                    payload: { rej: rej, articleId: articleId }
+                })
+            })
+    }
 }

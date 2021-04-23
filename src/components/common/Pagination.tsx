@@ -50,7 +50,8 @@ export default function Pagination({
     const handlePageNumberClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
         const target = e.target as Element
         setPageNumber(Number(target.innerHTML))
-
+        e.preventDefault()
+        e.stopPropagation()
     }
 
     const handleLeftClick = () => {

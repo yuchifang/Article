@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, Suspense, lazy, useCallback } from 'react'
+import { useEffect, useState, useMemo, useCallback } from 'react'
 import {
     pipe,
     _filter,
@@ -15,7 +15,6 @@ import Pagination from "../Pagination"
 import { useRWD } from '../../../utils/hooks'
 import Carousel from '../Carousel'
 import Filter from './Filter'
-import Spinner from '../Spinner'
 import ArticleInfo from '../ArticleInfo'
 
 export type ArticleProps = {
@@ -98,7 +97,6 @@ export default function TopicBlock({
     const [filterListOpen, setFilterListOpen] = useState<boolean>(false)
     const [publicTimeActive, setPublicTimeActive] = useState<boolean>(false)
     const [viewCountActive, setViewCountActive] = useState<boolean>(true)
-    console.log({ articleInfoFilteredList })
     useEffect(() => {
         setArticleInfoFilteredList?.(ArticleInfoList)
         setViewCountActive(true)
@@ -123,7 +121,6 @@ export default function TopicBlock({
     const articleContentRender =
         <>
             <WArticleInfoBlock wrap={wrap}>
-                {console.log("sss")}
                 {articleInfoFilteredList?.length > 0 &&
                     <>
                         {(device === "PC" || !showCarousel)
@@ -216,9 +213,6 @@ export default function TopicBlock({
                 <>
                     {filter &&
                         <Filter
-                            ArticleInfoList={ArticleInfoList}
-                            setPageState={setPageState}
-                            setArticleInfoFilteredList={setArticleInfoFilteredList}
                             onClickFilter={handleViewCountFilter}
                             onClickPublicTime={handlePublicTimeFilter}
                             onClickFilterList={handleFilterList}

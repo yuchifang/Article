@@ -1,7 +1,7 @@
 import { ARTICLE_LOADING, ARTICLE_SUCCESS, ARTICLE_FAIL } from '../actions/actionType'
 
 export type typeArticleState = {
-    articleId: {
+    [key: string]: {
         status: string,
         errorMsg: string,
         body: string
@@ -14,7 +14,7 @@ type ArticleAction = {
         [key: string]: string | {},
     }
 }
-const DefaultState = {
+const DefaultState: typeArticleState = {
     articleId: {
         status: "idle",
         errorMsg: "",

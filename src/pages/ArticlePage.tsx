@@ -61,6 +61,8 @@ export default function ArticlePage({ location: { state: { articleId } }, histor
             }
         }
         history.push(locationInfo)
+        e.preventDefault()
+        e.stopPropagation()
     }
 
 

@@ -3,13 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
 import Tag from "../Tag"
 import { blue600, blue100, blue50 } from '../../../styles/General'
-import { useState, useEffect } from 'react'
-import { ArticleProps, DefaultPageStateType, defaultPageState } from './TopicBlock'
 
 export default function Filter({
-    setArticleInfoFilteredList,
-    ArticleInfoList,
-    setPageState,
     onClickFilter,
     onClickPublicTime,
     onClickFilterList,
@@ -17,9 +12,6 @@ export default function Filter({
     publicTimeActive,
     viewCountActive
 }: {
-    setArticleInfoFilteredList: (value: React.SetStateAction<ArticleProps[]>) => void,
-    setPageState: (value: React.SetStateAction<DefaultPageStateType>) => void,
-    ArticleInfoList: ArticleProps[],
     onClickFilter: () => void,
     onClickPublicTime: () => void,
     onClickFilterList: () => void,
