@@ -44,23 +44,22 @@ export const GetWriterArticles = (userId = "pinkymini") => (dispatch: ThunkDispa
 }
 
 export const GetArticle = (articleId: string, authorName: string) => (dispatch: ThunkDispatch<typeArticleState, void, Action>) => {
-    if (!store.getState().Article[articleId]) {
-        dispatch({
-            type: ARTICLE_LOADING,
-            payload: { articleId: articleId }
+    dispatch({
+        type: ARTICLE_LOADING,
+        payload: { articleId: articleId }
+    })
+    axios.get(`https://emma.pixnet.cc/blog/articles/${articleId}?user=${authorName}`)
+        .then((res) => {
+            dispatch({
+                type: ARTICLE_SUCCESS,
+                payload: { res: res, articleId: articleId }
+            })
         })
-        axios.get(`https://emma.pixnet.cc/blog/articles/${articleId}?user=${authorName}`)
-            .then((res) => {
-                dispatch({
-                    type: ARTICLE_SUCCESS,
-                    payload: { res: res, articleId: articleId }
-                })
+        .catch((rej) => {
+            dispatch({
+                type: ARTICLE_FAIL,
+                payload: { rej: rej, articleId: articleId }
             })
-            .catch((rej) => {
-                dispatch({
-                    type: ARTICLE_FAIL,
-                    payload: { rej: rej, articleId: articleId }
-                })
-            })
-    }
+        })
+
 }

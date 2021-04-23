@@ -41,14 +41,16 @@ type ArticleState = {
 export default function ArticlePage({ location: { state: { articleId } }, history }: ArticlePageProps) {
 
     const dispatch = useDispatch()
-    const articleList = useSelector((state: RootState) => state.WriterList)
-
+    const authorList = useSelector((state: RootState) => state.WriterList)
+    const articleList = useSelector((state: RootState) => state.Article)
     const { [articleId]: article }: { [articleId: string]: ArticleState } = useSelector((state: RootState) => state.Article)
     // @ts-ignore
-    const authorName = articleList.pinkymini.AuthorName
+    const authorName = authorList.pinkymini.AuthorName
 
     useEffect(() => {
-        dispatch(GetArticle(articleId, authorName))
+        if (!articleList[articleId]) {
+            dispatch(GetArticle(articleId, authorName))
+        }
     }, [authorName, articleId])
 
     const handleTagClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
