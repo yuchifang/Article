@@ -2,21 +2,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react'
-// 要讓他不顯示
-// 如果畫面到最上層 就不顯示
-// 知道window的位置
+import { throttle } from '../../utils/utils'
 
-export default function GoTop() {
+type GoTopProps = {
+    listenEvent?: boolean
+}
+
+export default function GoTop({ listenEvent = false }: GoTopProps) {
     const [showGoTopIcon, setShowGoTopIcon] = useState<boolean>(false)
     const [webHeight, setWebHeight] = useState<number>(0)
 
     useEffect(() => {
+        let handleFunction = listenEvent ? handleScroll : handleHeight
 
-        window.addEventListener('scroll', handleScroll)
+
+
+        window.addEventListener('scroll', handleFunction)
         return (() => {
-            window.removeEventListener('scroll', handleScroll)
+            window.removeEventListener('scroll', handleFunction)
         })
     }, [webHeight])
+
+    const handleHeight = () => {
+        if (window.scrollY === 0) {
+            setShowGoTopIcon(false)
+            return
+        }
+        setShowGoTopIcon(true)
+    }
 
     const handleScroll = () => {
         if (window.scrollY === 0) {

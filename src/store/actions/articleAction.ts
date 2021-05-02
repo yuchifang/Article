@@ -1,8 +1,8 @@
 import axios from 'axios'
 // import fakeData from '../../data.json'
 import { ThunkDispatch } from 'redux-thunk';
-import store from "../store"
 import { Action } from 'redux';
+import { getFetch } from './api.js'
 import {
     ARTICLE_LIST_LOADING,
     ARTICLE_LIST_FAIL,
@@ -27,15 +27,14 @@ export const GetWriterArticles = (userId = "pinkymini") => (dispatch: ThunkDispa
     //     type: ARTICLE_LIST_SUCCESS,
     //     payload: { res: fakeData.pinkymini, userId: userId }
     // })
-
-    axios.get(`https://emma.pixnet.cc/blog/articles?user=${userId}&per_page=100`)
-        .then((res) => {
+    getFetch("https://emma.pixnet.cc/blog/articles?", { user: userId, per_page: 100 })
+        .then((res: any) => {
             dispatch({
                 type: ARTICLE_LIST_SUCCESS,
                 payload: { res: res, userId: userId }
             })
         })
-        .catch((rej) => {
+        .catch((rej: any) => {
             dispatch({
                 type: ARTICLE_LIST_FAIL,
                 payload: { rej: rej, userId: userId }
@@ -48,7 +47,7 @@ export const GetArticle = (articleId: string, authorName: string) => (dispatch: 
         type: ARTICLE_LOADING,
         payload: { articleId: articleId }
     })
-    axios.get(`https://emma.pixnet.cc/blog/articles/${articleId}?user=${authorName}`)
+    getFetch(`https://emma.pixnet.cc/blog/articles/${articleId}?`, { user: authorName })
         .then((res) => {
             dispatch({
                 type: ARTICLE_SUCCESS,

@@ -248,7 +248,7 @@ const WSearchInputIcon = styled.div`
 `
 
 const WSearchButton = styled(WSearchFeature)`
-
+ cursor:pointer;
 `
 
 const WSearchInput = styled.input`

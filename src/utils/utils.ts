@@ -33,3 +33,25 @@ export function timestampToDate(timestamp: any) {
     const getDateString = Time.getDate() < 10 ? '0' + Time.getDate() : Time.getDate()
     return `${getYear}-${getMonth}-${getDateString}`
 }
+
+
+export function throttle(func: any, delay: number) {
+    let inThrottle = false
+    let timeout: any
+    return function () {
+        //@ts-ignore
+        let context = this
+        let args = arguments
+        if (!inThrottle) {
+            func.apply(context, args)
+            inThrottle = true
+            clearTimeout(timeout)
+            timeout = setTimeout(function () {
+                inThrottle = false
+            }, delay)
+
+        }
+    }
+
+
+}
