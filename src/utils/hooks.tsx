@@ -29,8 +29,7 @@ export function useOutsideClick({
   const wrapper = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function OutsideClick(event: any) {
-      //@ts-ignore
+    function OutsideClick(event: any) {      
       if (
         wrapper &&
         wrapper.current &&
