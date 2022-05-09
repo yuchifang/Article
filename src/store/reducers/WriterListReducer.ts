@@ -72,8 +72,7 @@ const ArticleListReducer = (
       // }
       return {
         ...state,
-        //@ts-ignore
-        [payload.userId]: {
+        [payload.userId as string]: {
           ...state.authorName,
           errorMsg: "",
           actionStatus: "loading",
@@ -88,18 +87,17 @@ const ArticleListReducer = (
       // }
       return {
         ...state,
-        //@ts-ignore
-        [payload.userId]: {
+        [payload.userId as string]: {
           //@ts-ignore
-          ...state[payload.userId],
+          ...state[payload.userId as string],
           errorMsg: payload.rej,
           actionStatus: "error",
         },
       };
 
     case ARTICLE_LIST_SUCCESS:
-      //@ts-ignore
       const {
+        //@ts-ignore
         res: { data },
       } = payload;
       const compileArticles = data.articles.map(
@@ -119,7 +117,7 @@ const ArticleListReducer = (
           sub_site_category,
           articleId: id,
           total_hits: total,
-          public_at, //@ts-ignore
+          public_at, 
           tags: tags.map((obj) => obj.tag),
           avatar: user.avatar,
         })
@@ -127,10 +125,8 @@ const ArticleListReducer = (
 
       return {
         ...state,
-        //@ts-ignore
 
-        [payload.userId]: {
-          //@ts-ignore
+        [payload.userId as string]: {
           ...state[payload.userId],
           errorMsg: "",
           actionStatus: "success",

@@ -32,18 +32,16 @@ const ArticleReducer = (state = DefaultState, action: ArticleAction) => {
     case ARTICLE_LOADING:
       return {
         ...state,
-        //@ts-ignore
-        [payload.articleId]: {
-          //@ts-ignore
-          ...state[payload.articleId],
+        [payload.articleId as string]: {
+          ...state[payload.articleId as string],
           status: "loading",
           errorMsg: "",
         },
       };
     case ARTICLE_SUCCESS:
-      //@ts-ignore
       const {
         res: {
+          //@ts-ignore
           data: {
             article: {
               body,
@@ -60,10 +58,8 @@ const ArticleReducer = (state = DefaultState, action: ArticleAction) => {
       } = payload;
       return {
         ...state,
-        //@ts-ignore
-        [payload.articleId]: {
-          //@ts-ignore
-          ...state[payload.articleId],
+        [payload.articleId as string]: {
+          ...state[payload.articleId as string],
           status: "success",
           errorMsg: "",
           body,
@@ -80,10 +76,8 @@ const ArticleReducer = (state = DefaultState, action: ArticleAction) => {
     case ARTICLE_FAIL:
       return {
         ...state,
-        //@ts-ignore
-        [payload.articleId]: {
-          //@ts-ignore
-          ...state[payload.articleId],
+        [payload.articleId as string]: {
+          ...state[payload.articleId as string],
           status: "error",
           errorMsg: payload.rej,
         },
