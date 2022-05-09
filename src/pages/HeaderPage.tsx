@@ -30,7 +30,7 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
   const searchRef = useRef<HTMLInputElement>(null);
 
   const handleSearch = () => {
-    setIsSearchFeatureVisible?.((prevState) => !prevState);
+    setIsSearchFeatureVisible?.((prevState:boolean) => !prevState);
   };
 
   const handleInputCancel = () => {
@@ -92,7 +92,6 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
               color={`${blue600}`}
             />
           </WSearchBlock>
-
           <WSearchButton
             isSearchFeatureVisible={isSearchFeatureVisible}
             onClick={handleSearch}
