@@ -1,123 +1,145 @@
-import { ARTICLE_LIST_LOADING, ARTICLE_LIST_FAIL, ARTICLE_LIST_SUCCESS } from '../actions/actionType'
+import {
+  ARTICLE_LIST_LOADING,
+  ARTICLE_LIST_FAIL,
+  ARTICLE_LIST_SUCCESS,
+} from "../actions/actionType";
 
 export type typeArticleListState = {
-    authorName: {
-        authorDisplayName: string,
-        authorName: string,
-        errorMsg: string,
-        actionStatus: string,
-        total: number,
-        img: string,
-        articles: [{
-            title: string,
-            category: string,
-            sub_site_category: string,
-            id: string,
-            total_hits: number,
-            tag: string[],
-            public_at: string
-        }]
-    }
-}
+  authorName: {
+    authorDisplayName: string;
+    authorName: string;
+    errorMsg: string;
+    actionStatus: string;
+    total: number;
+    img: string;
+    articles: [
+      {
+        title: string;
+        category: string;
+        sub_site_category: string;
+        id: string;
+        total_hits: number;
+        tag: string[];
+        public_at: string;
+      }
+    ];
+  };
+};
 
 const DefaultState: typeArticleListState = {
-    //這邊應該要存整理過的資料
+  //這邊應該要存整理過的資料
 
-    authorName: {
-        authorDisplayName: "",
-        authorName: "",
-        errorMsg: "",
-        actionStatus: "idle",
-        total: 0,
-        img: "",
-        articles: [{
-            title: "",
-            category: "",
-            sub_site_category: "",
-            id: "",
-            total_hits: 0,
-            tag: [],
-            public_at: ""
-        }]
-    }
-}
+  authorName: {
+    authorDisplayName: "",
+    authorName: "",
+    errorMsg: "",
+    actionStatus: "idle",
+    total: 0,
+    img: "",
+    articles: [
+      {
+        title: "",
+        category: "",
+        sub_site_category: "",
+        id: "",
+        total_hits: 0,
+        tag: [],
+        public_at: "",
+      },
+    ],
+  },
+};
 
 type ArticleAction = {
-    type: string,
-    payload: {
-        [key: string]: string | {},
-    }
-}
+  type: string;
+  payload: {
+    [key: string]: string | {};
+  };
+};
 
-const ArticleListReducer = (state: typeArticleListState = DefaultState, action: ArticleAction) => {
-    const { payload } = action
-    switch (action.type) {
-        case ARTICLE_LIST_LOADING:
-            // console.log({ payload })
-            // return {
-            //     ...state,
-            //     errorMsg: "",
-            //     actionStatus: "loading"
-            // }
-            return {
-                ...state,
-                //@ts-ignore
-                [payload.userId]: {
-                    ...state.authorName,
-                    errorMsg: "",
-                    actionStatus: "loading"
-                }
-            }
-        case ARTICLE_LIST_FAIL:
+const ArticleListReducer = (
+  state: typeArticleListState = DefaultState,
+  action: ArticleAction
+) => {
+  const { payload } = action;
+  switch (action.type) {
+    case ARTICLE_LIST_LOADING:
+      // console.log({ payload })
+      // return {
+      //     ...state,
+      //     errorMsg: "",
+      //     actionStatus: "loading"
+      // }
+      return {
+        ...state,
+        //@ts-ignore
+        [payload.userId]: {
+          ...state.authorName,
+          errorMsg: "",
+          actionStatus: "loading",
+        },
+      };
+    case ARTICLE_LIST_FAIL:
+      // console.log({ payload })
+      // return {
+      //     ...state,
+      //     errorMsg: action.payload,
+      //     actionStatus: "error"
+      // }
+      return {
+        ...state,
+        //@ts-ignore
+        [payload.userId]: {
+          //@ts-ignore
+          ...state[payload.userId],
+          errorMsg: payload.rej,
+          actionStatus: "error",
+        },
+      };
 
-            // console.log({ payload })
-            // return {
-            //     ...state,
-            //     errorMsg: action.payload,
-            //     actionStatus: "error"
-            // }
-            return {
-                ...state,
-                //@ts-ignore
-                [payload.userId]: {
-                    //@ts-ignore
-                    ...state[payload.userId],
-                    errorMsg: payload.rej,
-                    actionStatus: "error"
-                }
-            }
+    case ARTICLE_LIST_SUCCESS:
+      //@ts-ignore
+      const {
+        res: { data },
+      } = payload;
+      const compileArticles = data.articles.map(
+        ({
+          //@ts-ignore
+          sub_site_category,
+          category,
+          title,
+          id,
+          hits: { total },
+          public_at,
+          tags,
+          user,
+        }) => ({
+          category,
+          title,
+          sub_site_category,
+          articleId: id,
+          total_hits: total,
+          public_at, //@ts-ignore
+          tags: tags.map((obj) => obj.tag),
+          avatar: user.avatar,
+        })
+      );
 
-        case ARTICLE_LIST_SUCCESS:
-            //@ts-ignore
-            const { res: { data } } = payload
-            const compileArticles = data.articles.map(({
-                //@ts-ignore
-                sub_site_category, category, title, id, hits: { total }, public_at, tags, user
-            }) => ({
-                category,
-                title,
-                sub_site_category,
-                articleId: id,
-                total_hits: total,
-                public_at, //@ts-ignore
-                tags: tags.map(obj => obj.tag),
-                avatar: user.avatar
-            }))
+      return {
+        ...state,
+        //@ts-ignore
 
-            return {
-                ...state,
-                //@ts-ignore
-
-                [payload.userId]: { //@ts-ignore
-                    ...state[payload.userId],
-                    errorMsg: "",
-                    actionStatus: 'success',
-                    authorDisplayName: data.articles[0].user.display_name,
-                    total: data.total,
-                    AuthorName: data.articles[0].user.name,
-                    articles: compileArticles
-                }
-                /*
+        [payload.userId]: {
+          //@ts-ignore
+          ...state[payload.userId],
+          errorMsg: "",
+          actionStatus: "success",
+          authorDisplayName: data.articles[0].user.display_name,
+          total: data.total,
+          AuthorName: data.articles[0].user.name,
+          articles: compileArticles,
+        },
+        /*
                 articles: [{
                     title: "",
                     category: "",
@@ -128,10 +150,10 @@ const ArticleListReducer = (state: typeArticleListState = DefaultState, action: 
                     public_at: ""
                 }]
                 */
-            }
-        default:
-            return state;
-    }
-}
+      };
+    default:
+      return state;
+  }
+};
 
-export default ArticleListReducer
+export default ArticleListReducer;

@@ -1,5 +1,3 @@
+const Theme = {};
 
-const Theme = {
-}
-
-export default Theme
+export default Theme;
