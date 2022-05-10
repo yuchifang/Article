@@ -51,8 +51,6 @@ export default function Pagination({
     ) => {
         const target = e.target as Element
         setPageNumber(Number(target.innerHTML))
-        e.preventDefault()
-        e.stopPropagation()
     }
 
     const handleLeftClick = () => {

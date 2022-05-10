@@ -53,8 +53,6 @@ export default function HeaderPage({ topicTitleList }: HeaderPageProps) {
                 history.push(locationInfo)
             }
         }
-        e.preventDefault()
-        e.stopPropagation()
     }
 
     return (

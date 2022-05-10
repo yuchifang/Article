@@ -69,8 +69,6 @@ export default function ArticlePage({
             },
         }
         history.push(locationInfo)
-        e.preventDefault()
-        e.stopPropagation()
     }
 
     return (
