@@ -48,10 +48,10 @@ function App() {
 
   useEffect(() => {
     dispatch(GetWriterArticles("pinkymini"));
-  }, []);
+  }, [dispatch]);
 
   return (
-    <BrowserRouter>
+      <BrowserRouter>
       {
         // @ts-ignore
         articleList?.pinkymini?.actionStatus === "success" &&

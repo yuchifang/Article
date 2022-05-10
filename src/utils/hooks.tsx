@@ -1,49 +1,49 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from 'react'
 
 export const useRWD = () => {
-  const [device, setDevice] = useState("idle");
+    const [device, setDevice] = useState('idle')
 
-  useEffect(() => {
-    const handleRWD = () => {
-      if (window.innerWidth > 980) {
-        setDevice("PC");
-      } else {
-        setDevice("Mobile");
-      }
-    };
-    handleRWD();
-    window.addEventListener("resize", handleRWD);
-    return () => {
-      window.removeEventListener("resize", handleRWD);
-    };
-  }, []);
+    useEffect(() => {
+        const handleRWD = () => {
+            if (window.innerWidth > 980) {
+                setDevice('PC')
+            } else {
+                setDevice('Mobile')
+            }
+        }
+        handleRWD()
+        window.addEventListener('resize', handleRWD)
+        return () => {
+            window.removeEventListener('resize', handleRWD)
+        }
+    }, [])
 
-  return device;
-};
+    return device
+}
 
 export function useOutsideClick({
-  handleOutsideClick,
+    handleOutsideClick,
 }: {
-  handleOutsideClick: (value?: any) => void;
+    handleOutsideClick: (value?: any) => void
 }): React.RefObject<HTMLDivElement> {
-  const wrapper = useRef<HTMLDivElement>(null);
+    const wrapper = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    function OutsideClick(event: any) {      
-      if (
-        wrapper &&
-        wrapper.current &&
-        !wrapper?.current?.contains(event.target)
-      ) {
-        handleOutsideClick?.();
-      }
-    }
+    useEffect(() => {
+        function OutsideClick(event: any) {
+            if (
+                wrapper &&
+                wrapper.current &&
+                !wrapper?.current?.contains(event.target)
+            ) {
+                handleOutsideClick?.()
+            }
+        }
 
-    document.addEventListener("mousedown", OutsideClick);
-    return () => {
-      document.removeEventListener("mousedown", OutsideClick);
-    };
-  }, [wrapper]);
+        document.addEventListener('mousedown', OutsideClick)
+        return () => {
+            document.removeEventListener('mousedown', OutsideClick)
+        }
+    }, [wrapper])
 
-  return wrapper;
+    return wrapper
 }
